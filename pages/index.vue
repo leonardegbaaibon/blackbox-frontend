@@ -1,0 +1,105 @@
+<template>
+  <!-- <v-container fluid class="fill-height"> -->
+  <v-row justify="center" align="center">
+    <v-col md="4" class="">
+      <div class="text-center">
+        <Logo class="mb-7" />
+      </div>
+
+      <!-- Alert -->
+      <v-alert v-model="alert" color="error" dismissible dense type="success">
+        {{ error }}
+      </v-alert>
+
+      <!-- Login form -->
+      <template v-if="!done">
+        <FormLogin
+          v-if="isLogin"
+          :loading="loading"
+          @click:switch="isLogin = false"
+          @submit="login"
+        />
+
+        <!-- Signup form -->
+        <FormSignup
+          v-else
+          :loading="loading"
+          @click:switch="isLogin = true"
+          @submit="signup"
+        />
+      </template>
+
+      <!-- Success Card -->
+      <CardSuccess
+        v-if="done"
+        @login="
+          done = false
+          isLogin = true
+        "
+      />
+    </v-col>
+  </v-row>
+  <!-- </v-container> -->
+</template>
+
+<script>
+import { mapActions } from 'vuex'
+
+export default {
+  layout: 'noAuth',
+
+  auth: 'guest',
+
+  data() {
+    return {
+      isLogin: true,
+      done: false,
+      loading: false,
+      alert: false,
+      error: null,
+    }
+  },
+
+  watch: {
+    isLogin(newValue, oldValue) {
+      this.alert = false
+    },
+  },
+
+  methods: {
+    ...mapActions({ register: 'user/authentication/register' }),
+
+    async signup(evt) {
+      this.alert = false
+      const { confirm, ...restForm } = evt
+      this.loading = true
+      try {
+        await this.register(restForm)
+        this.done = true
+      } catch (error) {
+        this.alert = true
+        this.error = error.response.data.message
+      } finally {
+        this.loading = false
+      }
+    },
+
+    async login(evt) {
+      this.alert = false
+      this.loading = true
+      try {
+        await this.$auth.loginWith('local', {
+          data: {
+            ...evt,
+          },
+        })
+      } catch (error) {
+        this.alert = true
+        this.error = error.response.data.message
+      } finally {
+        this.loading = false
+      }
+    },
+  },
+}
+</script>
