@@ -1,0 +1,24 @@
+// Ref: https://github.com/nuxt-community/vuetify-module#customvariables
+//
+// The variables you want to modify
+
+// Globals
+$font-size-root: 14px;
+$body-font-family: 'Spartan', sans-serif;
+$heading-font-family: $body-font-family;
+// $border-radius-root: 8px;
+$material-light: (
+  'background': #f6f6f6,
+);
+
+// Buttons
+$btn-text-transform: titlecase;
+$btn-font-weight: 600;
+$btn-letter-spacing: 0em;
+$btn-font-sizes: (
+  'x-small': 0.625rem,
+  'small': 0.75rem,
+  'default': 1rem,
+  'large': 0.875rem,
+  'x-large': 1rem,
+);
