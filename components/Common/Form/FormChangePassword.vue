@@ -1,43 +1,45 @@
 <template>
-  <CardAuth :disabled="loading" title="Sign up for Blackbox">
+  <CardAuth
+    :disabled="loading"
+    title="Recover Password"
+    subtitle="Don't worry, happens to the best of us."
+  >
     <ValidationObserver v-slot="{ handleSubmit }">
       <v-form
         @submit.prevent="
           handleSubmit(() => {
-            $emit('submit', form)
+            $emit('submit', {
+              password: form.password,
+              confirmationCode: form.confirmationCode,
+            })
           })
         "
       >
         <FormInput
-          v-model="form.name"
-          name="Your name"
-          label="Name"
+          v-model="form.confirmationCode"
+          label="Code"
           rules="required"
-          type="text"
-        />
-        <FormInput
-          v-model="form.email"
-          label="Email"
-          rules="required|email"
           type="email"
         />
         <FormInput
           v-model="form.password"
           label="Password"
           rules="required|password_check|password:@confirm"
-          type="password"
-        ></FormInput>
+          type="email"
+        />
         <FormInput
           v-model="form.confirm"
-          label="Confirm Password"
           name="confirm"
+          label="Confirm Password"
           rules="required"
-          type="password"
-        ></FormInput>
-        <FormButton block :loading="loading">Signup</FormButton>
+          type="email"
+        />
+        <FormButton block :loading="loading" type="submit">
+          Reset Password
+        </FormButton>
         <p class="mb-0 mt-2 text-center">
-          Already have an account?
-          <a class="font-weight-bold" @click="$emit('click:switch')">Login</a>
+          Remember now?
+          <NuxtLink class="font-weight-bold" to="/">Log in</NuxtLink>
         </p>
       </v-form>
     </ValidationObserver>
@@ -60,7 +62,7 @@ export default {
 
   data() {
     return {
-      form: { name: null, email: null, password: null, confirm: null },
+      form: { password: '', confirmationCode: '', confirm: '' },
     }
   },
 }

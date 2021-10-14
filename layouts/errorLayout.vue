@@ -1,12 +1,12 @@
 <template>
   <div>
-    <!-- Header -->
-    <AppHeader />
-    <Nuxt />
-    <!-- Footer -->
-    <AppFooter />
-    <!-- Misc -->
-    <LazyModalContact v-if="showContact" v-model="showContact" />
+    <v-app>
+      <v-main>
+        <v-container fluid class="fill-height secondary text-center">
+          <Nuxt />
+        </v-container>
+      </v-main>
+    </v-app>
   </div>
 </template>
 

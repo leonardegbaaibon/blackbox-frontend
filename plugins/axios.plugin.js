@@ -1,15 +1,19 @@
 export default ({ $axios, error }) => {
   $axios.onResponse((response) => {
-    console.log(`[${response.status}] ${response.request.path}`)
+    console.log(`Response: [${response.status}] ${response.config.url}`)
   })
 
   $axios.onError((err) => {
     console.log(
-      `[${err.response && err.response.status}] ${
-        err.response && err.response.request.path
+      `Error: [${err.response && err.response.status}] ${
+        err.response && err.response.config.url
       }`
     )
-    if (err.response.status === 404 || err.response.status === 500) {
+    if (
+      (err.response.status === 404 &&
+        err.response.config.url !== '/auth/sign.in') ||
+      err.response.status === 500
+    ) {
       error({ statusCode: err.response.status, message: err.response.message })
     }
   })

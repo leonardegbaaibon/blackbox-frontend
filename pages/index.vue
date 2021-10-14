@@ -30,13 +30,7 @@
       </template>
 
       <!-- Success Card -->
-      <CardSuccess
-        v-if="done"
-        @login="
-          done = false
-          isLogin = true
-        "
-      />
+      <CardSuccess v-if="done" button-text="Go to Login" @clicked="reset" />
     </v-col>
   </v-row>
   <!-- </v-container> -->
@@ -99,6 +93,11 @@ export default {
       } finally {
         this.loading = false
       }
+    },
+
+    reset() {
+      this.done = false
+      this.isLogin = true
     },
   },
 }

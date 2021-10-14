@@ -6,16 +6,29 @@
       </v-icon>
       <p class="text-h5 font-weight-bold mb-3">Success!</p>
       <p class="mb-4">
-        Thanks! Your account has been successfully created. Please check your
-        inbox to verify your account
+        {{ message }}
       </p>
-      <FormButton block @click.native="$emit('login')">Login</FormButton>
+      <FormButton v-if="buttonText" block @click.native="$emit('clicked')">
+        {{ buttonText }}
+      </FormButton>
     </v-card-text>
   </v-card>
 </template>
 
 <script>
-export default {}
+export default {
+  props: {
+    message: {
+      type: String,
+      default:
+        'Thanks! Your account has been successfully created. Please check your inbox to verify your account',
+    },
+    buttonText: {
+      type: String,
+      default: '',
+    },
+  },
+}
 </script>
 
 <style lang="scss" scoped></style>

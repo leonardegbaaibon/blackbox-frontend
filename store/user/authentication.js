@@ -17,20 +17,34 @@ export const actions = {
     }
   },
 
-  // payload:{signature,expires}
-  async verifyEmail({ commit }, payload) {
-    commit('SET_PROCESS', 'user/authentication/verifyEmail', {
+  async requestPasswordChange({ commit }, payload) {
+    commit('SET_PROCESS', 'user/authentication/requestPasswordChange', {
       root: true,
     })
     try {
-      const resp = await this.$axios.$get(
-        `email/verify/4/984238d5f4e5888cc3d266dac0cf940b53c9f0e1?expires=${payload.expires}&signature=${payload.signature}`
+      const resp = await this.$axios.$post(`auth/change.password`, payload)
+      return resp
+    } catch (error) {
+      throw error
+    }
+  },
+
+  async passwordReset({ commit }, payload) {
+    commit('SET_PROCESS', 'user/authentication/passwordReset', {
+      root: true,
+    })
+    try {
+      const resp = await this.$axios.$post(
+        `auth/confirm.change.password`,
+        payload
       )
       return resp
     } catch (error) {
       throw error
     }
   },
+
+  // ------------------------------ old
 
   async resendVerificationEmail({ commit }) {
     commit('SET_PROCESS', 'user/authentication/resendVerificationEmail', {
@@ -51,22 +65,6 @@ export const actions = {
     })
     try {
       const resp = await this.$axios.$post(`password/email`, { email })
-      return resp
-    } catch (error) {
-      throw error
-    }
-  },
-
-  // payload:{token,email,password,password_confirmation}
-  async passwordReset({ commit }, payload) {
-    commit('SET_PROCESS', 'user/authentication/passwordReset', {
-      root: true,
-    })
-    try {
-      const resp = await this.$axios.$post(
-        `password/reset/${payload.token}`,
-        payload
-      )
       return resp
     } catch (error) {
       throw error

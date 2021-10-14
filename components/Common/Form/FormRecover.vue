@@ -1,5 +1,9 @@
 <template>
-  <CardAuth :disabled="loading" title="Log into Blackbox">
+  <CardAuth
+    :disabled="loading"
+    title="Recover Password"
+    subtitle="Don't worry, happens to the best of us."
+  >
     <ValidationObserver v-slot="{ handleSubmit }">
       <v-form
         @submit.prevent="
@@ -14,20 +18,12 @@
           rules="required|email"
           type="email"
         />
-        <FormInput
-          v-model="form.password"
-          label="Password"
-          rules="required|password_check"
-          type="password"
-        >
-          <template #label2>
-            <NuxtLink to="/reset-password">Forgot Password?</NuxtLink>
-          </template>
-        </FormInput>
-        <FormButton block :loading="loading" type="submit">Login</FormButton>
+        <FormButton block :loading="loading" type="submit">
+          Reset Password
+        </FormButton>
         <p class="mb-0 mt-2 text-center">
-          Don’t have an account?
-          <a class="font-weight-bold" @click="$emit('click:switch')">Sign up</a>
+          Remember now?
+          <NuxtLink class="font-weight-bold" to="/">Log in</NuxtLink>
         </p>
       </v-form>
     </ValidationObserver>
@@ -50,7 +46,7 @@ export default {
 
   data() {
     return {
-      form: { email: '', password: '' },
+      form: { email: '' },
     }
   },
 }
