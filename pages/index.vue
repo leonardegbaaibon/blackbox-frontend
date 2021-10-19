@@ -42,7 +42,7 @@ import { mapActions } from 'vuex'
 export default {
   layout: 'noAuth',
 
-  auth: 'guest',
+  middleware: 'guest',
 
   data() {
     return {
@@ -65,8 +65,8 @@ export default {
 
     async signup(evt) {
       this.alert = false
-      const { confirm, ...restForm } = evt
       this.loading = true
+      const { confirm, ...restForm } = evt
       try {
         await this.register(restForm)
         this.done = true

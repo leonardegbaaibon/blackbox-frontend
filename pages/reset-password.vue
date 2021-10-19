@@ -44,7 +44,7 @@ import { mapActions } from 'vuex'
 export default {
   layout: 'noAuth',
 
-  auth: 'guest',
+  middleware: 'guest',
 
   data() {
     return {
@@ -90,7 +90,6 @@ export default {
     async changePassword(evt) {
       this.loading = true
       evt = { email: this.email, ...evt }
-      console.log('🚀 ~ changePassword ~ evt', evt)
       try {
         await this.change(evt)
         this.stepper++

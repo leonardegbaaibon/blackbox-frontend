@@ -7,13 +7,15 @@
     :mode="mode"
   >
     <div v-show="label" class="mb-1 d-flex" :for="id">
-      <p class="mb-0 text-uppercase text--black font-weight-bold">
+      <p class="mb-0 text-uppercase text--black font-weight-medium">
         {{ label }}
       </p>
       <v-spacer></v-spacer>
       <slot name="label2"></slot>
     </div>
     <v-text-field
+      v-for="(phone, index) in phones"
+      :key="index"
       single-line
       :readonly="readonly"
       :error-messages="errors"
@@ -132,6 +134,12 @@ export default {
       type: [String, Boolean],
       default: false,
     },
+  },
+
+  data() {
+    return {
+      phones: [''],
+    }
   },
 }
 </script>

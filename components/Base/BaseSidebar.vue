@@ -44,7 +44,7 @@ export default {
         {
           icon: 'mdi-chart-bubble',
           title: 'Drivers',
-          to: '/inspire',
+          to: '/drivers',
         },
         {
           icon: 'mdi-chart-bubble',

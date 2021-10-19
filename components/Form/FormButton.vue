@@ -1,5 +1,6 @@
 <template>
   <v-btn
+    v-bind="$attrs"
     depressed
     :color="color"
     :disabled="disabled"

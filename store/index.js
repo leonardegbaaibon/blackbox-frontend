@@ -2,6 +2,7 @@
 export const state = () => ({
   drawer: true,
   process: '',
+  snackbar: [],
 })
 
 export const mutations = {
@@ -11,6 +12,13 @@ export const mutations = {
   SET_PROCESS(state, payload) {
     state.process = payload
   },
+  SET_SNACKBAR(state, snackbar) {
+    state.snackbar = snackbar
+  },
 }
 
-export const actions = {}
+export const actions = {
+  setSnackbar({ commit }, snackbar) {
+    commit('SET_SNACKBAR', snackbar)
+  },
+}

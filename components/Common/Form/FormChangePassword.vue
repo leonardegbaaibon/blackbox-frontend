@@ -19,20 +19,20 @@
           v-model="form.confirmationCode"
           label="Code"
           rules="required"
-          type="email"
+          type="text"
         />
         <FormInput
           v-model="form.password"
           label="Password"
           rules="required|password_check|password:@confirm"
-          type="email"
+          type="password"
         />
         <FormInput
           v-model="form.confirm"
           name="confirm"
           label="Confirm Password"
           rules="required"
-          type="email"
+          type="password"
         />
         <FormButton block :loading="loading" type="submit">
           Reset Password

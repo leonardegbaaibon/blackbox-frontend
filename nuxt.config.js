@@ -57,7 +57,26 @@ export default {
     '@nuxtjs/pwa',
     '@nuxtjs/auth-next',
     '@nuxtjs/dayjs',
+    '@nuxtjs/toast',
   ],
+
+  toast: {
+    position: 'bottom-center',
+    theme: 'outline',
+    keepOnHover: true,
+    iconPack: 'mdi',
+    duration: 6000,
+    register: [
+      // Register custom toasts
+      {
+        name: 'showing',
+        message: 'Oops...Something went wrong',
+        options: {
+          type: 'error',
+        },
+      },
+    ],
+  },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
