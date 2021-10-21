@@ -35,7 +35,7 @@
           type="password"
         ></FormInput>
         <FormButton block :loading="loading">Signup</FormButton>
-        <p class="mb-0 mt-2 text-center">
+        <p class="mb-0 mt-7 text-center">
           Already have an account?
           <a class="font-weight-bold" @click="$emit('click:switch')">Login</a>
         </p>

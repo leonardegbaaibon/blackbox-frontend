@@ -29,6 +29,7 @@ export default {
     return {
       drivers: '',
       dialog: false,
+      loading: false,
     }
   },
 
@@ -44,10 +45,18 @@ export default {
     }),
 
     create(evt) {
-      this.createDriver(evt).then(() => {
-        this.dialog = false
-        this.$toast.success('Driver successfully created')
-      })
+      this.createDriver(evt)
+        .then((resp) => {
+          console.log('🚀 ~ .then ~ resp', resp)
+          this.dialog = false
+          this.$toast.success('Driver successfully created')
+        })
+        .catch((error) => {
+          // console.log('🚀 ~ create ~ errors', errors)
+          // errors.data.message.forEach((error) => {
+          this.$toast.error(error.data.message)
+          // })
+        })
     },
   },
 }

@@ -28,7 +28,7 @@ export const actions = {
       const resp = await this.$axios.$post('terminals', payload)
       return resp
     } catch (error) {
-      throw error
+      throw error.response
     }
   },
 

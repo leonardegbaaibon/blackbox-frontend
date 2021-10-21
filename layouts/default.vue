@@ -46,5 +46,9 @@ export default {
     //   this.$store.dispatch('setSnackbar', { showing: false })
     // },
   },
+
+  // created() {
+  //   this.$toast.success('Success', { position: 'top-right' })
+  // },
 }
 </script>

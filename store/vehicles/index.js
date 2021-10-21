@@ -1,8 +1,8 @@
 /* eslint-disable no-useless-catch */
 // console.log('this :>> ', this)
 export const state = () => ({
-  state: 'drivers',
-  drivers: [],
+  state: 'vehicles',
+  vehicles: [],
 })
 
 export const mutations = {

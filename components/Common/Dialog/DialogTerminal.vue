@@ -3,14 +3,14 @@
     title="Create Terminal"
     subtitle="Enter terminal's details to create one"
     :value="value"
-    :ok-button="'Create Driver'"
+    :ok-button="'Create Terminal'"
     @input="$emit('input', $event)"
     @clicked:ok="submit"
     @clicked:cancel="$emit('input', false)"
   >
     <ValidationObserver ref="observer">
       <v-form>
-        <!-- Driver's Information -->
+        <!-- Terminal's Information -->
         <p class="primary--text text-overline font-weight-bold text-center">
           Terminal's Information
         </p>

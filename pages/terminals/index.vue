@@ -30,6 +30,7 @@ export default {
     return {
       terminals: [],
       dialog: false,
+      loading: false,
     }
   },
 
@@ -45,10 +46,14 @@ export default {
     }),
 
     create(evt) {
-      this.createTerminal(evt).then(() => {
-        this.dialog = false
-        this.$toast.success('Terminal successfully created')
-      })
+      this.createTerminal(evt)
+        .then(() => {
+          this.dialog = false
+          this.$toast.success('Terminal successfully created')
+        })
+        .catch((error) => {
+          this.$toast.error(error.data.message)
+        })
     },
   },
 }

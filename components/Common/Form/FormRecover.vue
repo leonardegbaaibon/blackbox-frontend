@@ -21,7 +21,7 @@
         <FormButton block :loading="loading" type="submit">
           Reset Password
         </FormButton>
-        <p class="mb-0 mt-2 text-center">
+        <p class="mb-0 mt-7 text-center">
           Remember now?
           <NuxtLink class="font-weight-bold" to="/">Log in</NuxtLink>
         </p>
