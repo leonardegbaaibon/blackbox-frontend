@@ -1,7 +1,7 @@
 <template>
   <v-app>
-    <v-main>
-      <v-container fluid class="fill-height secondary">
+    <v-main class="fill-height secondary pt-12">
+      <v-container fluid>
         <Nuxt />
       </v-container>
     </v-main>

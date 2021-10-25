@@ -25,28 +25,6 @@
       :items="items"
       class="elevation-1"
     >
-      <template #[`item.name`]="{ item }">
-        <v-row class="py-3" align="center">
-          <v-col cols="auto">
-            <v-avatar color="primary" size="40">
-              <img
-                v-if="item.driverPhoto"
-                :src="item.driverPhoto"
-                :alt="item.driverName"
-              />
-              <v-icon v-else dark>mdi-account</v-icon>
-            </v-avatar>
-          </v-col>
-          <v-col>
-            <p class="text-subtitle-1 mb-0 font-weight-bold">
-              {{ item.driverName }}
-            </p>
-            <p class="mb-0">
-              {{ item.driverEmail }} • {{ item.driverPhoneNumber }}
-            </p>
-          </v-col>
-        </v-row>
-      </template>
       <template #[`item.createdAt`]="{ item }">
         {{ $dayjs(item.createdAt).format('DD MMMM, YYYY • hh:mm A') }}
       </template>
@@ -68,15 +46,16 @@ export default {
       search: '',
       headers: [
         {
-          text: 'Driver Information',
+          text: 'Make',
           align: 'start',
           sortable: false,
-          value: 'name',
+          value: 'vehicleMake',
         },
-        { text: 'Address', value: 'driverAddress' },
-        { text: 'License', value: 'driverLicenseNumber' },
-        { text: 'Phone', value: 'driverPhoneNumber' },
-        { text: 'NIN', value: 'driverNin' },
+        { text: 'Color', value: 'vehicleColor' },
+        { text: 'Registration Number', value: 'vehicleRegistrationNumber' },
+        { text: 'Model', value: 'vehicleModel' },
+        { text: 'Year', value: 'vehicleYear' },
+        { text: 'VIN', value: 'vehicleVin' },
         { text: 'Created at', value: 'createdAt' },
       ],
     }

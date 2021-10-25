@@ -36,7 +36,11 @@ export default {
   css: ['~/assets/scss/app.scss'],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: ['~/plugins/axios.plugin', '~/plugins/vee-validate.plugin'],
+  plugins: [
+    '~/plugins/axios.plugin',
+    '~/plugins/vee-validate.plugin',
+    '~/plugins/persistedState.plugin.js',
+  ],
 
   // Auto import onents: https://go.nuxtjs.dev/config-components
   components: { dirs: ['~/components', '~/components/Common'] },
@@ -61,7 +65,7 @@ export default {
   ],
 
   toast: {
-    position: 'bottom-center',
+    position: 'top-right',
     theme: 'outline',
     keepOnHover: true,
     iconPack: 'mdi',
@@ -102,7 +106,7 @@ export default {
         },
         user: {
           property: 'user',
-          // autoFetch: true
+          autoFetch: false,
         },
         endpoints: {
           login: { url: '/auth/sign.in', method: 'post' },

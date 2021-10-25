@@ -15,7 +15,7 @@
     </v-col>
 
     <!-- Dialogs -->
-    <DialogDriver v-model="dialog" @clicked:ok="create" />
+    <DialogDriver v-model="dialog" :loading="loading" @clicked:ok="create" />
   </v-row>
 </template>
 
@@ -45,6 +45,7 @@ export default {
     }),
 
     create(evt) {
+      this.loading = true
       this.createDriver(evt)
         .then((resp) => {
           console.log('🚀 ~ .then ~ resp', resp)
@@ -56,6 +57,9 @@ export default {
           // errors.data.message.forEach((error) => {
           this.$toast.error(error.data.message)
           // })
+        })
+        .finally(() => {
+          this.loading = false
         })
     },
   },

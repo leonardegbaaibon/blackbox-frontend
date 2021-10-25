@@ -42,27 +42,27 @@ export default {
           to: '/dashboard',
         },
         {
-          icon: 'mdi-chart-bubble',
+          icon: 'mdi-account-multiple-outline',
           title: 'Drivers',
           to: '/drivers',
         },
         {
-          icon: 'mdi-chart-bubble',
+          icon: 'mdi-bus-marker',
           title: 'Terminals',
           to: '/terminals',
         },
         {
-          icon: 'mdi-chart-bubble',
+          icon: 'mdi-map-marker-distance',
           title: 'Trips',
           to: '/trips',
         },
         {
-          icon: 'mdi-chart-bubble',
+          icon: 'mdi-car-settings',
           title: 'Vehicles',
           to: '/vehicles',
         },
         {
-          icon: 'mdi-chart-bubble',
+          icon: 'mdi-alert-decagram',
           title: 'Faults Monitor',
           to: '/faults',
         },

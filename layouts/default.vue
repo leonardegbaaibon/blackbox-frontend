@@ -27,7 +27,7 @@
 </template>
 
 <script>
-// import { mapState } from 'vuex'
+import { mapActions } from 'vuex'
 export default {
   data() {
     return {
@@ -41,14 +41,21 @@ export default {
     // ...mapState({ snackbars: (state) => state.snackbars }),
   },
 
+  created() {
+    // this.$toast.success('Success', { position: 'top-right' })
+    console.log('here')
+    this.getUser({}).then((response) => {
+      this.$auth.setUser(response)
+    })
+  },
+
   methods: {
+    ...mapActions({
+      getUser: 'user/authentication/getUserInfo',
+    }),
     // close() {
     //   this.$store.dispatch('setSnackbar', { showing: false })
     // },
   },
-
-  // created() {
-  //   this.$toast.success('Success', { position: 'top-right' })
-  // },
 }
 </script>

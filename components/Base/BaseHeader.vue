@@ -10,8 +10,11 @@
       <v-icon>mdi-magnify</v-icon>
     </v-btn>
     <v-divider vertical inset class="mx-3"></v-divider>
-    <p class="mb-0 mr-2 font-weight-bold grey--text text--darken-2">
-      Richard Saseun
+    <p
+      v-if="$auth.user.firstName"
+      class="mb-0 mr-2 font-weight-bold grey--text text--darken-2"
+    >
+      {{ $auth.user.firstName + ' ' + $auth.user.lastName }}
     </p>
     <v-menu offset-y>
       <template #activator="{ on, attrs }">
@@ -36,7 +39,7 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex'
+import { mapState, mapMutations, mapActions } from 'vuex'
 export default {
   data() {
     return {}
@@ -47,9 +50,18 @@ export default {
     }),
   },
 
+  created() {
+    // if (!this.$auth.user) {
+    //   this.getUser()
+    // }
+  },
+
   methods: {
     ...mapMutations({
       setDrawer: 'SET_DRAWER',
+    }),
+    ...mapActions({
+      getUser: 'user/authentication/getUserInfo',
     }),
   },
 }

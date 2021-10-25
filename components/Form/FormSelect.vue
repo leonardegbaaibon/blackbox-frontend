@@ -15,7 +15,8 @@
         <slot name="label2"></slot>
       </div>
     </div>
-    <v-text-field
+    <v-select
+      :items="items"
       single-line
       :readonly="readonly"
       :error-messages="errors"
@@ -32,8 +33,8 @@
       :clearable="clearable"
       outlined
       :hide-details="hideDetails"
-      @input="$emit('input', $event)"
-    ></v-text-field>
+      @change="$emit('input', $event)"
+    ></v-select>
   </ValidationProvider>
 </template>
 
@@ -53,6 +54,10 @@ export default {
     value: {
       type: [String, Number],
       default: '',
+    },
+    items: {
+      type: Array,
+      default: () => [],
     },
     placeholder: {
       type: String,

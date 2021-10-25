@@ -6,57 +6,58 @@ export const state = () => ({
 })
 
 export const mutations = {
-  SET_DRIVERS(state, drivers) {
-    state.drivers = [...drivers]
+  SET_VEHICLES(state, vehicles) {
+    state.vehicles = [...vehicles]
   },
 }
 
 export const actions = {
-  async getDrivers({ commit }, payload) {
-    commit('SET_PROCESS', 'drivers/getDrivers', { root: true })
+  async getVehicles({ commit }, payload) {
+    commit('SET_PROCESS', 'vehicles/getVehicles', { root: true })
     try {
-      const resp = await this.$axios.$get('drivers')
+      const resp = await this.$axios.$get('vehicles')
       return resp
     } catch (error) {
       throw error
     }
   },
 
-  async createDriver({ commit }, payload) {
-    commit('SET_PROCESS', 'drivers/createDriver', { root: true })
+  async createVehicle({ commit, dispatch }, payload) {
+    commit('SET_PROCESS', 'vehicles/createVehicle', { root: true })
     try {
-      const resp = await this.$axios.$post('drivers', payload)
+      const resp = await this.$axios.$post('vehicles', payload)
+      dispatch('getVehicles')
       return resp
     } catch (error) {
-      console.log('🚀 ~ createDriver ~ error', error)
+      console.log('🚀 ~ createVehicle ~ error', error)
       throw error.response
     }
   },
 
-  async getOneDriver({ commit }, payload) {
-    commit('SET_PROCESS', 'drivers/getOneDriver', { root: true })
+  async getOneVehicle({ commit }, payload) {
+    commit('SET_PROCESS', 'vehicles/getOneVehicle', { root: true })
     try {
-      const resp = await this.$axios.$get(`drivers/${payload.id}`)
+      const resp = await this.$axios.$get(`vehicles/${payload.id}`)
       return resp
     } catch (error) {
       throw error
     }
   },
 
-  async updateDriver({ commit }, payload) {
-    commit('SET_PROCESS', 'drivers/updateDriver', { root: true })
+  async updateVehicle({ commit }, payload) {
+    commit('SET_PROCESS', 'vehicles/updateVehicle', { root: true })
     try {
-      const resp = await this.$axios.$patch(`drivers/${payload.id}`, payload)
+      const resp = await this.$axios.$patch(`vehicles/${payload.id}`, payload)
       return resp
     } catch (error) {
       throw error
     }
   },
 
-  async deleteDriver({ commit }, payload) {
-    commit('SET_PROCESS', 'drivers/deleteDriver', { root: true })
+  async deleteVehicle({ commit }, payload) {
+    commit('SET_PROCESS', 'vehicles/deleteVehicle', { root: true })
     try {
-      const resp = await this.$axios.$delete(`drivers/${payload.id}`)
+      const resp = await this.$axios.$delete(`vehicles/${payload.id}`)
       return resp
     } catch (error) {
       throw error

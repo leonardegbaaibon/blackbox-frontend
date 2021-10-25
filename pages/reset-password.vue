@@ -1,7 +1,7 @@
 <template>
   <!-- <v-container fluid class="fill-height"> -->
   <v-row justify="center" align="center">
-    <v-col md="4" class="">
+    <v-col md="3" class="">
       <div class="text-center">
         <Logo class="mb-7" />
       </div>
@@ -11,7 +11,7 @@
         {{ error }}
       </v-alert>
 
-      <v-stepper v-model="stepper">
+      <v-stepper v-model="stepper" flat>
         <v-stepper-items>
           <!-- Recover form -->
           <v-stepper-content step="1">
@@ -103,3 +103,12 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+.v-stepper__content {
+  top: 0;
+  padding: 0;
+  flex: 1 0 auto;
+  width: 100%;
+}
+</style>

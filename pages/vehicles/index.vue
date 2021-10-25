@@ -7,16 +7,16 @@
         indeterminate
       ></v-progress-circular>
       <CardNoState
-        v-else-if="terminals.length === 0"
-        title="No terminals created yet"
-        button-text="New Terminal"
+        v-else-if="vehicles.length === 0"
+        title="No vehicles created yet"
+        button-text="New Vehicle"
         @clicked="dialog = true"
       ></CardNoState>
-      <TableTerminals v-else :items="terminals" @clicked="dialog = true" />
+      <TableVehicles v-else :items="vehicles" @clicked="dialog = true" />
     </v-col>
 
     <!-- Dialogs -->
-    <DialogTerminal v-model="dialog" @clicked:ok="create" />
+    <DialogVehicle v-model="dialog" :loading="loading" @clicked:ok="create" />
   </v-row>
 </template>
 
@@ -28,35 +28,38 @@ export default {
 
   data() {
     return {
-      terminals: [],
+      vehicles: '',
       dialog: false,
       loading: false,
     }
   },
 
   async fetch() {
-    const { data: terminals } = await this.getTerminals()
-    this.terminals = terminals
+    const { data: vehicles } = await this.getVehicles()
+    this.vehicles = vehicles
   },
 
   methods: {
     ...mapActions({
-      getTerminals: 'terminals/getTerminals',
-      createTerminal: 'terminals/createTerminal',
+      getVehicles: 'vehicles/getVehicles',
+      createVehicle: 'vehicles/createVehicle',
     }),
 
     create(evt) {
       this.loading = true
-      this.createTerminal(evt)
-        .then(() => {
+      this.createVehicle(evt)
+        .then((resp) => {
           this.dialog = false
-          this.$toast.success('Terminal successfully created')
+          this.$toast.success('Vehicle successfully created')
         })
         .catch((error) => {
+          // console.log('🚀 ~ create ~ errors', errors)
+          // errors.data.message.forEach((error) => {
           this.$toast.error(error.data.message)
+          // })
         })
         .finally(() => {
-          this.loadind = false
+          this.loading = false
         })
     },
   },

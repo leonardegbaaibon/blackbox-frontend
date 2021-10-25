@@ -1,5 +1,5 @@
 <template>
-  <v-card :disabled="disabled" class="py-4" :color="color">
+  <v-card :disabled="disabled" class="py-4 px-2" :color="color">
     <v-card-title class="text-h5 font-weight-bold text-center">
       <v-spacer></v-spacer>
       {{ title }}

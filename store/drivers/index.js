@@ -22,10 +22,11 @@ export const actions = {
     }
   },
 
-  async createDriver({ commit }, payload) {
+  async createDriver({ commit, dispatch }, payload) {
     commit('SET_PROCESS', 'drivers/createDriver', { root: true })
     try {
       const resp = await this.$axios.$post('drivers', payload)
+      dispatch('getDrivers')
       return resp
     } catch (error) {
       console.log('🚀 ~ createDriver ~ error', error)

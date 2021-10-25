@@ -61,7 +61,10 @@ export default {
   },
 
   methods: {
-    ...mapActions({ register: 'user/authentication/register' }),
+    ...mapActions({
+      register: 'user/authentication/register',
+      getUser: 'user/authentication/getUserInfo',
+    }),
 
     async signup(evt) {
       this.alert = false
@@ -82,14 +85,19 @@ export default {
       this.alert = false
       this.loading = true
       try {
-        await this.$auth.loginWith('local', {
+        const loginResponse = await this.$auth.loginWith('local', {
           data: {
             ...evt,
           },
         })
+        const userResponse = await this.getUser({
+          id: loginResponse.data.data.sub,
+        })
+        this.$auth.setUser(userResponse)
       } catch (error) {
+        console.log('🚀 ~ login ~ error', error)
         this.alert = true
-        this.error = error.response.data.message
+        this.error = error.response?.data?.message
       } finally {
         this.loading = false
       }

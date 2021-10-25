@@ -22,10 +22,11 @@ export const actions = {
     }
   },
 
-  async createTerminal({ commit }, payload) {
+  async createTerminal({ commit, dispatch }, payload) {
     commit('SET_PROCESS', 'terminals/createTerminal', { root: true })
     try {
       const resp = await this.$axios.$post('terminals', payload)
+      dispatch('getTerminals')
       return resp
     } catch (error) {
       throw error.response

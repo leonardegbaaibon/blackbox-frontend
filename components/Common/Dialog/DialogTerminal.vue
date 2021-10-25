@@ -2,6 +2,7 @@
   <DialogHandler
     title="Create Terminal"
     subtitle="Enter terminal's details to create one"
+    :loading="loading"
     :value="value"
     :ok-button="'Create Terminal'"
     @input="$emit('input', $event)"
@@ -16,7 +17,7 @@
         </p>
         <FormInput
           v-model="form.terminalName"
-          label="Terminal Name"
+          label="Terminal Name *"
           rules="required"
           type="text"
         />
@@ -24,7 +25,7 @@
           <v-col>
             <FormInput
               v-model="form.terminalAddress"
-              label="Terminal Address"
+              label="Terminal Address *"
               rules="required"
               type="text"
             />
@@ -32,7 +33,7 @@
           <v-col>
             <FormInput
               v-model="form.terminalState"
-              label="Terminal State"
+              label="Terminal State *"
               rules="required"
               type="text"
             />
@@ -47,7 +48,7 @@
         </p>
         <FormInput
           v-model="form.terminalManager"
-          label="Terminal Manager's Name"
+          label="Terminal Manager's Name *"
           rules="required"
           type="text"
         />
@@ -61,7 +62,7 @@
           <v-col class="pb-0">
             <FormInput
               v-model="form.terminalPhoneNumber[0]"
-              label="Terminal Phone 1"
+              label="Terminal Phone Number *"
               rules="required|digits:11"
               type="tel"
             />
@@ -69,7 +70,7 @@
           <v-col class="pb-0">
             <FormInput
               v-model="form.terminalPhoneNumber[1]"
-              label="Terminal Phone 2"
+              label="Terminal Alternate Phone Number"
               rules="digits:11"
               type="tel"
             />
@@ -94,6 +95,10 @@ export default {
 
   props: {
     value: {
+      type: Boolean,
+      default: false,
+    },
+    loading: {
       type: Boolean,
       default: false,
     },

@@ -3,6 +3,7 @@
     title="Create Driver"
     subtitle="Enter driver and guarantor's details to create one"
     :value="value"
+    :loading="loading"
     :ok-button="'Create Driver'"
     @input="$emit('input', $event)"
     @clicked:ok="submit"
@@ -16,7 +17,7 @@
         </p>
         <FormInput
           v-model="form.driverName"
-          label="Driver Name"
+          label="Driver Name *"
           rules="required"
           type="text"
         />
@@ -24,7 +25,7 @@
           <v-col class="pb-0">
             <FormInput
               v-model="form.driverPhoneNumber[0]"
-              label="Driver Phone 1"
+              label="Driver Phone Number *"
               rules="required|digits:11"
               type="tel"
             />
@@ -32,7 +33,7 @@
           <v-col class="pb-0">
             <FormInput
               v-model="form.driverPhoneNumber[1]"
-              label="Driver Phone 2"
+              label="Driver Alternate Phone Number"
               rules="digits:11"
               type="tel"
             />
@@ -42,7 +43,7 @@
           <v-col>
             <FormInput
               v-model="form.driverNin"
-              label="Driver NIN"
+              label="Driver NIN *"
               rules="required|digits:11"
               type="text"
             />
@@ -50,7 +51,7 @@
           <v-col>
             <FormInput
               v-model="form.driverLicenseNumber"
-              label="Driver License Number"
+              label="Driver License Number *"
               rules="required"
               type="text"
             />
@@ -58,20 +59,20 @@
         </v-row>
         <FormInput
           v-model="form.driverAddress"
-          label="Driver Address"
+          label="Driver Address *"
           rules="required"
           type="text"
         />
         <FormInput
           v-model="form.driverEmail"
-          label="Driver Email"
+          label="Driver Email *"
           rules="email"
           type="text"
         />
         <FormDatePicker
           v-model="form.driverLicenseExpiryDate"
           rules="required"
-          label="Driver License Expiry Date"
+          label="Driver License Expiry Date *"
         />
 
         <!-- Guarantor's Information -->
@@ -82,7 +83,7 @@
         </p>
         <FormInput
           v-model="form.driverQuarantor"
-          label="Guarantor Name"
+          label="Guarantor Name *"
           rules="required"
           type="text"
         />
@@ -96,7 +97,7 @@
           <v-col class="pb-0">
             <FormInput
               v-model="form.driverQuarantorPhoneNumber[0]"
-              label="Guarantor Phone 1"
+              label="Guarantor Phone Number *"
               rules="required|digits:11"
               type="tel"
             />
@@ -104,7 +105,7 @@
           <v-col class="pb-0">
             <FormInput
               v-model="form.driverQuarantorPhoneNumber[1]"
-              label="Guarantor Phone 2"
+              label="Guarantor Alternate Phone Number"
               rules="digits:11"
               type="tel"
             />
@@ -129,6 +130,10 @@ export default {
 
   props: {
     value: {
+      type: Boolean,
+      default: false,
+    },
+    loading: {
       type: Boolean,
       default: false,
     },

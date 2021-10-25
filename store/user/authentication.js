@@ -2,9 +2,14 @@
 // import cookie from 'cookie'
 export const state = () => ({
   state: 'user/authentication',
+  userId: '',
 })
 
-export const mutations = {}
+export const mutations = {
+  SET_USER_ID(state, id) {
+    state.userId = id
+  },
+}
 
 export const actions = {
   async register({ commit }, payload) {
@@ -39,6 +44,17 @@ export const actions = {
         payload
       )
       return resp
+    } catch (error) {
+      throw error
+    }
+  },
+
+  async getUserInfo({ commit, state }, payload) {
+    commit('SET_PROCESS', 'user/authentication/getUserInfo', { root: true })
+    if (payload.id) commit('SET_USER_ID', payload.id)
+    try {
+      const resp = await this.$axios.$get(`users/${payload.id || state.userId}`)
+      return resp.data
     } catch (error) {
       throw error
     }
