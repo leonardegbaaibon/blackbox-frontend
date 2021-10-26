@@ -3,7 +3,7 @@
 </template>
 
 <script>
-// import { mapActions } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 
 export default {
   middleware: 'auth',
@@ -12,6 +12,16 @@ export default {
     return {}
   },
 
-  methods: {},
+  async fetch() {
+    await this.getTrips()
+  },
+
+  computed: {
+    ...mapState({ trips: (state) => state.trips }),
+  },
+
+  methods: {
+    ...mapActions({ getTrips: 'trips/getTrips' }),
+  },
 }
 </script>

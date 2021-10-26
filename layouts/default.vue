@@ -5,11 +5,15 @@
     <v-main>
       <v-container fluid class="pt-6">
         <Nuxt />
+        <v-footer absolute>
+          <span>&copy; {{ new Date().getFullYear() }}</span>
+        </v-footer>
       </v-container>
     </v-main>
-    <v-footer :absolute="true" app>
+    <!-- <v-footer fixed app>
       <span>&copy; {{ new Date().getFullYear() }}</span>
-    </v-footer>
+    </v-footer> -->
+
     <!-- Snackbar -->
     <!-- <v-snackbar
       v-for="(snackbar, index) in snackbars.filter((s) => s.showing)"
