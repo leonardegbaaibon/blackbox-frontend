@@ -131,10 +131,11 @@ export default {
   // Runtime Config
   publicRuntimeConfig: {
     baseURL: process.env.BASE_URL,
+    mapsKey: process.env.MAPS_API_KEY,
   },
 
   privateRuntimeConfig: {
-    apiSecret: process.env.MAPS_API_KEY,
+    mapsKey: process.env.MAPS_API_KEY,
   },
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa
