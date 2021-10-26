@@ -1,16 +1,16 @@
 <template>
   <v-card flat>
     <v-card-title class="py-5">
-      <p class="mb-0 font-weight-bold">All Drivers</p>
+      <p class="mb-0 font-weight-bold">All Vehicles</p>
       <v-spacer></v-spacer>
       <FormInput
         v-model="search"
         class="mr-3"
         type="text"
-        placeholder="Search Drivers"
+        placeholder="Search Vehicles"
         :hide-details="true"
       />
-      <FormButton @click.native="$emit('clicked')">New Driver</FormButton>
+      <FormButton @click.native="$emit('clicked')">New Vehicle</FormButton>
       <!-- <v-text-field
         v-model="search"
         append-icon="mdi-magnify"
@@ -20,7 +20,7 @@
       ></v-text-field> -->
     </v-card-title>
     <v-data-table
-      no-data-text="No drivers created"
+      no-data-text="No vehicles created"
       :headers="headers"
       :items="items"
       class="elevation-1"

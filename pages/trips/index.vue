@@ -6,6 +6,8 @@
 import { mapActions, mapState } from 'vuex'
 
 export default {
+  name: 'Trips',
+
   middleware: 'auth',
 
   data() {

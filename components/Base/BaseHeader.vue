@@ -1,7 +1,9 @@
 <template>
   <v-app-bar :clipped-left="false" fixed app flat>
     <!-- <v-app-bar-nav-icon @click.native.stop="setDrawer(!drawer)" /> -->
-    <v-toolbar-title class="text-h5 font-weight-bold">Overview</v-toolbar-title>
+    <v-toolbar-title class="text-h5 font-weight-bold text-capitalize">
+      {{ $route.name }}
+    </v-toolbar-title>
     <v-spacer />
     <v-btn icon>
       <v-icon>mdi-bell-outline</v-icon>
@@ -41,9 +43,17 @@
 <script>
 import { mapState, mapMutations, mapActions } from 'vuex'
 export default {
+  props: {
+    title: {
+      type: String,
+      default: 'Overview',
+    },
+  },
+
   data() {
     return {}
   },
+
   computed: {
     ...mapState({
       drawer: (state) => state.drawer,
