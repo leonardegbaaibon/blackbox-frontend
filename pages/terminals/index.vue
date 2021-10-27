@@ -21,22 +21,28 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 
 export default {
   middleware: 'auth',
 
   data() {
     return {
-      terminals: [],
+      // terminals: [],
       dialog: false,
       loading: false,
     }
   },
 
   async fetch() {
-    const { data: terminals } = await this.getTerminals()
-    this.terminals = terminals
+    await this.getTerminals()
+    // this.terminals = terminals
+  },
+
+  computed: {
+    ...mapState({
+      terminals: (state) => state.terminals.all,
+    }),
   },
 
   methods: {

@@ -41,8 +41,8 @@
             <FormInput
               v-model.number="form.year"
               label="Year *"
-              rules="required"
-              type="number"
+              rules="required|numeric|digits:4"
+              type="text"
             />
           </v-col>
         </v-row>
@@ -65,7 +65,7 @@
           </v-col>
         </v-row>
         <!-- color picker  -->
-        <FormSelect v-model="form.color" label="Color *" :items="colorItems" />
+        <FormSelect v-model="form.color" label="Color *" :items="color" />
         <!-- END color picker  -->
 
         <!-- Owner's Information -->
@@ -109,6 +109,8 @@
 
 <script>
 import { ValidationObserver } from 'vee-validate'
+import COLORS from 'vuetify/lib/util/colors'
+console.log('🚀 ~ COLORS', COLORS)
 export default {
   components: {
     ValidationObserver,
@@ -132,7 +134,11 @@ export default {
 
   data() {
     return {
-      colorItems: ['Red', 'Blue', 'Green'],
+      colorItems: [
+        { text: 'Red', value: 'red' },
+        { text: 'Green', value: 'green' },
+        { text: 'Blue', value: 'blue' },
+      ],
       form: {
         model: '',
         year: '',
@@ -147,6 +153,20 @@ export default {
         vehicleOwnerName: '',
       },
     }
+  },
+
+  computed: {
+    color() {
+      const colorArray = Object.keys(COLORS).map((color) => ({
+        text: color.charAt(0).toUpperCase() + color.slice(1),
+        value: color.charAt(0).toUpperCase() + color.slice(1),
+        color: color
+          .split(/(?=[A-Z])/)
+          .join('-')
+          .toLowerCase(),
+      }))
+      return colorArray
+    },
   },
 
   methods: {

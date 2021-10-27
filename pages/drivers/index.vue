@@ -20,22 +20,28 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 
 export default {
   middleware: 'auth',
 
   data() {
     return {
-      drivers: '',
+      // drivers: '',
       dialog: false,
       loading: false,
     }
   },
 
   async fetch() {
-    const { data: drivers } = await this.getDrivers()
-    this.drivers = drivers
+    await this.getDrivers()
+    // this.drivers = drivers
+  },
+
+  computed: {
+    ...mapState({
+      drivers: (state) => state.drivers.all,
+    }),
   },
 
   methods: {

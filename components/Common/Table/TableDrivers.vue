@@ -42,7 +42,7 @@
               {{ item.driverName }}
             </p>
             <p class="mb-0">
-              {{ item.driverEmail }} • {{ item.driverPhoneNumber }}
+              {{ item.driverEmail }}
             </p>
           </v-col>
         </v-row>
@@ -76,7 +76,7 @@ export default {
         { text: 'Address', value: 'driverAddress' },
         { text: 'License', value: 'driverLicenseNumber' },
         { text: 'Phone', value: 'driverPhoneNumber' },
-        { text: 'NIN', value: 'driverNin' },
+        // { text: 'NIN', value: 'driverNin' },
         { text: 'Created at', value: 'createdAt' },
       ],
     }

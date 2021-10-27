@@ -2,12 +2,12 @@
 // console.log('this :>> ', this)
 export const state = () => ({
   state: 'drivers',
-  drivers: [],
+  all: [],
 })
 
 export const mutations = {
   SET_DRIVERS(state, drivers) {
-    state.drivers = [...drivers]
+    state.all = [...drivers]
   },
 }
 
@@ -16,6 +16,7 @@ export const actions = {
     commit('SET_PROCESS', 'drivers/getDrivers', { root: true })
     try {
       const resp = await this.$axios.$get('drivers')
+      commit('SET_DRIVERS', resp.data)
       return resp
     } catch (error) {
       throw error

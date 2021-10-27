@@ -2,12 +2,12 @@
 // console.log('this :>> ', this)
 export const state = () => ({
   state: 'terminals',
-  terminals: [],
+  all: [],
 })
 
 export const mutations = {
   SET_TERMINALS(state, terminals) {
-    state.terminals = [...terminals]
+    state.all = [...terminals]
   },
 }
 
@@ -16,6 +16,7 @@ export const actions = {
     commit('SET_PROCESS', 'terminals/getterminals', { root: true })
     try {
       const resp = await this.$axios.$get('terminals')
+      commit('SET_TERMINALS', resp.data)
       return resp
     } catch (error) {
       throw error

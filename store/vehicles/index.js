@@ -2,12 +2,12 @@
 // console.log('this :>> ', this)
 export const state = () => ({
   state: 'vehicles',
-  vehicles: [],
+  all: [],
 })
 
 export const mutations = {
   SET_VEHICLES(state, vehicles) {
-    state.vehicles = [...vehicles]
+    state.all = [...vehicles]
   },
 }
 
@@ -16,6 +16,7 @@ export const actions = {
     commit('SET_PROCESS', 'vehicles/getVehicles', { root: true })
     try {
       const resp = await this.$axios.$get('vehicles')
+      commit('SET_VEHICLES', resp.data)
       return resp
     } catch (error) {
       throw error

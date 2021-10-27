@@ -21,22 +21,28 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 
 export default {
   middleware: 'auth',
 
   data() {
     return {
-      vehicles: '',
+      // vehicles: '',
       dialog: false,
       loading: false,
     }
   },
 
   async fetch() {
-    const { data: vehicles } = await this.getVehicles()
-    this.vehicles = vehicles
+    await this.getVehicles()
+    // this.vehicles = vehicles
+  },
+
+  computed: {
+    ...mapState({
+      vehicles: (state) => state.vehicles.all,
+    }),
   },
 
   methods: {

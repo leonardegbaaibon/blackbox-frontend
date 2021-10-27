@@ -28,6 +28,19 @@
       <template #[`item.createdAt`]="{ item }">
         {{ $dayjs(item.createdAt).format('DD MMMM, YYYY • hh:mm A') }}
       </template>
+      <template #[`item.vehicleColor`]="{ item }">
+        <v-avatar
+          :class="[
+            item.vehicleColor
+              .split(/(?=[A-Z])/)
+              .join('-')
+              .toLowerCase(),
+          ]"
+          size="24"
+          class="mr-3"
+        ></v-avatar>
+        {{ item.vehicleColor }}
+      </template>
     </v-data-table>
   </v-card>
 </template>
