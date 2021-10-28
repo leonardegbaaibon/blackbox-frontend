@@ -43,6 +43,7 @@ export default {
 
   created() {
     // this.$toast.success('Success', { position: 'top-right' })
+    // Later we can take out console.log(), we can use better logging infrastructure
     console.log('here')
     this.getUser({}).then((response) => {
       this.$auth.setUser(response)
