@@ -34,7 +34,23 @@
       outlined
       :hide-details="hideDetails"
       @change="$emit('input', $event)"
-    ></v-select>
+    >
+      <template #selection="{ item }">
+        <v-avatar :class="[item.color]" size="16" class="mr-4"></v-avatar>
+        {{ item.text }}
+      </template>
+      de
+      <template #item="{ item }">
+        <v-list-item-avatar size="24">
+          <v-icon :class="[item.color]" dark small>mdi-palette</v-icon>
+        </v-list-item-avatar>
+        <v-list-item-content>
+          <v-list-item-title class="font-weight-bold">
+            {{ item.text }}
+          </v-list-item-title>
+        </v-list-item-content>
+      </template>
+    </v-select>
   </ValidationProvider>
 </template>
 

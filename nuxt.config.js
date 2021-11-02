@@ -6,7 +6,7 @@ export default {
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    titleTemplate: '%s | Blackbox Admin',
+    titleTemplate: '%s | BlackBox Admin',
     // title: 'Blackbox',
     meta: [
       { charset: 'utf-8' },
@@ -39,6 +39,7 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
+    '~/plugins/api.plugin',
     '~/plugins/axios.plugin',
     '~/plugins/vee-validate.plugin',
     '~/plugins/persistedState.plugin.js',
@@ -134,10 +135,12 @@ export default {
   publicRuntimeConfig: {
     baseURL: process.env.BASE_URL,
     mapsKey: process.env.MAPS_API_KEY,
+    carsURL: process.env.CARS_API_KEY,
   },
 
   privateRuntimeConfig: {
     mapsKey: process.env.MAPS_API_KEY,
+    carsURL: process.env.CARS_API_KEY,
   },
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa

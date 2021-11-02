@@ -6,6 +6,7 @@ import {
   regex,
   length,
   size,
+  numeric,
 } from 'vee-validate/dist/rules'
 
 extend('password', {
@@ -28,6 +29,7 @@ extend('required', {
 extend('email', email)
 extend('length', length)
 extend('digits', digits)
+extend('numeric', numeric)
 extend('size', {
   ...size,
   message: 'File size must be less than {size}KB',

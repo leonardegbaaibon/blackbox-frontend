@@ -3,7 +3,9 @@
     persistent
     :value="value"
     :max-width="width"
+    :fullscreen="fullscreen"
     scrollable
+    transition="dialog-bottom-transition"
     @input.stop="$emit('input', $event)"
   >
     <v-overlay opacity="0.7" absolute color="white" :value="loading">
@@ -50,6 +52,10 @@ export default {
       default: false,
     },
     loading: {
+      type: Boolean,
+      default: false,
+    },
+    fullscreen: {
       type: Boolean,
       default: false,
     },

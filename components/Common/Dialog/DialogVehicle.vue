@@ -110,7 +110,7 @@
 <script>
 import { ValidationObserver } from 'vee-validate'
 import COLORS from 'vuetify/lib/util/colors'
-console.log('🚀 ~ COLORS', COLORS)
+// console.log('🚀 ~ COLORS', COLORS)
 export default {
   components: {
     ValidationObserver,

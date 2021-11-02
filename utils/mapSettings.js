@@ -8,9 +8,9 @@ const mapSettings = {
   zoomControlOptions: {
     style: 'SMALL',
   },
-  zoom: 6,
-  minZoom: 2,
-  maxZoom: 8,
+  zoom: 12,
+  // minZoom: 2,
+  // maxZoom: 8,
   styles: [
     {
       elementType: 'geometry',
@@ -174,13 +174,11 @@ const mapSettings = {
 }
 
 const POINT_MARKER_ICON_CONFIG = {
-  path: 'M 0, 0 m -5, 0 a 5,5 0 1,0 10,0 a 5,5 0 1,0 -10,0',
-  strokeOpacity: 0.7,
-  strokeWeight: 4,
-  strokeColor: 'rgb(243,114,114)',
-  fillColor: 'rgb(255,255,255)',
-  fillOpacity: 0.7,
-  scale: 1,
+  start:
+    'https://firebasestorage.googleapis.com/v0/b/fir-5fa64.appspot.com/o/start.svg?alt=media&token=78b989a4-6a54-41c6-ba04-5f5becff641c',
+  end: 'https://firebasestorage.googleapis.com/v0/b/fir-5fa64.appspot.com/o/end.svg?alt=media&token=c85454b8-4d35-4bf2-8bc2-9ff80c70bf96',
+  on: 'https://firebasestorage.googleapis.com/v0/b/fir-5fa64.appspot.com/o/on.svg?alt=media&token=f9e21630-9d82-4f81-8b6b-5d1d6e01efb9',
+  off: 'https://firebasestorage.googleapis.com/v0/b/fir-5fa64.appspot.com/o/off.svg?alt=media&token=eadefb7c-e996-4c0f-8590-cc194e9a75b7',
 }
 
 export { mapSettings, POINT_MARKER_ICON_CONFIG }

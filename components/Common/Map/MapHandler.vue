@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div ref="googleMap" class="google-map rounded-lg"></div>
+    <div ref="googleMap" class="google-map"></div>
     <template v-if="Boolean(google) && Boolean(map)">
       <slot :google="google" :map="map" />
     </template>
@@ -16,6 +16,7 @@ export default {
   props: {
     mapConfig: Object,
     apiKey: String,
+    // center: String,
   },
 
   data() {
@@ -42,10 +43,10 @@ export default {
           console.log('map error', e)
         } else {
           this.google = window.google
-          this.map = new this.google.maps.Map(
-            this.$refs.googleMap,
-            this.mapConfig
-          )
+          this.map = new this.google.maps.Map(this.$refs.googleMap, {
+            ...this.mapConfig,
+            // center: this.center,
+          })
         }
       })
       //* using promise

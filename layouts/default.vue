@@ -3,7 +3,7 @@
     <BaseHeader />
     <BaseSidebar />
     <v-main>
-      <v-container fluid class="pt-6">
+      <v-container fluid class="pt-6 pb-16">
         <Nuxt />
         <v-footer absolute>
           <span>&copy; {{ new Date().getFullYear() }}</span>
@@ -47,7 +47,7 @@ export default {
 
   created() {
     // this.$toast.success('Success', { position: 'top-right' })
-    console.log('here')
+    // console.log('here')
     this.getUser({}).then((response) => {
       this.$auth.setUser(response)
     })

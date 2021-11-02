@@ -1,5 +1,5 @@
 <template>
-  <CardAuth :disabled="loading" title="Sign up for Blackbox">
+  <CardAuth :disabled="loading" title="Sign up for BlackBox">
     <ValidationObserver v-slot="{ handleSubmit }">
       <v-form
         @submit.prevent="

@@ -24,10 +24,10 @@ export default {
       type: String,
       default: '',
     },
-    size: {
-      type: String,
-      default: '',
-    },
+    // size: {
+    //   type: String,
+    //   default: '',
+    // },
     to: {
       type: String,
       default: '',

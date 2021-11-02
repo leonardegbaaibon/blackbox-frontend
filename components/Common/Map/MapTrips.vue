@@ -1,31 +1,39 @@
 <template>
-  <MapHandler :style="{ height: `${height}px` }" :map-config="mapConfig">
-    <template slot-scope="{ google, map }">
-      <MapMarker
-        v-for="marker in markers"
+  <MapHandler
+    :style="{ height: `${height}px` }"
+    :map-config="mapConfig"
+    class="rounded-lg"
+  >
+    <template v-if="items.length !== 0" slot-scope="{ google, map }">
+      <!-- <MapMarker
+        v-for="(marker, index) in trips.trips"
         :key="marker.id"
+        :length="items.length"
+        :index="index"
         :marker="marker"
         :google="google"
         :map="map"
-      />
+      /> -->
+      <MapWaypoint :markers="items" :google="google" :map="map" />
     </template>
   </MapHandler>
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import { mapSettings } from '@/utils/mapSettings'
 
 export default {
   props: {
     height: {
       type: [Number, String],
-      default: 800,
+      default: 500,
     },
 
-    // markers: {
-    //   type: Array,
-    //   default: () => [],
-    // },
+    items: {
+      type: Array,
+      default: () => [],
+    },
   },
 
   // components: {
@@ -54,6 +62,9 @@ export default {
   },
 
   computed: {
+    ...mapState({
+      trips: (state) => state.trips.all,
+    }),
     mapConfig() {
       return {
         ...mapSettings,
