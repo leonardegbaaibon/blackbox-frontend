@@ -8,6 +8,7 @@
     :type="type"
     :block="block"
     :to="to"
+    :dark="dark"
   >
     <slot></slot>
   </v-btn>
@@ -41,6 +42,10 @@ export default {
       default: false,
     },
     block: {
+      type: Boolean,
+      default: false,
+    },
+    dark: {
       type: Boolean,
       default: false,
     },

@@ -26,7 +26,170 @@
         <span v-if="item.rendered">{{ item.rendered }}</span>
         <span v-else>{{ item.text }}</span>
       </template>
+      <template #append-item>
+        <v-list-item ripple class="" @click="dialog = true">
+          <v-list-item-content>
+            <v-list-item-title class="font-weight-bold">
+              Custom time
+            </v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </template>
     </v-select>
+
+    <v-dialog v-model="dialog" max-width="600">
+      <v-card>
+        <v-card-text class="pa-16">
+          <v-form>
+            <!-- Start -->
+            <v-row align="end">
+              <v-col>
+                <FormDatePicker
+                  v-model="startDate"
+                  rules="required"
+                  label="Start"
+                  :max="endDate"
+                />
+              </v-col>
+              <v-col>
+                <v-dialog
+                  ref="dialog1"
+                  v-model="modal1"
+                  :return-value.sync="startTime"
+                  persistent
+                  width="290px"
+                >
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-text-field
+                      v-model="startTime"
+                      prepend-icon="mdi-clock-time-four-outline"
+                      readonly
+                      outlined
+                      dense
+                      v-bind="attrs"
+                      v-on="on"
+                    ></v-text-field>
+                  </template>
+                  <v-time-picker
+                    v-if="modal1"
+                    v-model="startTime"
+                    :max="endTime"
+                    full-width
+                  >
+                    <v-spacer></v-spacer>
+                    <v-btn text color="primary" @click="modal1 = false">
+                      Cancel
+                    </v-btn>
+                    <v-btn
+                      text
+                      color="primary"
+                      @click="$refs.dialog1.save(startTime)"
+                    >
+                      OK
+                    </v-btn>
+                  </v-time-picker>
+                </v-dialog>
+              </v-col>
+            </v-row>
+            <!-- End -->
+            <v-row align="end">
+              <v-col>
+                <FormDatePicker
+                  v-model="endDate"
+                  rules="required"
+                  label="End"
+                  :min="startDate"
+                />
+              </v-col>
+              <v-col>
+                <v-dialog
+                  ref="dialog2"
+                  v-model="modal2"
+                  :return-value.sync="endTime"
+                  persistent
+                  width="290px"
+                >
+                  <template #activator="{ on, attrs }">
+                    <v-text-field
+                      v-model="endTime"
+                      prepend-icon="mdi-clock-time-four-outline"
+                      readonly
+                      outlined
+                      dense
+                      v-bind="attrs"
+                      v-on="on"
+                    ></v-text-field>
+                  </template>
+                  <v-time-picker
+                    v-if="modal2"
+                    v-model="endTime"
+                    :min="startTime"
+                    full-width
+                  >
+                    <v-spacer></v-spacer>
+                    <v-btn text color="primary" @click="modal2 = false">
+                      Cancel
+                    </v-btn>
+                    <v-btn
+                      text
+                      color="primary"
+                      @click="$refs.dialog2.save(endTime)"
+                    >
+                      OK
+                    </v-btn>
+                  </v-time-picker>
+                </v-dialog>
+              </v-col>
+            </v-row>
+            <!-- <div class="mb-1 d-flex">
+              <p class="mb-0 text-uppercase text--black font-weight-bold">
+                Pick date range
+              </p>
+            </div>
+            <v-menu
+              ref="menu"
+              v-model="menu"
+              :close-on-content-click="false"
+              :return-value.sync="date"
+              transition="scale-transition"
+              offset-y
+              min-width="auto"
+            >
+              <template #activator="{ on, attrs }">
+                <v-text-field
+                  v-model="date"
+                  prepend-icon="mdi-calendar"
+                  readonly
+                  outlined
+                  dense
+                  v-bind="attrs"
+                  v-on="on"
+                ></v-text-field>
+              </template>
+              <v-date-picker v-model="date" range no-title scrollable>
+                <v-spacer></v-spacer>
+                <v-btn text color="primary" @click="menu = false">Cancel</v-btn>
+                <v-btn text color="primary" @click="$refs.menu.save(date)">
+                  OK
+                </v-btn>
+              </v-date-picker>
+            </v-menu> -->
+          </v-form>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <FormButton color="" @click.native="dialog = false">
+            Cancel
+          </FormButton>
+          <FormButton
+            :disabled="!startTime || !endTime || !startDate || !endDate"
+            @click.native="change(customTime)"
+          >
+            Save
+          </FormButton>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
@@ -48,8 +211,16 @@ export default {
   },
   data() {
     return {
+      startDate: '',
+      startTime: null,
+      endDate: '',
+      endTime: null,
+      modal1: false,
+      modal2: false,
+      // ========
       today: this.$dayjs(),
       dValue: '',
+      dialog: false,
     }
   },
 
@@ -131,6 +302,38 @@ export default {
         // },
       ]
     },
+
+    customTime() {
+      return {
+        outside: true,
+        text: `Custom Time`,
+        rendered: `${this.$dayjs(
+          this.startDate + ',' + this.startTime,
+          'YYYY-MM-DD,HH:mm'
+        ).format('MMM DD, HH:mm')} - ${this.$dayjs(
+          this.endDate + ',' + this.endTime,
+          'YYYY-MM-DD,HH:mm'
+        ).format('MMM DD, HH:mm')}`,
+        value: {
+          start: this.$dayjs(
+            this.startDate + ',' + this.startTime,
+            'YYYY-MM-DD,HH:mm'
+          ).toISOString(),
+          end: this.$dayjs(
+            this.endDate + ',' + this.endTime,
+            'YYYY-MM-DD,HH:mm'
+          ).toISOString(),
+          text: `Custom Time`,
+          rendered: `${this.$dayjs(
+            this.startDate + ',' + this.startTime,
+            'YYYY-MM-DD,HH:mm'
+          ).format('MMM DD, HH:mm')} - ${this.$dayjs(
+            this.endDate + ',' + this.endTime,
+            'YYYY-MM-DD,HH:mm'
+          ).format('MMM DD, HH:mm')}`,
+        },
+      }
+    },
   },
 
   created() {
@@ -141,7 +344,16 @@ export default {
   methods: {
     change(evt) {
       this.$emit('change', evt)
+      this.dialog = false
+      if (evt.outside) {
+        const {outside,...rest}=evt
+        this.dValue = rest
+      }
       // console.log(evt)
+    },
+
+    toggle() {
+      console.log(`click`)
     },
   },
 }

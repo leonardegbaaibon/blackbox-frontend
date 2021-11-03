@@ -112,7 +112,7 @@ export default {
       infoWindow.open({
         anchor: marker,
         map: this.map,
-        shouldFocus: false,
+        shouldFocus: true,
       })
     })
     marker.addListener('mouseout', () => {
@@ -120,7 +120,8 @@ export default {
         infoWindow.close()
       }, 2000)
     })
-    if (this.index === 0) this.map.fitBounds(bounds)
+
+    // if (this.index === 0) this.map.fitBounds(bounds)
   },
 
   // eslint-disable-next-line vue/require-render-return

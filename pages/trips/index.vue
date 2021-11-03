@@ -14,6 +14,8 @@
                 />
               </v-col>
               <v-col cols="auto">
+                <!-- <v-md-date-range-picker></v-md-date-range-picker> -->
+                <!-- <Datetime v-model="date"></Datetime> -->
                 <FormSelectTime label="Period" @change="setTime" />
               </v-col>
             </v-row>
@@ -45,15 +47,21 @@
 
 <script>
 import { mapActions, mapState } from 'vuex'
+// import { Datetime } from 'vue-datetime'
 const { parseString } = require('xml2js')
 
 export default {
   name: 'Trips',
 
+  // components: {
+  //   datetime: Datetime,
+  // },
+
   middleware: 'auth',
 
   data() {
     return {
+      date: '',
       form: { chosenVehicle: '', time: '' },
       image: '',
       loading: false,

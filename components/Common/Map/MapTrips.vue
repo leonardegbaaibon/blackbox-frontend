@@ -5,16 +5,16 @@
     class="rounded-lg"
   >
     <template v-if="items.length !== 0" slot-scope="{ google, map }">
-      <!-- <MapMarker
-        v-for="(marker, index) in trips.trips"
+      <MapMarker
+        v-for="(marker, index) in items"
         :key="marker.id"
         :length="items.length"
         :index="index"
         :marker="marker"
         :google="google"
         :map="map"
-      /> -->
-      <MapWaypoint :markers="items" :google="google" :map="map" />
+      />
+      <!-- <MapWaypoint :markers="items" :google="google" :map="map" /> -->
     </template>
   </MapHandler>
 </template>
@@ -76,6 +76,8 @@ export default {
       return { lat: 6.459295, lng: 3.335831 }
     },
   },
+
+  updated() {},
 }
 </script>
 

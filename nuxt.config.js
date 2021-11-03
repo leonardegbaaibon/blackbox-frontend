@@ -42,6 +42,7 @@ export default {
     '~/plugins/api.plugin',
     '~/plugins/axios.plugin',
     '~/plugins/vee-validate.plugin',
+    '~/plugins/datetimepicker.plugin',
     '~/plugins/persistedState.plugin.js',
   ],
 
@@ -126,7 +127,7 @@ export default {
     // defaultLocale: 'en',
     // defaultTimeZone: 'Asia/Tokyo',
     plugins: [
-      // 'utc', // import 'dayjs/plugin/utc'
+      'customParseFormat', // import 'dayjs/plugin/customParseFormat'
       // 'timezone', // import 'dayjs/plugin/timezone'
     ], // Your Day.js plugin
   },

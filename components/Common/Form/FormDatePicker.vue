@@ -33,7 +33,13 @@
           ></v-text-field>
         </div>
       </template>
-      <v-date-picker :value="value" scrollable @change="$emit('input', $event)">
+      <v-date-picker
+        :value="value"
+        :max="max"
+        :min="min"
+        scrollable
+        @change="$emit('input', $event)"
+      >
         <v-spacer></v-spacer>
         <!-- <v-btn text color="primary" @click="modal = false">Cancel</v-btn> -->
         <v-btn text color="primary" @click="$refs.dialog.save(value)">OK</v-btn>
@@ -69,6 +75,25 @@ export default {
       type: String,
       default: 'Date',
     },
+
+    min: {
+      type: String,
+      default: '',
+    },
+
+    max: {
+      type: String,
+      default: '',
+    },
+
+    range: {
+      type: Boolean,
+      default: false,
+    },
+    // hideDetails: {
+    //   type: [String, Boolean],
+    //   default: 'auto',
+    // },
   },
   data() {
     return {
