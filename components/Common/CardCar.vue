@@ -1,6 +1,6 @@
 <template>
   <v-card class="mt-0 pt-0" flat>
-    <MapTrips :items="trips.trips" class="mb-6" height="400" />
+    <MapTrips :items="trips" class="mb-6" height="400" />
     <v-img
       class="white--text align-end rounded-lg"
       :src="image"

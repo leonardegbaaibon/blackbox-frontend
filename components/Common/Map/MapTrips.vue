@@ -77,7 +77,9 @@ export default {
     },
   },
 
-  updated() {},
+  beforeUpdate() {
+    console.log(`updated`)
+  },
 }
 </script>
 

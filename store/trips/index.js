@@ -3,12 +3,20 @@
 /* eslint-disable no-useless-catch */
 export const state = () => ({
   state: 'trips',
-  all: { trips: [] },
+  all: [],
+  tripData: {},
 })
 
 export const mutations = {
   SET_TRIPS(state, trips) {
-    state.all = trips
+    state.all = [...trips]
+  },
+  SET_DATA(state, data) {
+    state.tripData = { ...data }
+  },
+  RESET(state) {
+    state.tripData = {}
+    state.all = []
   },
 }
 
@@ -50,12 +58,14 @@ export const actions = {
             `trips/${payload?.id}?from=${payload.from}&to=${payload.to}`
           )
         : null
-      // commit('SET_TRIPS', resp.data)
       if (resp.data.length !== 0) {
-        commit('SET_TRIPS', resp.data)
+        const { trips, ...data } = resp.data
+        commit('SET_TRIPS', trips)
+        commit('SET_DATA', data)
       } else {
-        commit('SET_TRIPS', null)
+        commit('RESET')
       }
+
       return resp
     } catch (error) {
       console.log('🚀 ~ getVehicleTrips ~ error', error)

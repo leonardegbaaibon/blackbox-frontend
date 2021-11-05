@@ -116,7 +116,7 @@ export default {
       getVehicles: 'vehicles/getVehicles',
     }),
     change(evt) {
-      console.log('🚀 ~ change ~ evt', evt)
+      // console.log('🚀 ~ change ~ evt', evt)
       this.$emit('change', evt)
       // console.log(evt)
     },
