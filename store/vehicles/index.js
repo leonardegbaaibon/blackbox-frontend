@@ -39,26 +39,28 @@ export const actions = {
     commit('SET_PROCESS', 'vehicles/getOneVehicle', { root: true })
     try {
       const resp = await this.$axios.$get(`vehicles/${payload.id}`)
-      return resp
+      return resp.data
     } catch (error) {
       throw error
     }
   },
 
-  async updateVehicle({ commit }, payload) {
+  async updateVehicle({ commit, dispatch }, payload) {
     commit('SET_PROCESS', 'vehicles/updateVehicle', { root: true })
     try {
       const resp = await this.$axios.$patch(`vehicles/${payload.id}`, payload)
+      dispatch('getVehicles')
       return resp
     } catch (error) {
       throw error
     }
   },
 
-  async deleteVehicle({ commit }, payload) {
+  async deleteVehicle({ commit, dispatch }, payload) {
     commit('SET_PROCESS', 'vehicles/deleteVehicle', { root: true })
     try {
       const resp = await this.$axios.$delete(`vehicles/${payload.id}`)
+      dispatch('getVehicles')
       return resp
     } catch (error) {
       throw error

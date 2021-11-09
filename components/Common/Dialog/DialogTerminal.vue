@@ -1,10 +1,11 @@
 <template>
   <DialogHandler
-    title="Create Terminal"
+    :title="formTitle"
     subtitle="Enter terminal's details to create one"
     :loading="loading"
     :value="value"
-    :ok-button="'Create Terminal'"
+    :ok-button="formTitle"
+    :ok-disabled="editedIndex === -1 ? true : false"
     @input="$emit('input', $event)"
     @clicked:ok="submit"
     @clicked:cancel="$emit('input', false)"
@@ -67,14 +68,14 @@
               type="tel"
             />
           </v-col>
-          <v-col class="pb-0">
+          <!-- <v-col class="pb-0">
             <FormInput
               v-model="form.terminalPhoneNumber[1]"
               label="Terminal Alternate Phone Number"
               rules="digits:11"
               type="tel"
             />
-          </v-col>
+          </v-col> -->
         </v-row>
       </v-form>
     </ValidationObserver>
@@ -102,33 +103,78 @@ export default {
       type: Boolean,
       default: false,
     },
+    editedIndex: {
+      type: Number,
+      default: -1,
+    },
+    model: {
+      type: Object,
+      default: () => {},
+    },
   },
 
   data() {
     return {
-      form: {
-        terminalName: '',
-        terminalAddress: '',
-        terminalState: '',
-        terminalManager: '',
-        terminalEmail: '',
-        // to turn to array
-        terminalPhoneNumber: ['', ''],
-      },
+      form: {},
     }
+  },
+
+  computed: {
+    formTitle() {
+      return this.editedIndex === -1 ? 'Create Terminal' : 'Edit Terminal'
+    },
+  },
+
+  watch: {
+    model: {
+      // immediate: true,
+      handler(newValue, oldValue) {
+        this.form = {
+          ...this.form,
+          ...newValue,
+          terminalPhoneNumber: [
+            typeof newValue.terminalPhoneNumber === 'object'
+              ? newValue.terminalPhoneNumber[0]
+              : newValue.terminalPhoneNumber,
+            '',
+          ],
+        }
+      },
+    },
+  },
+
+  created() {
+    this.form = Object.assign({}, this.model)
   },
 
   methods: {
     submit() {
-      this.$refs.observer.validate().then((success) => {
-        if (success) {
-          const payload = {
-            ...this.form,
-            terminalPhoneNumber: this.form.terminalPhoneNumber.filter((x) => x),
+      if (this.editedIndex !== -1) {
+        // edit terminal
+        this.$refs.observer.validate().then((success) => {
+          if (success) {
+            const { updatedAt, createdAt, ...rest } = this.form
+            const updatedPayload = {
+              id: this.model.terminalId,
+              payload: { ...rest },
+            }
+            this.$emit('clicked:edit', updatedPayload)
           }
-          this.$emit('clicked:ok', payload)
-        }
-      })
+        })
+      } else {
+        // create terminal
+        this.$refs.observer.validate().then((success) => {
+          if (success) {
+            const payload = {
+              ...this.form,
+              terminalPhoneNumber: this.form.terminalPhoneNumber.filter(
+                (x) => x
+              ),
+            }
+            this.$emit('clicked:ok', payload)
+          }
+        })
+      }
     },
   },
 }

@@ -128,6 +128,7 @@ export default {
     // defaultTimeZone: 'Asia/Tokyo',
     plugins: [
       'customParseFormat', // import 'dayjs/plugin/customParseFormat'
+      'advancedFormat', // import 'dayjs/plugin/advancedFormat'
       // 'timezone', // import 'dayjs/plugin/timezone'
     ], // Your Day.js plugin
   },

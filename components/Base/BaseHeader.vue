@@ -1,7 +1,15 @@
 <template>
   <v-app-bar :clipped-left="false" fixed app flat>
-    <!-- <v-app-bar-nav-icon @click.native.stop="setDrawer(!drawer)" /> -->
-    <v-toolbar-title class="text-h5 font-weight-bold text-capitalize">
+    <v-app-bar-nav-icon v-if="isCompoundRoute" @click.native.stop="reRoute">
+      <v-icon>mdi-arrow-left</v-icon>
+    </v-app-bar-nav-icon>
+    <v-toolbar-title
+      v-if="isCompoundRoute"
+      class="text-h6 font-weight-bold text-capitalize"
+    >
+      Back to {{ $route.path.split('/')[1] }}
+    </v-toolbar-title>
+    <v-toolbar-title v-else class="text-h6 font-weight-bold text-capitalize">
       {{ $route.name }}
     </v-toolbar-title>
     <v-spacer />
@@ -58,6 +66,19 @@ export default {
     ...mapState({
       drawer: (state) => state.drawer,
     }),
+
+    isCompoundRoute() {
+      const route = this.$route.path.split('/')
+      // let state = false
+      // route.length < 2 ? (state = true) : (state = false)
+      // console.log('route length', route.length)
+      if (route.length > 2) {
+        return true
+      } else {
+        return false
+      }
+      // return state
+    },
   },
 
   created() {
@@ -73,6 +94,11 @@ export default {
     ...mapActions({
       getUser: 'user/authentication/getUserInfo',
     }),
+    reRoute() {
+      // console.log(`object`, this.$route.path.split('/').slice(0, 2).join('/'))
+      this.$router.go(-1)
+      // this.$router.push(`/${this.$route.path.split('/').slice(0, 2).join('/')}`)
+    },
   },
 }
 </script>

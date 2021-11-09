@@ -39,26 +39,28 @@ export const actions = {
     commit('SET_PROCESS', 'drivers/getOneDriver', { root: true })
     try {
       const resp = await this.$axios.$get(`drivers/${payload.id}`)
-      return resp
+      return resp.data
     } catch (error) {
       throw error
     }
   },
 
-  async updateDriver({ commit }, payload) {
+  async updateDriver({ commit, dispatch }, { id, payload }) {
     commit('SET_PROCESS', 'drivers/updateDriver', { root: true })
     try {
-      const resp = await this.$axios.$patch(`drivers/${payload.id}`, payload)
+      const resp = await this.$axios.$patch(`drivers/${id}`, payload)
+      dispatch('getDrivers')
       return resp
     } catch (error) {
       throw error
     }
   },
 
-  async deleteDriver({ commit }, payload) {
+  async deleteDriver({ commit, dispatch }, payload) {
     commit('SET_PROCESS', 'drivers/deleteDriver', { root: true })
     try {
       const resp = await this.$axios.$delete(`drivers/${payload.id}`)
+      dispatch('getDrivers')
       return resp
     } catch (error) {
       throw error

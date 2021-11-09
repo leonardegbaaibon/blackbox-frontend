@@ -44,20 +44,22 @@ export const actions = {
     }
   },
 
-  async updateTerminal({ commit }, payload) {
+  async updateTerminal({ commit, dispatch }, payload) {
     commit('SET_PROCESS', 'terminals/updateTerminal', { root: true })
     try {
       const resp = await this.$axios.$patch(`terminals/${payload.id}`, payload)
+      dispatch('getTerminals')
       return resp
     } catch (error) {
       throw error
     }
   },
 
-  async deleteTerminal({ commit }, payload) {
+  async deleteTerminal({ commit, dispatch }, payload) {
     commit('SET_PROCESS', 'terminals/deleteTerminal', { root: true })
     try {
       const resp = await this.$axios.$delete(`terminals/${payload.id}`)
+      dispatch('getTerminals')
       return resp
     } catch (error) {
       throw error

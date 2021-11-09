@@ -38,7 +38,7 @@ export const getters = {
 
 export const actions = {
   async getTrips({ commit }, payload) {
-    commit('SET_PROCESS', 'vehicles/getTrips', { root: true })
+    commit('SET_PROCESS', 'trips/getTrips', { root: true })
     try {
       const resp = await this.$axios.$get('trips/vehicles')
       console.log('🚀 ~ getTrips ~ resp', resp)
@@ -51,7 +51,8 @@ export const actions = {
   },
 
   async getVehicleTrips({ commit }, payload) {
-    commit('SET_PROCESS', 'vehicles/getVehicleTrips', { root: true })
+    console.log('freaky')
+    commit('SET_PROCESS', 'trips/getVehicleTrips', { root: true })
     try {
       const resp = payload
         ? await this.$axios.$get(
@@ -67,6 +68,19 @@ export const actions = {
       }
 
       return resp
+    } catch (error) {
+      console.log('🚀 ~ getVehicleTrips ~ error', error)
+      throw error.response
+    }
+  },
+
+  async getTripHistory({ commit }, payload) {
+    commit('SET_PROCESS', 'trips/getTripHistory', { root: true })
+    try {
+      const resp = await this.$axios.$get(
+        `trips/${payload?.id}/trip.history?skip=0&limit=7wh`
+      )
+      return resp.data
     } catch (error) {
       console.log('🚀 ~ getVehicleTrips ~ error', error)
       throw error.response

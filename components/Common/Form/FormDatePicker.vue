@@ -103,6 +103,12 @@ export default {
       modal: false,
     }
   },
+
+  computed: {
+    formattedValue() {
+      return this.$dayjs(this.value).format('YYYY-MM-DD')
+    },
+  },
 }
 </script>
 

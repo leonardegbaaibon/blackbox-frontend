@@ -1,6 +1,7 @@
 <template>
   <DialogHandler
     :value="value"
+    width="400"
     :title="title"
     :ok-button="okButton"
     :cancel-button="cancelButton"
@@ -9,7 +10,7 @@
     @clicked:cancel="_cancel"
   >
     <!-- <v-icon class="icon-dialog" color="error" size="80">mdi-close-circle</v-icon> -->
-    <div class="text-h5 font-weight-bold mt-0 mb-4">{{ title }}</div>
+    <!-- <div class="text-h5 font-weight-bold mt-0 mb-4">{{ title }}</div> -->
     <p>
       {{ message }}
     </p>

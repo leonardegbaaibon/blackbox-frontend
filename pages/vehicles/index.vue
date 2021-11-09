@@ -10,13 +10,27 @@
         v-else-if="vehicles.length === 0"
         title="No vehicles created yet"
         button-text="New Vehicle"
-        @clicked="dialog = true"
+        @clicked="openCreateDialog"
       ></CardNoState>
-      <TableVehicles v-else :items="vehicles" @clicked="dialog = true" />
+      <TableVehicles
+        v-else
+        :items="vehicles"
+        @clicked="openCreateDialog"
+        @clicked:edit="openEditDialog"
+        @clicked:delete="openDeleteDialog"
+      />
     </v-col>
 
     <!-- Dialogs -->
-    <DialogVehicle v-model="dialog" :loading="loading" @clicked:ok="create" />
+    <DialogVehicle
+      v-model="dialog"
+      :loading="loading"
+      :model="vehicleModel"
+      :edited-index="editedIndex"
+      @clicked:ok="create"
+      @clicked:edit="edit"
+    />
+    <DialogPrompt ref="prompt" v-model="showPrompt" />
   </v-row>
 </template>
 
@@ -29,8 +43,36 @@ export default {
   data() {
     return {
       // vehicles: '',
+      showPrompt: false,
+      editedIndex: -1,
       dialog: false,
       loading: false,
+      vehicleModel: {
+        model: '',
+        year: '',
+        vin: '',
+        color: '',
+        registrationNumber: '',
+        make: '',
+        name: '',
+        // owner info
+        vehicleOwnerAddress: '',
+        vehicleOwnerPhoneNumber: '',
+        vehicleOwnerName: '',
+      },
+      defaultVehicleModel: {
+        model: '',
+        year: '',
+        vin: '',
+        color: '',
+        registrationNumber: '',
+        make: '',
+        name: '',
+        // owner info
+        vehicleOwnerAddress: '',
+        vehicleOwnerPhoneNumber: '',
+        vehicleOwnerName: '',
+      },
     }
   },
 
@@ -49,6 +91,8 @@ export default {
     ...mapActions({
       getVehicles: 'vehicles/getVehicles',
       createVehicle: 'vehicles/createVehicle',
+      editVehicle: 'vehicles/updateVehicle',
+      deleteVehicle: 'vehicles/deleteVehicle',
     }),
 
     create(evt) {
@@ -66,6 +110,64 @@ export default {
         })
         .finally(() => {
           this.loading = false
+        })
+    },
+
+    edit(evt) {
+      this.loading = true
+      this.editVehicle(evt)
+        .then((resp) => {
+          console.log('🚀 ~ .then ~ resp', resp)
+          this.dialog = false
+          this.$toast.success('Vehicle successfully updated')
+        })
+        .catch((error) => {
+          // console.log('🚀 ~ create ~ errors', errors)
+          // errors.data.message.forEach((error) => {
+          this.$toast.error(error.data.message)
+          // })
+        })
+        .finally(() => {
+          this.loading = false
+        })
+    },
+
+    openCreateDialog() {
+      this.editedIndex = -1
+      this.vehicleModel = Object.assign({}, this.defaultVehicleModel)
+      this.dialog = true
+    },
+
+    openEditDialog(evt) {
+      this.editedIndex = this.vehicles
+        .map((e) => e.vehicleId)
+        .indexOf(evt.vehicleId)
+      this.vehicleModel = Object.assign({}, evt)
+      this.dialog = true
+    },
+
+    openDeleteDialog(evt) {
+      this.$refs.prompt
+        .show({
+          title: 'Confirmation',
+          message: `Are you sure you want to delete ${evt.vehicleMake} ${evt.vehicleModel}`,
+          okButton: 'Yes, Delete',
+          cancelButton: 'No',
+        })
+        .then(async (ok) => {
+          if (ok) {
+            this.loading = true
+            try {
+              const response = await this.deleteVehicle({ id: evt.vehicleId })
+              this.$toast.success(response.meta.info)
+            } catch (error) {
+              this.$toast.error(`Delete failed`)
+            } finally {
+              this.loading = false
+            }
+          } else {
+            this.loading = false
+          }
         })
     },
   },

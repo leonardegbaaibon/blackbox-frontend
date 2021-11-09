@@ -28,6 +28,15 @@
       <template #[`item.createdAt`]="{ item }">
         {{ $dayjs(item.createdAt).format('DD MMMM, YYYY • hh:mm A') }}
       </template>
+      <template #[`item.actions`]="{ item }">
+        <v-icon small class="mr-2" @click="$emit('clicked:edit', item)">
+          mdi-pencil
+        </v-icon>
+        <v-icon small @click="$emit('clicked:delete', item)">mdi-delete</v-icon>
+      </template>
+      <template #no-data>
+        <v-btn color="primary" @click="initialize">Reset</v-btn>
+      </template>
     </v-data-table>
   </v-card>
 </template>
@@ -57,9 +66,12 @@ export default {
         { text: 'Email', value: 'terminalEmail' },
         { text: 'Phone Number', value: 'terminalPhoneNumber' },
         { text: 'Created', value: 'createdAt' },
+        { text: 'Actions', value: 'actions', sortable: false },
       ],
     }
   },
+
+  methods: {},
 }
 </script>
 

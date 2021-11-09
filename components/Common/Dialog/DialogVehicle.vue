@@ -1,9 +1,10 @@
 <template>
   <DialogHandler
-    title="Create Vehicle"
+    :title="formTitle"
     subtitle="Enter vehicle and vehicle owner's details to create one"
     :value="value"
-    :ok-button="'Create Vehicle'"
+    :ok-button="formTitle"
+    :ok-disabled="editedIndex === -1 ? true : false"
     :loading="loading"
     @input="$emit('input', $event)"
     @clicked:ok="submit"
@@ -130,6 +131,14 @@ export default {
       type: Boolean,
       default: false,
     },
+    editedIndex: {
+      type: Number,
+      default: -1,
+    },
+    model: {
+      type: Object,
+      default: () => {},
+    },
   },
 
   data() {
@@ -139,23 +148,27 @@ export default {
         { text: 'Green', value: 'green' },
         { text: 'Blue', value: 'blue' },
       ],
-      form: {
-        model: '',
-        year: '',
-        vin: '',
-        color: '',
-        registrationNumber: '',
-        make: '',
-        name: '',
-        // owner info
-        vehicleOwnerAddress: '',
-        vehicleOwnerPhoneNumber: '',
-        vehicleOwnerName: '',
-      },
+      form: {},
+      // form: {
+      //   model: '',
+      //   year: '',
+      //   vin: '',
+      //   color: '',
+      //   registrationNumber: '',
+      //   make: '',
+      //   name: '',
+      //   // owner info
+      //   vehicleOwnerAddress: '',
+      //   vehicleOwnerPhoneNumber: '',
+      //   vehicleOwnerName: '',
+      // },
     }
   },
 
   computed: {
+    formTitle() {
+      return this.editedIndex === -1 ? 'Create Vehicle' : 'Edit Vehicle'
+    },
     color() {
       const colorArray = Object.keys(COLORS).map((color) => ({
         text: color.charAt(0).toUpperCase() + color.slice(1),
@@ -169,13 +182,53 @@ export default {
     },
   },
 
+  watch: {
+    model: {
+      // immediate: true,
+      handler(newValue, oldValue) {
+        if (this.editedIndex === -1) {
+          // create
+          this.form = {
+            ...newValue,
+          }
+        } else {
+          // edit
+          this.form = {
+            ...newValue,
+          }
+        }
+      },
+    },
+  },
+
+  created() {
+    this.form = Object.assign({}, this.model)
+  },
+
   methods: {
     submit() {
-      this.$refs.observer.validate().then((success) => {
-        if (success) {
-          this.$emit('clicked:ok', this.form)
-        }
-      })
+      if (this.editedIndex !== -1) {
+        // edit vehicle
+        this.$refs.observer.validate().then((success) => {
+          if (success) {
+            const { updatedAt, createdAt, device, ...rest } = this.form
+            const updatedPayload = {
+              id: this.model.vehicleId,
+              payload: {
+                ...rest,
+              },
+            }
+            this.$emit('clicked:edit', updatedPayload)
+          }
+        })
+      } else {
+        // create vehicle
+        this.$refs.observer.validate().then((success) => {
+          if (success) {
+            this.$emit('clicked:ok', this.form)
+          }
+        })
+      }
     },
 
     changeColor(evt) {

@@ -3,6 +3,14 @@ import { POINT_MARKER_ICON_CONFIG } from '@/utils/mapSettings'
 
 export default {
   props: {
+    index: {
+      type: Number,
+      required: true,
+    },
+    length: {
+      type: Number,
+      required: true,
+    },
     google: {
       type: Object,
       required: true,
@@ -23,7 +31,24 @@ export default {
     const { InfoWindow } = this.google.maps
     const { Size } = this.google.maps
 
-    // let icon
+    let icon
+    if (this.index === 0) {
+      icon = { url: POINT_MARKER_ICON_CONFIG.start }
+    } else if (this.index !== this.length - 1) {
+      if (this.marker.attributes.motion) {
+        icon = {
+          url: POINT_MARKER_ICON_CONFIG.on,
+          scaledSize: new Size(10, 10),
+        }
+      } else {
+        icon = {
+          url: POINT_MARKER_ICON_CONFIG.off,
+          scaledSize: new Size(10, 10),
+        }
+      }
+    } else {
+      icon = { url: POINT_MARKER_ICON_CONFIG.end }
+    }
 
     const bounds = new LatLngBounds()
 
@@ -45,7 +70,7 @@ export default {
       title: this.marker.protocol,
       // marker: this.marker,
       map: this.map,
-      icon: { url: POINT_MARKER_ICON_CONFIG.on, scaledSize: new Size(30, 30) },
+      icon,
     })
     bounds.extend(marker.getPosition())
 
@@ -70,7 +95,7 @@ export default {
 	<div class="d-flex justify-space-between">
 		<div>Time</div>
 		<div class="font-weight-bold">${this.$dayjs(this.marker.deviceTime).format(
-      'Do MMM YYYY, HH:MM A'
+      'Do MMM YYYY, hh:MM A'
     )}</div>
 	</div>
 	<hr class="my-3" />

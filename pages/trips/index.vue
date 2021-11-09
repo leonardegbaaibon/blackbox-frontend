@@ -23,12 +23,12 @@
           </v-form>
         </v-col>
         <v-col sm="12">
-          <CardCar
+          <!-- <CardCar
             ref="carCard"
             v-bind="form.chosenVehicle"
             :image="image"
             @clicked:getTrip="getTripMethod"
-          />
+          /> -->
         </v-col>
         <!-- <DialogMap
           v-model="showDialog"
@@ -37,6 +37,11 @@
         <!-- <v-col sm="12">
           <MapTrips />
         </v-col> -->
+      </v-row>
+      <v-row>
+        <v-col>
+          <MapTrips height="600" />
+        </v-col>
       </v-row>
     </v-card-text>
     <v-overlay :value="loading" color="white" app>
@@ -48,7 +53,7 @@
 <script>
 import { mapActions, mapState } from 'vuex'
 // import { Datetime } from 'vue-datetime'
-const { parseString } = require('xml2js')
+// const { parseString } = require('xml2js')
 
 export default {
   name: 'Trips',
@@ -117,18 +122,18 @@ export default {
       getTrip: 'trips/getVehicleTrips',
     }),
 
-    async selectVehicle(evt) {
-      this.$nextTick(() => {
-        this.$refs.carCard.setShow(false)
-      })
+    selectVehicle(evt) {
+      // this.$nextTick(() => {
+      //   this.$refs.carCard.setShow(false)
+      // })
       if (evt) {
         this.form.chosenVehicle = evt
-        const data = await this.$api.get(
-          `/GetImageUrl?searchTerm=${evt.vehicleMakee}`
-        )
-        parseString(data.data, (_, result) => {
-          this.image = result.string._
-        })
+        // const data = await this.$api.get(
+        //   `/GetImageUrl?searchTerm=${evt.vehicleMakee}`
+        // )
+        // parseString(data.data, (_, result) => {
+        //   this.image = result.string._
+        // })
       }
       // this.getTrips({ id: evt.vehicleId })
       // console.log('🚀 ~ selectVehicle ~ evt', evt)

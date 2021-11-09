@@ -1,6 +1,6 @@
 <template>
   <v-card class="mt-0 pt-0" flat>
-    <MapTrips :items="trips" class="mb-6" height="400" />
+    <!-- <MapTrips :items="trips" class="mb-6" height="400" /> -->
     <v-img
       class="white--text align-end rounded-lg"
       :src="image"
@@ -24,7 +24,7 @@
     <v-card-text class="mt-5">
       <v-row>
         <v-col cols="">
-          <p class="text-h4 mb-0 font-weight-bold">
+          <p class="text-h6 mb-0 font-weight-bold">
             {{ vehicleYear ? `${vehicleYear}` : '' }}
           </p>
           <p class="text-caption">Year</p>
@@ -41,7 +41,7 @@
                   .toLowerCase()
               "
             ></v-avatar>
-            <p class="text-h4 mb-0 font-weight-bold">
+            <p class="text-h6 mb-0 font-weight-bold">
               {{ vehicleColor ? `${vehicleColor}` : '' }}
             </p>
           </div>
@@ -49,15 +49,27 @@
           <p class="text-caption">Vehicle Color</p>
         </v-col>
         <v-col cols="">
-          <p class="text-h4 mb-0 font-weight-bold">
-            {{
+          <p class="text-h6 mb-0 font-weight-bold">
+            #{{
               vehicleRegistrationNumber ? `${vehicleRegistrationNumber}` : ''
             }}
           </p>
           <p class="text-caption">Reg. Number</p>
         </v-col>
+        <v-col cols="">
+          <p class="text-h6 mb-0 font-weight-bold">
+            {{ attributes.totalDistance }}
+          </p>
+          <p class="text-caption">Total Distance Travelled</p>
+        </v-col>
+        <v-col cols="">
+          <p class="text-h6 mb-0 font-weight-bold">
+            {{ attributes.fuelConsumption }}
+          </p>
+          <p class="text-caption">Fuel Consumed</p>
+        </v-col>
         <!-- <v-col cols="">
-          <p class="text-h4 mb-0 font-weight-bold">
+          <p class="text-h6 mb-0 font-weight-bold">
             {{ device ? `Connected` : 'Disconnected' }}
           </p>
           <p class="text-caption">Status</p>
@@ -113,6 +125,10 @@ export default {
     vehicleId: {
       type: String,
       default: '',
+    },
+    attributes: {
+      type: Object,
+      default: () => {},
     },
   },
 

@@ -4,18 +4,12 @@
     :map-config="mapConfig"
     class="rounded-lg"
   >
-    <template v-if="trips.length !== 0" slot-scope="{ google, map }">
-      <MapMarkers
-        v-for="(marker, index) in trips"
-        :key="marker.id"
-        :length="trips.length"
-        :index="index"
-        :marker="marker"
+    <template slot-scope="{ google, map }">
+      <MapMarker
+        :marker="trips[trips.length - 1]"
         :google="google"
         :map="map"
       />
-      <MapPolygons :google="google" :map="map" :markers="trips" />
-      <!-- <MapWaypoint :markers="items" :google="google" :map="map" /> -->
     </template>
   </MapHandler>
 </template>
@@ -31,11 +25,16 @@ export default {
       default: 500,
     },
 
-    items: {
-      type: Array,
-      default: () => [],
+    marker: {
+      type: Object,
+      default: () => {},
     },
   },
+
+  // components: {
+  // 	MapHandler: () => import('@/components/Common/Map/GoogleMapHandler'),
+  // 	MapMarker: () => import('@/components/Common/Map/GoogleMapMarker'),
+  // },
 
   data() {
     return {}
@@ -48,17 +47,18 @@ export default {
     mapConfig() {
       return {
         ...mapSettings,
-        // center: this.mapCenter,
+        center: this.mapCenter,
       }
     },
+
     mapCenter() {
       return { lat: 6.459295, lng: 3.335831 }
     },
   },
 
-  // beforeUpdate() {
-  //   console.log(`updated`)
-  // },
+  beforeUpdate() {
+    console.log(`updated`)
+  },
 }
 </script>
 

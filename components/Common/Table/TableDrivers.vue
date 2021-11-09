@@ -50,6 +50,18 @@
       <template #[`item.createdAt`]="{ item }">
         {{ $dayjs(item.createdAt).format('DD MMMM, YYYY • hh:mm A') }}
       </template>
+      <template #[`item.actions`]="{ item }">
+        <v-icon small class="mr-2" @click="navigateDriver(item)">
+          mdi-eye
+        </v-icon>
+        <v-icon small class="mr-2" @click="$emit('clicked:edit', item)">
+          mdi-pencil
+        </v-icon>
+        <v-icon small @click="$emit('clicked:delete', item)">mdi-delete</v-icon>
+      </template>
+      <template #no-data>
+        <v-btn color="primary" @click="initialize">Reset</v-btn>
+      </template>
     </v-data-table>
   </v-card>
 </template>
@@ -78,8 +90,16 @@ export default {
         { text: 'Phone', value: 'driverPhoneNumber' },
         // { text: 'NIN', value: 'driverNin' },
         { text: 'Created at', value: 'createdAt' },
+        { text: 'Actions', value: 'actions', sortable: false },
       ],
     }
+  },
+
+  methods: {
+    navigateDriver(evt) {
+      console.log('🚀 ~ navigateVehicle ~ evt', evt)
+      this.$router.push(`drivers/${evt.driverId}`)
+    },
   },
 }
 </script>

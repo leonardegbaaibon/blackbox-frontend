@@ -1,10 +1,11 @@
 <template>
   <DialogHandler
-    title="Create Driver"
+    :title="formTitle"
     subtitle="Enter driver and guarantor's details to create one"
     :value="value"
     :loading="loading"
-    :ok-button="'Create Driver'"
+    :ok-button="formTitle"
+    :ok-disabled="editedIndex === -1 ? true : false"
     @input="$emit('input', $event)"
     @clicked:ok="submit"
     @clicked:cancel="$emit('input', false)"
@@ -30,14 +31,14 @@
               type="tel"
             />
           </v-col>
-          <v-col class="pb-0">
+          <!-- <v-col class="pb-0">
             <FormInput
               v-model="form.driverPhoneNumber[1]"
               label="Driver Alternate Phone Number"
               rules="digits:11"
               type="tel"
             />
-          </v-col>
+          </v-col> -->
         </v-row>
         <v-row>
           <v-col>
@@ -88,6 +89,13 @@
           type="text"
         />
         <FormInput
+          v-if="editedIndex !== -1"
+          v-model="form.driverQuarantorAddress"
+          label="Guarantor Address *"
+          rules="required"
+          type="text"
+        />
+        <FormInput
           v-model="form.driverQuarantorEmail"
           label="Guarantor Email"
           rules="email"
@@ -102,14 +110,14 @@
               type="tel"
             />
           </v-col>
-          <v-col class="pb-0">
+          <!-- <v-col class="pb-0">
             <FormInput
               v-model="form.driverQuarantorPhoneNumber[1]"
               label="Guarantor Alternate Phone Number"
               rules="digits:11"
               type="tel"
             />
-          </v-col>
+          </v-col> -->
         </v-row>
       </v-form>
     </ValidationObserver>
@@ -137,44 +145,96 @@ export default {
       type: Boolean,
       default: false,
     },
+    editedIndex: {
+      type: Number,
+      default: -1,
+    },
+    model: {
+      type: Object,
+      default: () => {},
+    },
   },
 
   data() {
     return {
-      form: {
-        driverName: '',
-        driverNin: '',
-        driverEmail: '',
-        driverLicenseNumber: '',
-        driverLicenseExpiryDate: '',
-        driverAddress: '',
-        // to turn to array
-        driverPhoneNumber: ['', ''],
-        driverPhoto: [''],
-        driverQuarantorPhoneNumber: ['', ''],
-        // guarantor info
-        driverQuarantor: '',
-        driverQuarantorEmail: '',
-      },
+      form: {},
     }
+  },
+
+  computed: {
+    formTitle() {
+      return this.editedIndex === -1 ? 'Create Driver' : 'Edit Driver'
+    },
+  },
+
+  watch: {
+    model: {
+      // immediate: true,
+      handler(newValue, oldValue) {
+        this.form = {
+          ...this.form,
+          ...newValue,
+          driverLicenseExpiryDate: newValue.driverLicenseExpiryDate
+            ? this.$dayjs(newValue.driverLicenseExpiryDate).format('YYYY-MM-DD')
+            : '',
+          driverPhoneNumber: [
+            typeof newValue.driverPhoneNumber === 'object'
+              ? newValue.driverPhoneNumber[0]
+              : newValue.driverPhoneNumber,
+            '',
+          ],
+          driverPhoto: [newValue.driverPhoto],
+          driverQuarantorPhoneNumber: [
+            typeof newValue.driverQuarantorPhoneNumber === 'object'
+              ? newValue.driverQuarantorPhoneNumber[0]
+              : newValue.driverQuarantorPhoneNumber,
+            '',
+          ],
+        }
+      },
+    },
+  },
+
+  created() {
+    this.form = Object.assign({}, this.model)
   },
 
   methods: {
     submit() {
-      this.$refs.observer.validate().then((success) => {
-        if (success) {
-          const payload = {
-            ...this.form,
-            driverLicenseExpiryDate: this.$dayjs(
-              this.form.driverLicenseExpiryDate
-            ).toISOString(),
-            driverPhoneNumber: this.form.driverPhoneNumber.filter((x) => x),
-            driverQuarantorPhoneNumber:
-              this.form.driverQuarantorPhoneNumber.filter((x) => x),
+      if (this.editedIndex !== -1) {
+        // edit driver
+        this.$refs.observer.validate().then((success) => {
+          if (success) {
+            const { updatedAt, createdAt, driverId, ...rest } = this.form
+            const updatedPayload = {
+              id: this.model.driverId,
+              payload: {
+                ...rest,
+                driverLicenseExpiryDate: this.$dayjs(
+                  rest.driverLicenseExpiryDate
+                ).toISOString(),
+              },
+            }
+            this.$emit('clicked:edit', updatedPayload)
           }
-          this.$emit('clicked:ok', payload)
-        }
-      })
+        })
+      } else {
+        // create driver
+        this.$refs.observer.validate().then((success) => {
+          if (success) {
+            const payload = {
+              ...this.form,
+              driverLicenseExpiryDate: this.$dayjs(
+                this.form.driverLicenseExpiryDate
+              ).toISOString(),
+              driverPhoneNumber: this.form.driverPhoneNumber.filter((x) => x),
+              driverQuarantorPhoneNumber:
+                this.form.driverQuarantorPhoneNumber.filter((x) => x),
+            }
+            this.$emit('clicked:ok', payload)
+          }
+        })
+      }
     },
   },
 }

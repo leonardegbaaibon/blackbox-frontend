@@ -36,6 +36,7 @@
 
 <script>
 import { ValidationObserver } from 'vee-validate'
+
 export default {
   components: {
     ValidationObserver,
@@ -50,7 +51,13 @@ export default {
 
   data() {
     return {
-      form: { email: '', password: '' },
+      form: {
+        email:
+          process.env.NODE_ENV === 'development'
+            ? 'richardsaseun@gmail.com'
+            : '',
+        password: process.env.NODE_ENV === 'development' ? 'Forces123!' : '',
+      },
     }
   },
 }
