@@ -36,7 +36,7 @@
         </v-col>
         <v-col cols="">
           <p class="text-h6 mb-0 font-weight-bold">
-            {{ tripData.averageSpeedcle }}
+            {{ tripData.averageSpeed }}
           </p>
           <p class="text-caption">Average Speed</p>
         </v-col>
