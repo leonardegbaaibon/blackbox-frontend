@@ -1,10 +1,10 @@
 <template>
   <v-card flat outlined>
     <v-card-text>
+      <!-- Select Vehicle and Time -->
       <v-row justify="center" align="center">
         <v-col sm="12" class="">
           <v-form>
-            <!-- <v-container> -->
             <v-row>
               <v-col>
                 <FormSelectVehicle
@@ -14,30 +14,34 @@
                 />
               </v-col>
               <v-col cols="auto">
-                <!-- <v-md-date-range-picker></v-md-date-range-picker> -->
-                <!-- <Datetime v-model="date"></Datetime> -->
                 <FormSelectTime label="Period" @change="setTime" />
               </v-col>
             </v-row>
-            <!-- </v-container> -->
           </v-form>
         </v-col>
-        <v-col sm="12">
-          <!-- <CardCar
-            ref="carCard"
-            v-bind="form.chosenVehicle"
-            :image="image"
-            @clicked:getTrip="getTripMethod"
-          /> -->
-        </v-col>
-        <!-- <DialogMap
-          v-model="showDialog"
-          :subtitle="`Trip Profile for ${form.time.rendered || form.time.text}`"
-        /> -->
-        <!-- <v-col sm="12">
-          <MapTrips />
-        </v-col> -->
       </v-row>
+      <!-- Trips Stats -->
+      <v-row v-if="Object.values(tripData).length > 0">
+        <v-col cols="">
+          <p class="text-h6 mb-0 font-weight-bold">
+            {{ tripData.averageDistance }}
+          </p>
+          <p class="text-caption">Average Distance</p>
+        </v-col>
+        <v-col cols="">
+          <p class="text-h6 mb-0 font-weight-bold">
+            {{ tripData.averageFuelConsumption }}
+          </p>
+          <p class="text-caption">Average Fuel Consumption</p>
+        </v-col>
+        <v-col cols="">
+          <p class="text-h6 mb-0 font-weight-bold">
+            {{ tripData.averageSpeedcle }}
+          </p>
+          <p class="text-caption">Average Speed</p>
+        </v-col>
+      </v-row>
+      <!-- MapTrips -->
       <v-row>
         <v-col>
           <MapTrips height="600" />
@@ -82,6 +86,7 @@ export default {
   computed: {
     ...mapState({
       trips: (state) => state.trips,
+      tripData: (state) => state.trips.tripData,
       vehicles: (state) => state.vehicles.all,
     }),
   },
