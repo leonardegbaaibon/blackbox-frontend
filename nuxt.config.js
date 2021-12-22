@@ -88,7 +88,7 @@ export default {
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    baseURL: 'https://powerful-sea-54328.herokuapp.com/v1/',
+    baseURL: 'https://blackbox-server-deploy.herokuapp.com/v1',
   },
 
   auth: {
