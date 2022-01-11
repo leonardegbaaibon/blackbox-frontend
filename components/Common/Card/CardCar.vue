@@ -8,13 +8,18 @@
       :height="'200px'"
       position="center center"
     >
-      <v-chip
-        style="position: absolute; top: 16px; right: 16px"
-        :color="device ? 'success' : 'error'"
-        label
-      >
-        {{ device ? `Connected` : 'Disconnected' }}
-      </v-chip>
+      <div style="position: absolute; top: 16px; right: 16px">
+        <v-btn
+          depressed
+          color="primary"
+          @click="$emit('clicked:assign', { id: vehicleId })"
+        >
+          Assign device
+        </v-btn>
+        <!-- <v-chip :color="device ? 'success' : 'error'" label>
+          {{ device ? `Connected` : 'Disconnected' }}
+        </v-chip> -->
+      </div>
 
       <v-card-title class="font-weight-bold text-h3">
         {{ vehicleMake ? `${vehicleMake} ${vehicleModel}` : 'Loading....' }}
@@ -58,13 +63,15 @@
         </v-col>
         <v-col cols="">
           <p class="text-h6 mb-0 font-weight-bold">
-            {{ attributes.totalDistance }}
+            <!-- {{ attributes.totalDistance }} -->
+            0
           </p>
           <p class="text-caption">Total Distance Travelled</p>
         </v-col>
         <v-col cols="">
           <p class="text-h6 mb-0 font-weight-bold">
-            {{ attributes.fuelConsumption }}
+            <!-- {{ attributes.fuelConsumption }} -->
+            0
           </p>
           <p class="text-caption">Fuel Consumed</p>
         </v-col>

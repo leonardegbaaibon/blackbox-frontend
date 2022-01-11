@@ -7,8 +7,18 @@
         indeterminate
       ></v-progress-circular>
       <div v-else class="">
-        <CardCar v-bind="{ ...vehicle, ...trips[trips.length - 1] }"></CardCar>
-        <MapVehicle class="" height="500" :marker="trips[trips.length - 1]" />
+        <CardCar
+          v-bind="{ ...vehicle, ...trips[trips.length - 1] }"
+          @clicked:assign="openAssign"
+        ></CardCar>
+        <!-- <MapVehicle class="" height="500" :marker="trips[trips.length - 1]" /> -->
+
+        <!-- Dialogs -->
+        <DialogAssignDevice
+          v-if="dialog"
+          v-model="dialog"
+          :vehicle="$route.params.id"
+        />
       </div>
     </v-col>
   </v-row>
@@ -53,6 +63,10 @@ export default {
       getTripHistory: 'trips/getTripHistory',
       getPosition: 'trips/getVehicleTrips',
     }),
+
+    openAssign(evt) {
+      this.dialog = true
+    },
   },
 }
 </script>

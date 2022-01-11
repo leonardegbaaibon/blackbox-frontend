@@ -61,11 +61,11 @@ export default {
           title: 'Vehicles',
           to: '/vehicles',
         },
-        // {
-        //   icon: 'mdi-alert-decagram',
-        //   title: 'Faults Monitor',
-        //   to: '/faults',
-        // },
+        {
+          icon: 'mdi-devices',
+          title: 'Devices',
+          to: '/devices',
+        },
       ],
     }
   },

@@ -1,0 +1,86 @@
+<template>
+  <v-card flat>
+    <v-card-title class="py-5">
+      <p class="mb-0 font-weight-bold">All Devices</p>
+      <v-spacer></v-spacer>
+      <FormInput
+        v-model="search"
+        class="mr-3"
+        type="text"
+        placeholder="Search Devices"
+        :hide-details="true"
+      />
+      <FormButton @click.native="$emit('clicked')">New Device</FormButton>
+      <!-- <v-text-field
+        v-model="search"
+        append-icon="mdi-magnify"
+        label="Search"
+        single-line
+        hide-details
+      ></v-text-field> -->
+    </v-card-title>
+    <v-data-table
+      no-data-text="No devices created"
+      :headers="headers"
+      :items="items"
+      class="elevation-1"
+    >
+      <template #[`item.lastUpdate`]="{ item }">
+        {{ $dayjs(item.lastUpdate).format('DD MMMM, YYYY • hh:mm A') }}
+      </template>
+      <template #[`item.status`]="{ item }">
+        <v-chip
+          small
+          :color="item.status === 'offline' ? 'error' : 'success'"
+          class="text-overline"
+        >
+          {{ item.status }}
+        </v-chip>
+      </template>
+      <template #[`item.actions`]="{ item }">
+        <v-icon small class="mr-2" @click="$emit('clicked:edit', item)">
+          mdi-pencil
+        </v-icon>
+        <v-icon small @click="$emit('clicked:delete', item)">mdi-delete</v-icon>
+      </template>
+      <template #no-data>
+        <v-btn color="primary" @click="initialize">Reset</v-btn>
+      </template>
+    </v-data-table>
+  </v-card>
+</template>
+
+<script>
+export default {
+  props: {
+    items: {
+      type: Array,
+      default: () => [],
+    },
+  },
+
+  data() {
+    return {
+      search: '',
+      headers: [
+        {
+          text: 'Device Id',
+          align: 'start',
+          sortable: false,
+          value: 'deviceId',
+        },
+        { text: 'Name', value: 'name' },
+        { text: 'Disabled', value: 'disabled' },
+        { text: 'Position Id', value: 'positionId' },
+        { text: 'Status', value: 'status' },
+        { text: 'Unique ID', value: 'uniqueId' },
+        { text: 'Actions', value: 'actions', sortable: false },
+      ],
+    }
+  },
+
+  methods: {},
+}
+</script>
+
+<style lang="scss" scoped></style>

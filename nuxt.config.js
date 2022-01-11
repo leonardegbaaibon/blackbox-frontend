@@ -70,7 +70,7 @@ export default {
 
   toast: {
     position: 'top-right',
-    theme: 'outline',
+    theme: 'bubble',
     keepOnHover: true,
     iconPack: 'mdi',
     duration: 6000,
