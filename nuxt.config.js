@@ -129,8 +129,11 @@ export default {
     plugins: [
       'customParseFormat', // import 'dayjs/plugin/customParseFormat'
       'advancedFormat', // import 'dayjs/plugin/advancedFormat'
-      // 'timezone', // import 'dayjs/plugin/timezone'
-    ], // Your Day.js plugin
+      'duration', // import 'dayjs/plugin/duration'
+      'relativeTime', // import 'dayjs/plugin/relativeTime'
+      'timezone', // import 'dayjs/plugin/relativeTime'
+      'utc', // import 'dayjs/plugin/relativeTime'
+    ], // 'duration'
   },
 
   // Runtime Config

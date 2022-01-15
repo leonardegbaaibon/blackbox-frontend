@@ -3,15 +3,17 @@
 /* eslint-disable no-useless-catch */
 export const state = () => ({
   state: 'trips',
-  all: [],
+  trips: [],
   tripData: {},
 })
 
 export const mutations = {
   SET_TRIPS(state, trips) {
-    state.all = [...trips]
+    if (trips.trips) {
+      state.trips = [...trips.trips]
+    }
   },
-  SET_DATA(state, data) {
+  SET_TRIP_ITEM(state, data) {
     state.tripData = { ...data }
   },
   RESET(state) {
@@ -20,29 +22,20 @@ export const mutations = {
   },
 }
 
-export const getters = {
-  // directionsMap: (state) => {
-  //   const n = Math.round(state.all.trips.length / 20)
-  //   let length = state.all.trips.length - 1
-  //   const arr = []
-  //   while (length > 0) {
-  //     arr.push(state.all.trips[length])
-  //     length = length - n
-  //   }
-  //   if (arr.length) {
-  //     arr.push(state.all.trips[state.all.trips.length - 1])
-  //   }
-  //   return arr
-  // },
-}
+export const getters = {}
 
 export const actions = {
+  //*
   async getTrips({ commit }, payload) {
     commit('SET_PROCESS', 'trips/getTrips', { root: true })
     try {
-      const resp = await this.$axios.$get('trips/vehicles')
-      console.log('🚀 ~ getTrips ~ resp', resp)
-      // commit('SET_TRIPS', resp.data)
+      const resp = await this.$axios.$get(
+        `trips/report/${payload.vehicleId}?from=${payload.from}&to=${payload.to}`
+      )
+      if (resp.meta.status === 404) {
+        throw new Error(resp.meta.info)
+      }
+      commit('SET_TRIPS', resp.data)
       return resp
     } catch (error) {
       console.log('🚀 ~ getTrips ~ error', error)
@@ -50,9 +43,9 @@ export const actions = {
     }
   },
 
-  async getVehicleTrips({ commit }, payload) {
-    console.log('freaky')
-    commit('SET_PROCESS', 'trips/getVehicleTrips', { root: true })
+  //*
+  async getSingleTrip({ commit }, payload) {
+    commit('SET_PROCESS', 'trips/getSingleTrip', { root: true })
     try {
       const resp = payload
         ? await this.$axios.$get(
@@ -60,16 +53,14 @@ export const actions = {
           )
         : null
       if (resp.data.length !== 0) {
-        const { trips, ...data } = resp.data
-        commit('SET_TRIPS', trips)
-        commit('SET_DATA', data)
+        console.log('🚀 ~ getSingleTrip ~ resp.data', resp.data)
+        commit('SET_TRIP_ITEM', resp.data)
       } else {
-        commit('RESET')
+        // commit('RESET')
       }
 
       return resp
     } catch (error) {
-      console.log('🚀 ~ getVehicleTrips ~ error', error)
       throw error.response
     }
   },

@@ -131,6 +131,7 @@ export default {
             this.loading = true
             try {
               const response = await this.deleteDevice({ id: evt.deviceId })
+              this.$fetch()
               this.$toast.success(response.meta.info)
             } catch (error) {
               this.$toast.error(`Delete failed`)

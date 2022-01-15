@@ -10,11 +10,20 @@
     >
       <div style="position: absolute; top: 16px; right: 16px">
         <v-btn
+          v-if="!device"
           depressed
           color="primary"
           @click="$emit('clicked:assign', { id: vehicleId })"
         >
           Assign device
+        </v-btn>
+        <v-btn
+          v-else
+          depressed
+          color="error"
+          @click="$emit('clicked:unassign', { id: vehicleId })"
+        >
+          Unassign device
         </v-btn>
         <!-- <v-chip :color="device ? 'success' : 'error'" label>
           {{ device ? `Connected` : 'Disconnected' }}

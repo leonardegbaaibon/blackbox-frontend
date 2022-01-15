@@ -10,12 +10,47 @@
     @clicked:ok="$emit('input', false)"
     @clicked:cancel="$emit('input', false)"
   >
-    <MapTrips height="700" :items="gTrips" />
+    <v-row>
+      <v-col cols="">
+        <p class="text-h6 mb-0 font-weight-bold">{{ averageDistance }}</p>
+        <p class="text-caption">Average Distance</p>
+      </v-col>
+      <v-col cols="">
+        <p class="text-h6 mb-0 font-weight-bold">
+          <!-- {{ attributes.totalDistance }} -->
+          {{ averageSpeed }}
+        </p>
+        <p class="text-caption">Average Speed Travelled</p>
+      </v-col>
+      <v-col cols="">
+        <p class="text-h6 mb-0 font-weight-bold">
+          <!-- {{ attributes.fuelConsumption }} -->
+          {{ averageFuelConsumption }}
+        </p>
+        <p class="text-caption">Fuel Consumed</p>
+      </v-col>
+      <!-- <v-col cols="">
+          <p class="text-h6 mb-0 font-weight-bold">
+            {{ device ? `Connected` : 'Disconnected' }}
+          </p>
+          <p class="text-caption">Status</p>
+        </v-col> -->
+    </v-row>
+    <MapTrips height="800" :items="trips" />
+    <!-- <v-row>
+      <v-col class="overline d-flex justify-space-between">
+        <p class="mb-0">
+          {{ $dayjs(trip.startTime).format('DD MMMM, YYYY. HH:mmA') }}
+          -
+          {{ $dayjs(trip.endTime).format('DD MMMM, YYYY. HH:mmA') }}
+        </p>
+      </v-col>
+    </v-row> -->
   </DialogHandler>
 </template>
 
 <script>
-import { mapActions, mapState, mapGetters } from 'vuex'
+// import { mapActions, mapState, mapGetters } from 'vuex'
 export default {
   model: {
     event: 'input',
@@ -35,28 +70,28 @@ export default {
       type: String,
       default: '',
     },
+    trips: {
+      type: Array,
+      default: () => [],
+    },
+    stats: {
+      type: Object,
+      default: () => {},
+    },
+    averageSpeed: String,
+    averageDistance: String,
+    averageFuelConsumption: String,
   },
 
-  data() {
-    return {
-      form: {},
-    }
-  },
+  // created() {
+  //   this.getTrip({ id: this.vehicleId, from: this.from, to: this.to })
+  // },
 
-  computed: {
-    ...mapState({
-      trips: (state) => state.trips.all,
-    }),
-    ...mapGetters({
-      gTrips: 'trips/directionsMap',
-    }),
-  },
-
-  methods: {
-    ...mapActions({
-      getTripData: 'trips/getVehicleTrips',
-    }),
-  },
+  // methods: {
+  //   ...mapActions({
+  //     getTrip: 'trips/getSingleTrip',
+  //   }),
+  // },
 }
 </script>
 

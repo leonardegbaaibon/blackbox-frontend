@@ -4,17 +4,17 @@
     :map-config="mapConfig"
     class="rounded-lg"
   >
-    <template v-if="trips.length !== 0" slot-scope="{ google, map }">
+    <template v-if="items.length !== 0" slot-scope="{ google, map }">
       <MapMarkers
-        v-for="(marker, index) in trips"
+        v-for="(marker, index) in items"
         :key="marker.id"
-        :length="trips.length"
+        :length="items.length"
         :index="index"
         :marker="marker"
         :google="google"
         :map="map"
       />
-      <MapPolygons :google="google" :map="map" :markers="trips" />
+      <MapPolygons :google="google" :map="map" :markers="items" />
       <!-- <MapWaypoint :markers="items" :google="google" :map="map" /> -->
     </template>
   </MapHandler>

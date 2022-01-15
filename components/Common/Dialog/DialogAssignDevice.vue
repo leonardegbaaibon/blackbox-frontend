@@ -80,7 +80,7 @@ export default {
 
   methods: {
     ...mapActions({
-      getDevices: 'devices/getDevices',
+      getDevices: 'devices/getUnassignedDevices',
       assignDevice: 'devices/assignDevice',
     }),
     async submit() {
@@ -90,6 +90,8 @@ export default {
           deviceId: this.form.id,
         })
         this.$toast.success(resp.meta.info)
+        this.$emit('input', false)
+        this.$emit('reload')
       } catch (error) {
         console.log('🚀 ~ submit ~ error', error)
         this.$toast.error(error.data.message)
