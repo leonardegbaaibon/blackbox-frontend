@@ -54,9 +54,9 @@ export default {
       form: {
         email:
           process.env.NODE_ENV === 'development'
-            ? 'richardsaseun@gmail.com'
+            ? 'maildaniel.me1@gmail.com'
             : '',
-        password: process.env.NODE_ENV === 'development' ? 'Forces123!' : '',
+        password: process.env.NODE_ENV === 'development' ? 'Password@1' : '',
       },
     }
   },

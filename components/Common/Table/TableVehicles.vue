@@ -50,6 +50,12 @@
         </v-icon>
         <v-icon small @click="$emit('clicked:delete', item)">mdi-delete</v-icon>
       </template>
+      <template #[`item.device`]="{ item }">
+        <v-icon :color="item.device ? 'success' : 'error'" small>
+          {{ item.device ? 'mdi-check-circle' : 'mdi-close-circle' }}
+        </v-icon>
+        {{ item.device ? 'Assigned' : 'Unassigned' }}
+      </template>
       <template #no-data>
         <v-btn color="primary" @click="initialize">Reset</v-btn>
       </template>
@@ -81,6 +87,7 @@ export default {
         { text: 'Model', value: 'vehicleModel' },
         { text: 'Year', value: 'vehicleYear' },
         { text: 'VIN', value: 'vehicleVin' },
+        { text: 'Device connected', value: 'device' },
         { text: 'Created at', value: 'createdAt' },
         { text: 'Actions', value: 'actions', sortable: false },
       ],

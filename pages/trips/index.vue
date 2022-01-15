@@ -1,57 +1,57 @@
 <template>
-  <v-card flat outlined>
-    <v-card-text>
-      <!-- Select Vehicle and Time -->
-      <v-row justify="center" align="center">
-        <v-col sm="12" class="">
-          <v-form>
-            <v-row>
-              <v-col>
-                <FormSelectVehicle
-                  label="Select Vehicle"
-                  :items="vehicles"
-                  @change="selectVehicle"
-                />
-              </v-col>
-              <v-col cols="auto">
-                <FormSelectTime label="Period" @change="setTime" />
-              </v-col>
-            </v-row>
-          </v-form>
-        </v-col>
-      </v-row>
-      <!-- Trips Stats -->
-      <v-row v-if="Object.values(tripData).length > 0">
-        <v-col cols="">
-          <p class="text-h6 mb-0 font-weight-bold">
-            {{ tripData.averageDistance }}
-          </p>
-          <p class="text-caption">Average Distance</p>
-        </v-col>
-        <v-col cols="">
-          <p class="text-h6 mb-0 font-weight-bold">
-            {{ tripData.averageFuelConsumption }}
-          </p>
-          <p class="text-caption">Average Fuel Consumption</p>
-        </v-col>
-        <v-col cols="">
-          <p class="text-h6 mb-0 font-weight-bold">
-            {{ tripData.averageSpeed }}
-          </p>
-          <p class="text-caption">Average Speed</p>
-        </v-col>
-      </v-row>
-      <!-- MapTrips -->
-      <v-row>
-        <v-col>
-          <MapTrips height="600" />
-        </v-col>
-      </v-row>
-    </v-card-text>
-    <v-overlay :value="loading" color="white" app>
-      <v-progress-circular color="primary" indeterminate />
-    </v-overlay>
-  </v-card>
+  <div>
+    <v-card flat outlined>
+      <v-card-text>
+        <!-- Select Vehicle and Time -->
+        <v-row justify="center" align="center">
+          <v-col sm="12" class="">
+            <v-form>
+              <v-row>
+                <v-col>
+                  <FormSelectVehicle
+                    label="Select Vehicle"
+                    :items="vehicles"
+                    @change="selectVehicle"
+                  />
+                </v-col>
+                <v-col cols="auto">
+                  <FormSelectTime label="Period" @change="setTime" />
+                </v-col>
+              </v-row>
+            </v-form>
+          </v-col>
+        </v-row>
+        <!-- Trips List -->
+        <div v-if="trips.length === 0">
+          <v-alert type="warning">{{ error }}</v-alert>
+        </div>
+        <div v-else>
+          <div class="text-h4 text-center my-8">
+            <span class="font-weight-medium primary--text">
+              {{ trips.length }}
+            </span>
+            trips found
+          </div>
+
+          <CardTrip
+            v-for="(trip, index) in trips"
+            :key="index"
+            :trip="trip"
+            class="mb-5"
+            @clicked:open="openTripDialog"
+          />
+        </div>
+      </v-card-text>
+      <v-overlay :value="loading" color="white" app>
+        <v-progress-circular color="primary" indeterminate />
+      </v-overlay>
+    </v-card>
+    <DialogMap
+      v-if="showDialog"
+      v-model="showDialog"
+      v-bind="{ ...tripData }"
+    />
+  </div>
 </template>
 
 <script>
@@ -75,6 +75,7 @@ export default {
       image: '',
       loading: false,
       showDialog: false,
+      error: 'No trips found',
     }
   },
 
@@ -85,7 +86,7 @@ export default {
 
   computed: {
     ...mapState({
-      trips: (state) => state.trips,
+      trips: (state) => state.trips.trips,
       tripData: (state) => state.trips.tripData,
       vehicles: (state) => state.vehicles.all,
     }),
@@ -103,13 +104,19 @@ export default {
       deep: true,
       async handler(newValue, oldValue) {
         if (Object.keys(newValue).every((x) => newValue[x])) {
-          this.loading = true
-          await this.getTrip({
-            id: newValue.chosenVehicle?.vehicleId,
-            from: newValue.time?.value.start,
-            to: newValue.time?.value.end,
-          })
-          this.loading = false
+          try {
+            this.loading = true
+            await this.getTrip({
+              vehicleId: newValue.chosenVehicle?.vehicleId,
+              from: newValue.time?.value.start,
+              to: newValue.time?.value.end,
+            })
+            this.error = 'No trips found'
+            this.loading = false
+          } catch (error) {
+            this.error = error.message
+            this.loading = false
+          }
         }
       },
     },
@@ -124,7 +131,8 @@ export default {
     ...mapActions({
       // getTrips: 'trips/getTrips',
       getVehicles: 'vehicles/getVehicles',
-      getTrip: 'trips/getVehicleTrips',
+      getTrip: 'trips/getTrips',
+      getSingleTrip: 'trips/getSingleTrip',
     }),
 
     selectVehicle(evt) {
@@ -149,13 +157,26 @@ export default {
       // console.log('🚀 ~ evt', evt)
     },
 
-    getTripMethod() {
+    // getTripMethod() {
+    //   this.showDialog = true
+    //   this.getTrip({
+    //     vehicleId: this.form.chosenVehicle.vehicleId,
+    //     from: this.form.time.start,
+    //     to: this.form.time.end,
+    //   })
+    // },
+
+    openTripDialog(evt) {
+      console.log('🚀 ~ openTripDialog ~ evt', evt)
       this.showDialog = true
-      this.getTrip({
+      // const timezone = this.$dayjs.tz.guess()
+      const payload = {
         id: this.form.chosenVehicle.vehicleId,
-        from: this.form.time.start,
-        to: this.form.time.end,
-      })
+        from: this.$dayjs(evt.from).toISOString(),
+        to: this.$dayjs(evt.to).toISOString(),
+      }
+      console.log('🚀 ~ openTripDialog ~ payload', payload)
+      this.getSingleTrip(payload)
     },
   },
 }
