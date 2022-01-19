@@ -89,7 +89,7 @@ export default {
         { text: 'VIN', value: 'vehicleVin' },
         { text: 'Device connected', value: 'device' },
         { text: 'Created at', value: 'createdAt' },
-        { text: 'Actions', value: 'actions', sortable: false },
+        { text: 'Actions', value: 'actions', sortable: false, width: 150 },
       ],
     }
   },

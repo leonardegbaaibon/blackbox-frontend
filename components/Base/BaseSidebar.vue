@@ -1,13 +1,19 @@
 <template>
   <v-navigation-drawer
     v-model="drawer"
-    :mini-variant="false"
-    fixed
+    :mini-variant.sync="mini"
+    permanent
     dark
     app
     color="secondary"
   >
-    <Logo style="margin: 80px 0 50px 24px" class="" />
+    <v-list-item class="px-2">
+      <Logo style="margin: 80px 0 50px 24px" class="" />
+
+      <v-btn icon @click.stop="mini = !mini">
+        <v-icon>mdi-chevron-left</v-icon>
+      </v-btn>
+    </v-list-item>
 
     <v-list class="">
       <v-list-item-group color="white">
@@ -67,6 +73,7 @@ export default {
           to: '/devices',
         },
       ],
+      mini: true,
     }
   },
   computed: {

@@ -90,7 +90,7 @@ export default {
         { text: 'Phone', value: 'driverPhoneNumber' },
         // { text: 'NIN', value: 'driverNin' },
         { text: 'Created at', value: 'createdAt' },
-        { text: 'Actions', value: 'actions', sortable: false },
+        { text: 'Actions', value: 'actions', sortable: false, width: 150 },
       ],
     }
   },

@@ -74,7 +74,7 @@ export default {
         { text: 'Position Id', value: 'positionId' },
         { text: 'Status', value: 'status' },
         { text: 'Unique ID', value: 'uniqueId' },
-        { text: 'Actions', value: 'actions', sortable: false },
+        { text: 'Actions', value: 'actions', sortable: false, width: 150 },
       ],
     }
   },
