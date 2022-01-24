@@ -36,7 +36,7 @@
               .join('-')
               .toLowerCase(),
           ]"
-          size="24"
+          size="12"
           class="mr-3"
         ></v-avatar>
         {{ item.vehicleColor }}
@@ -82,13 +82,13 @@ export default {
           sortable: false,
           value: 'vehicleMake',
         },
-        { text: 'Color', value: 'vehicleColor' },
+        { text: 'Color', value: 'vehicleColor', width: '10%' },
         { text: 'Registration Number', value: 'vehicleRegistrationNumber' },
         { text: 'Model', value: 'vehicleModel' },
         { text: 'Year', value: 'vehicleYear' },
         { text: 'VIN', value: 'vehicleVin' },
-        { text: 'Device connected', value: 'device' },
-        { text: 'Created at', value: 'createdAt' },
+        { text: 'Device connected', value: 'device', width: '15%' },
+        { text: 'Created at', value: 'createdAt', width: '35%' },
         { text: 'Actions', value: 'actions', sortable: false, width: 150 },
       ],
     }

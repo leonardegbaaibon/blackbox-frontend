@@ -17,7 +17,7 @@
         <FormInput
           v-model="form.password"
           label="Password"
-          rules="required|password_check"
+          rules="required"
           type="password"
         >
           <template #label2>
