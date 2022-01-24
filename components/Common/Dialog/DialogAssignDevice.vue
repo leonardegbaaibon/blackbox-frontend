@@ -15,11 +15,11 @@
           label="Devices"
           :items="devices"
           outlined
-          item-text="name"
+          item-text="uniqueId"
           item-value="deviceId"
         >
           <template #selection="{ item }">
-            {{ item.name }} • {{ item.deviceId }}
+            {{ item.name }} • {{ item.uniqueId }}
           </template>
         </v-select>
       </v-form>

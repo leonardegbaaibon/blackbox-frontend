@@ -66,6 +66,7 @@ export default {
     '@nuxtjs/auth-next',
     '@nuxtjs/dayjs',
     '@nuxtjs/toast',
+    'vue-swatches/nuxt',
   ],
 
   toast: {

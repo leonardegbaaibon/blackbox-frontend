@@ -66,7 +66,18 @@
           </v-col>
         </v-row>
         <!-- color picker  -->
-        <FormSelect v-model="form.color" label="Color *" :items="color" />
+        <!-- <FormSelect v-model="form.color" label="Color *" :items="color" /> -->
+        <!-- END color picker  -->
+
+        <!-- new color picker  -->
+        <p
+          class="mb-2 text-uppercase text--black font-weight-bold text-caption"
+        >
+          vehicle color *
+        </p>
+        <v-swatches v-model="color" :swatches="swatches"></v-swatches>
+        <br />
+        {{ colorText }}
         <!-- END color picker  -->
 
         <!-- Owner's Information -->
@@ -110,11 +121,13 @@
 
 <script>
 import { ValidationObserver } from 'vee-validate'
-import COLORS from 'vuetify/lib/util/colors'
-// console.log('🚀 ~ COLORS', COLORS)
+// import COLORS from 'vuetify/lib/util/colors'
+import VSwatches from 'vue-swatches'
+
 export default {
   components: {
     ValidationObserver,
+    VSwatches,
   },
 
   model: {
@@ -149,19 +162,26 @@ export default {
         { text: 'Blue', value: 'blue' },
       ],
       form: {},
-      // form: {
-      //   model: '',
-      //   year: '',
-      //   vin: '',
-      //   color: '',
-      //   registrationNumber: '',
-      //   make: '',
-      //   name: '',
-      //   // owner info
-      //   vehicleOwnerAddress: '',
-      //   vehicleOwnerPhoneNumber: '',
-      //   vehicleOwnerName: '',
-      // },
+      color: '',
+      swatches: [
+        { color: '#A52A2A', label: 'Brown' },
+        { color: '#808080', label: 'Gray' },
+        { color: '#008000', label: 'Green' },
+        { color: '#ffa500', label: 'Orange' },
+        { color: '#ffc0cb', label: 'Pink' },
+        { color: '#800080', label: 'Purple' },
+        { color: '#ff0000', label: 'Red' },
+        { color: '#c0c0c0', label: 'Silver' },
+        { color: '#ffffff', label: 'White' },
+        { color: '#ffff00', label: 'Yellow' },
+        { color: '#f5f5dc', label: 'Beige' },
+        { color: '#ffd700', label: 'Gold' },
+        { color: '#aaa9ad', label: 'SilverMetallic' },
+        { color: '#36454F', label: 'Charcoal' },
+        { color: '#800020', label: 'Burgundy' },
+        { color: '', label: 'Other' },
+        // { color: '#F891A6', label: 'Multi' },
+      ],
     }
   },
 
@@ -169,17 +189,20 @@ export default {
     formTitle() {
       return this.editedIndex === -1 ? 'Create Vehicle' : 'Edit Vehicle'
     },
-    color() {
-      const colorArray = Object.keys(COLORS).map((color) => ({
-        text: color.charAt(0).toUpperCase() + color.slice(1),
-        value: color.charAt(0).toUpperCase() + color.slice(1),
-        color: color
-          .split(/(?=[A-Z])/)
-          .join('-')
-          .toLowerCase(),
-      }))
-      return colorArray
+    colorText() {
+      return this.swatches.find((element) => element.color === this.color).label
     },
+    // color() {
+    //   const colorArray = Object.keys(COLORS).map((color) => ({
+    //     text: color.charAt(0).toUpperCase() + color.slice(1),
+    //     value: color.charAt(0).toUpperCase() + color.slice(1),
+    //     color: color
+    //       .split(/(?=[A-Z])/)
+    //       .join('-')
+    //       .toLowerCase(),
+    //   }))
+    //   return colorArray
+    // },
   },
 
   watch: {
@@ -225,14 +248,11 @@ export default {
         // create vehicle
         this.$refs.observer.validate().then((success) => {
           if (success) {
-            this.$emit('clicked:ok', this.form)
+            const { color, ...form } = this.form
+            this.$emit('clicked:ok', { ...form, color: this.colorText })
           }
         })
       }
-    },
-
-    changeColor(evt) {
-      console.log('🚀 ~ changeColor ~ evt', evt)
     },
   },
 }

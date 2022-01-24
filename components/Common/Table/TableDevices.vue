@@ -30,18 +30,36 @@
       </template>
       <template #[`item.status`]="{ item }">
         <v-chip
+          v-if="item.status === 'offline'"
           small
-          :color="item.status === 'offline' ? 'error' : 'success'"
           class="text-overline"
+          color="error"
         >
           {{ item.status }}
         </v-chip>
+        <v-chip
+          v-else-if="item.status === 'online'"
+          small
+          class="text-overline"
+          color="success"
+        >
+          {{ item.status }}
+        </v-chip>
+        <v-chip v-else small class="text-overline" color="warning">
+          {{ item.status }}
+        </v-chip>
       </template>
-      <template #[`item.actions`]="{ item }">
+      <!-- <template #[`item.actions`]="{ item }">
         <v-icon small class="mr-2" @click="$emit('clicked:edit', item)">
           mdi-pencil
         </v-icon>
         <v-icon small @click="$emit('clicked:delete', item)">mdi-delete</v-icon>
+      </template> -->
+      <template #[`item.disabled`]="{ item }">
+        <v-icon v-if="!item.disabled" small class="mr-2">
+          mdi-close-circle-outline
+        </v-icon>
+        <v-icon v-else small class="mr-2">mdi-check-circle-outline</v-icon>
       </template>
       <template #no-data>
         <v-btn color="primary" @click="initialize">Reset</v-btn>
@@ -63,20 +81,28 @@ export default {
     return {
       search: '',
       headers: [
-        {
-          text: 'Device Id',
-          align: 'start',
-          sortable: false,
-          value: 'deviceId',
-        },
-        { text: 'Name', value: 'name' },
-        { text: 'Disabled', value: 'disabled' },
-        { text: 'Position Id', value: 'positionId' },
+        // {
+        //   text: 'Device Id',
+        //   align: 'start',
+        //   sortable: false,
+        //   value: 'deviceId',
+        // },
+        { text: 'Name', value: 'name', align: 'start' },
+        // { text: 'Position Id', value: 'positionId' },
         { text: 'Status', value: 'status' },
         { text: 'Unique ID', value: 'uniqueId' },
-        { text: 'Actions', value: 'actions', sortable: false, width: 150 },
+        // { text: 'Disabled', value: 'disabled' },
+        // { text: 'Actions', value: 'actions', sortable: false, width: 150 },
       ],
     }
+  },
+
+  computed: {
+    computedColor() {
+      let color
+      // if()
+      return color
+    },
   },
 
   methods: {},
