@@ -89,7 +89,7 @@ export default {
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    baseURL: 'https://blackbox-server-deploy.herokuapp.com/v1',
+    baseURL: 'https://staging-blackbox-tsaron.herokuapp.com/v2',
   },
 
   auth: {

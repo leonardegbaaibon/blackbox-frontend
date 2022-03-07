@@ -1,10 +1,9 @@
 <template>
   <DialogHandler
-    :title="formTitle"
+    :title="title"
     subtitle="Enter vehicle and vehicle owner's details to create one"
     :value="value"
-    :ok-button="formTitle"
-    :ok-disabled="editedIndex === -1 ? true : false"
+    :ok-button="title"
     :loading="loading"
     @input="$emit('input', $event)"
     @clicked:ok="submit"
@@ -144,25 +143,36 @@ export default {
       type: Boolean,
       default: false,
     },
-    editedIndex: {
-      type: Number,
-      default: -1,
-    },
-    model: {
+    vehicle: {
       type: Object,
       default: () => {},
+    },
+    title: {
+      type: String,
+      default: 'Create',
+    },
+    subtitle: {
+      type: String,
+      default: "Enter device's details to create one",
     },
   },
 
   data() {
     return {
-      colorItems: [
-        { text: 'Red', value: 'red' },
-        { text: 'Green', value: 'green' },
-        { text: 'Blue', value: 'blue' },
-      ],
-      form: {},
-      color: '',
+      form: {
+        model: this.vehicle?.vehicleModel || '',
+        year: this.vehicle?.vehicleYear || '',
+        vin: this.vehicle?.vehicleVin || '',
+        color: this.vehicle?.vehicleColor || '',
+        registrationNumber: this.vehicle?.vehicleRegistrationNumber || '',
+        make: this.vehicle?.vehicleMake || '',
+        name: this.vehicle?.vehicleName || '',
+        // owner info
+        vehicleOwnerAddress: this.vehicle?.vehicleOwnerAddress || '',
+        vehicleOwnerPhoneNumber: this.vehicle?.vehicleOwnerPhoneNumber || '',
+        vehicleOwnerName: this.vehicle?.vehicleOwnerName || '',
+      },
+      color: this.vehicle?.vehicleColor || '',
       swatches: [
         { color: '#A52A2A', label: 'Brown' },
         { color: '#808080', label: 'Gray' },
@@ -186,75 +196,57 @@ export default {
   },
 
   computed: {
-    formTitle() {
-      return this.editedIndex === -1 ? 'Create Vehicle' : 'Edit Vehicle'
-    },
-    colorText() {
-      return this.swatches.find((element) => element.color === this.color).label
-    },
-    // color() {
-    //   const colorArray = Object.keys(COLORS).map((color) => ({
-    //     text: color.charAt(0).toUpperCase() + color.slice(1),
-    //     value: color.charAt(0).toUpperCase() + color.slice(1),
-    //     color: color
-    //       .split(/(?=[A-Z])/)
-    //       .join('-')
-    //       .toLowerCase(),
-    //   }))
-    //   return colorArray
+    // colorText() {
+    //   return this.swatches.find((element) => element.color === this.color).label
     // },
   },
 
-  watch: {
-    model: {
-      // immediate: true,
-      handler(newValue, oldValue) {
-        if (this.editedIndex === -1) {
-          // create
-          this.form = {
-            ...newValue,
-          }
-        } else {
-          // edit
-          this.form = {
-            ...newValue,
-          }
-        }
-      },
-    },
-  },
-
-  created() {
-    this.form = Object.assign({}, this.model)
-  },
+  // watch: {
+  //   model: {
+  //     // immediate: true,
+  //     handler(newValue, oldValue) {
+  //       if (this.editedIndex === -1) {
+  //         // create
+  //         this.form = {
+  //           ...newValue,
+  //         }
+  //       } else {
+  //         // edit
+  //         this.form = {
+  //           ...newValue,
+  //         }
+  //       }
+  //     },
+  //   },
+  // },
 
   methods: {
     submit() {
-      if (this.editedIndex !== -1) {
-        // edit vehicle
-        this.$refs.observer.validate().then((success) => {
-          if (success) {
-            const { updatedAt, createdAt, device, ...rest } = this.form
-            const updatedPayload = {
-              id: this.model.vehicleId,
-              payload: {
-                ...rest,
-              },
-            }
-            this.$emit('clicked:edit', updatedPayload)
-          }
-        })
-      } else {
-        // create vehicle
-        this.$refs.observer.validate().then((success) => {
-          if (success) {
-            const { color, ...form } = this.form
-            this.$emit('clicked:ok', { ...form, color: this.colorText })
-          }
-        })
-      }
+      // if (this.editedIndex !== -1) {
+      //   // edit vehicle
+      //   this.$refs.observer.validate().then((success) => {
+      //     if (success) {
+      //       const { updatedAt, createdAt, device, ...rest } = this.form
+      //       const updatedPayload = {
+      //         id: this.model.vehicleId,
+      //         payload: {
+      //           ...rest,
+      //         },
+      //       }
+      //       this.$emit('clicked:edit', updatedPayload)
+      //     }
+      //   })
+      // } else {
+      // create vehicle
+      this.$refs.observer.validate().then((success) => {
+        if (success) {
+          const { color, ...form } = this.form
+          this.$emit('clicked:ok', { ...form, color: this.colorText })
+        }
+      })
     },
   },
+  // },
 }
 </script>
 

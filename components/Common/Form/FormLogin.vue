@@ -53,10 +53,11 @@ export default {
     return {
       form: {
         email:
+          process.env.NODE_ENV === 'development' ? 'gigrcontact@gmail.com' : '',
+        password:
           process.env.NODE_ENV === 'development'
-            ? 'maildaniel.me1@gmail.com'
+            ? 'Glanks_integrated_global_resources'
             : '',
-        password: process.env.NODE_ENV === 'development' ? 'Password@1' : '',
       },
     }
   },

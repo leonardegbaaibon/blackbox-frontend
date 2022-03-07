@@ -16,19 +16,28 @@
         v-else
         :items="vehicles"
         @clicked="openCreateDialog"
-        @clicked:edit="openEditDialog"
+        @clicked:edit="openEdit"
         @clicked:delete="openDeleteDialog"
       />
     </v-col>
 
     <!-- Dialogs -->
+    <!-- create dialog -->
     <DialogVehicle
+      v-if="dialog"
       v-model="dialog"
+      title="Create Device"
       :loading="loading"
-      :model="vehicleModel"
-      :edited-index="editedIndex"
       @clicked:ok="create"
-      @clicked:edit="edit"
+    />
+    <!-- edit Dialog -->
+    <DialogVehicle
+      v-if="editDialog"
+      v-model="editDialog"
+      title="Edit Device"
+      :loading="loading"
+      :vehicle="selectedVehicle"
+      @clicked:ok="edit"
     />
     <DialogPrompt ref="prompt" v-model="showPrompt" />
   </v-row>
@@ -44,35 +53,10 @@ export default {
     return {
       // vehicles: '',
       showPrompt: false,
-      editedIndex: -1,
       dialog: false,
+      editDialog: false,
       loading: false,
-      vehicleModel: {
-        model: '',
-        year: '',
-        vin: '',
-        color: '',
-        registrationNumber: '',
-        make: '',
-        name: '',
-        // owner info
-        vehicleOwnerAddress: '',
-        vehicleOwnerPhoneNumber: '',
-        vehicleOwnerName: '',
-      },
-      defaultVehicleModel: {
-        model: '',
-        year: '',
-        vin: '',
-        color: '',
-        registrationNumber: '',
-        make: '',
-        name: '',
-        // owner info
-        vehicleOwnerAddress: '',
-        vehicleOwnerPhoneNumber: '',
-        vehicleOwnerName: '',
-      },
+      selectedVehicle: {},
     }
   },
 
@@ -94,6 +78,11 @@ export default {
       editVehicle: 'vehicles/updateVehicle',
       deleteVehicle: 'vehicles/deleteVehicle',
     }),
+
+    openEdit(evt) {
+      this.editDialog = true
+      this.selectedVehicle = evt
+    },
 
     create(evt) {
       this.loading = true
@@ -133,16 +122,8 @@ export default {
     },
 
     openCreateDialog() {
-      this.editedIndex = -1
-      this.vehicleModel = Object.assign({}, this.defaultVehicleModel)
-      this.dialog = true
-    },
-
-    openEditDialog(evt) {
-      this.editedIndex = this.vehicles
-        .map((e) => e.vehicleId)
-        .indexOf(evt.vehicleId)
-      this.vehicleModel = Object.assign({}, evt)
+      // this.editedIndex = -1
+      // this.vehicleModel = Object.assign({}, this.defaultVehicleModel)
       this.dialog = true
     },
 

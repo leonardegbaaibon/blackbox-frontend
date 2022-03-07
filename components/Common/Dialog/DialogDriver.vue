@@ -77,7 +77,7 @@
         />
 
         <!-- Guarantor's Information -->
-        <p
+        <!-- <p
           class="primary--text mt-5 text-overline font-weight-bold text-center"
         >
           Guarantor's Information
@@ -110,15 +110,7 @@
               type="tel"
             />
           </v-col>
-          <!-- <v-col class="pb-0">
-            <FormInput
-              v-model="form.driverQuarantorPhoneNumber[1]"
-              label="Guarantor Alternate Phone Number"
-              rules="digits:11"
-              type="tel"
-            />
-          </v-col> -->
-        </v-row>
+        </v-row> -->
       </v-form>
     </ValidationObserver>
   </DialogHandler>
