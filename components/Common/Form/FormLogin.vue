@@ -25,10 +25,6 @@
           </template>
         </FormInput>
         <FormButton block :loading="loading" type="submit">Login</FormButton>
-        <p class="mb-0 mt-7 text-center">
-          Don’t have an account?
-          <a class="font-weight-bold" @click="$emit('click:switch')">Sign up</a>
-        </p>
       </v-form>
     </ValidationObserver>
   </CardAuth>
