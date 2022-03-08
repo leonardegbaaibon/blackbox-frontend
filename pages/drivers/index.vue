@@ -9,7 +9,7 @@
       <CardNoState
         v-else-if="drivers.length === 0"
         button-text="New Driver"
-        @clicked="openCreateDialog"
+        @clicked="dialog = true"
       ></CardNoState>
       <TableDrivers
         v-else
@@ -117,7 +117,7 @@ export default {
           this.$toast.success('Driver successfully updated')
         })
         .catch((error) => {
-          this.$toast.error(error.data.message)
+          this.$toast.error(error.data.message || error.message)
         })
         .finally(() => {
           this.loading = false

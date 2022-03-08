@@ -10,12 +10,12 @@
         v-else-if="vehicles.length === 0"
         title="No vehicles created yet"
         button-text="New Vehicle"
-        @clicked="openCreateDialog"
+        @clicked="dialog = true"
       ></CardNoState>
       <TableVehicles
         v-else
         :items="vehicles"
-        @clicked="openCreateDialog"
+        @clicked="dialog = true"
         @clicked:edit="openEdit"
         @clicked:delete="openDeleteDialog"
       />
@@ -26,7 +26,7 @@
     <DialogVehicle
       v-if="dialog"
       v-model="dialog"
-      title="Create Device"
+      title="Create Vehicle"
       :loading="loading"
       @clicked:ok="create"
     />
@@ -34,7 +34,7 @@
     <DialogVehicle
       v-if="editDialog"
       v-model="editDialog"
-      title="Edit Device"
+      title="Edit Vehicle"
       :loading="loading"
       :vehicle="selectedVehicle"
       @clicked:ok="edit"
@@ -86,7 +86,7 @@ export default {
 
     create(evt) {
       this.loading = true
-      this.createVehicle(evt)
+      this.createVehicle({ ...evt, make: evt.make.name })
         .then((resp) => {
           this.dialog = false
           this.$toast.success('Vehicle successfully created')
@@ -104,7 +104,7 @@ export default {
 
     edit(evt) {
       this.loading = true
-      this.editVehicle(evt)
+      this.editVehicle({ id: this.selectedVehicle.vehicleId, payload: evt })
         .then((resp) => {
           console.log('🚀 ~ .then ~ resp', resp)
           this.dialog = false
@@ -119,12 +119,6 @@ export default {
         .finally(() => {
           this.loading = false
         })
-    },
-
-    openCreateDialog() {
-      // this.editedIndex = -1
-      // this.vehicleModel = Object.assign({}, this.defaultVehicleModel)
-      this.dialog = true
     },
 
     openDeleteDialog(evt) {

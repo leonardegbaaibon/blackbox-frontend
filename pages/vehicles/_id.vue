@@ -12,7 +12,7 @@
           @clicked:assign="openAssign"
           @clicked:unassign="openUnassign"
         ></CardCar>
-        <!-- <MapVehicle class="" height="500" :marker="trips[trips.length - 1]" /> -->
+        <MapVehicle class="" height="500" :marker="trips[trips.length - 1]" />
 
         <!-- Dialogs -->
         <DialogAssignDevice

@@ -141,13 +141,13 @@ export default {
   publicRuntimeConfig: {
     baseURL: process.env.BASE_URL,
     mapsKey:
-      process.env.MAPS_API_KEY || 'AIzaSyBkqE0PkQC2o7dnPVaaO6M7uF-d_NXXyyc',
+      process.env.MAPS_API_KEY || 'AIzaSyDbBTLvWhFpBeu5eJuy1hx0BceEsJTI6qU',
     carsURL: process.env.CARS_API_KEY,
   },
 
   privateRuntimeConfig: {
     mapsKey:
-      process.env.MAPS_API_KEY || 'AIzaSyBkqE0PkQC2o7dnPVaaO6M7uF-d_NXXyyc',
+      process.env.MAPS_API_KEY || 'AIzaSyDbBTLvWhFpBeu5eJuy1hx0BceEsJTI6qU',
     carsURL: process.env.CARS_API_KEY,
   },
 

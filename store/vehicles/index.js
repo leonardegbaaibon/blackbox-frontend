@@ -45,10 +45,10 @@ export const actions = {
     }
   },
 
-  async updateVehicle({ commit, dispatch }, payload) {
+  async updateVehicle({ commit, dispatch }, { id, payload }) {
     commit('SET_PROCESS', 'vehicles/updateVehicle', { root: true })
     try {
-      const resp = await this.$axios.$patch(`vehicles/${payload.id}`, payload)
+      const resp = await this.$axios.$patch(`vehicles/${id}`, payload)
       dispatch('getVehicles')
       return resp
     } catch (error) {
@@ -61,6 +61,30 @@ export const actions = {
     try {
       const resp = await this.$axios.$delete(`vehicles/${payload.id}`)
       dispatch('getVehicles')
+      return resp
+    } catch (error) {
+      throw error
+    }
+  },
+
+  async getMakes({ commit, dispatch }) {
+    commit('SET_PROCESS', 'vehicles/getMakes', { root: true })
+    try {
+      const resp = await this.$api.$get(`Generic/cheki/car-make`, {
+        baseUrl: 'https://api.axamansard.com/api/insurance',
+      })
+      return resp
+    } catch (error) {
+      throw error
+    }
+  },
+
+  async getModels({ commit, dispatch }, payload) {
+    commit('SET_PROCESS', 'vehicles/getModels', { root: true })
+    try {
+      const resp = await this.$api.$get(`Generic/cheki/car-model/${payload}`, {
+        baseUrl: 'https://api.axamansard.com/api/insurance',
+      })
       return resp
     } catch (error) {
       throw error

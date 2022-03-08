@@ -18,6 +18,7 @@
     <v-text-field
       single-line
       :readonly="readonly"
+      :prefix="prefix"
       :error-messages="errors"
       :value="value"
       :placeholder="placeholder"
@@ -133,6 +134,10 @@ export default {
     hideDetails: {
       type: [String, Boolean],
       default: false,
+    },
+    prefix: {
+      type: String,
+      default: '',
     },
   },
 }
