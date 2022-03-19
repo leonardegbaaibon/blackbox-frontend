@@ -15,20 +15,29 @@
       <TableTerminals
         v-else
         :items="terminals"
-        @clicked="openCreateDialog"
-        @clicked:edit="openEditDialog"
+        @clicked="dialog = true"
+        @clicked:edit="openEdit"
         @clicked:delete="openDeleteDialog"
       />
     </v-col>
 
     <!-- Dialogs -->
+    <!-- create dialog -->
     <DialogTerminal
+      v-if="dialog"
       v-model="dialog"
-      :model="terminalModel"
-      :edited-index="editedIndex"
+      title="Create Terminal"
       :loading="loading"
       @clicked:ok="create"
-      @clicked:edit="edit"
+    />
+    <!-- edit Dialog -->
+    <DialogTerminal
+      v-if="editDialog"
+      v-model="editDialog"
+      title="Edit Terminal"
+      :loading="loading"
+      :terminal="selectedTerminal"
+      @clicked:ok="edit"
     />
     <DialogPrompt ref="prompt" v-model="showPrompt" />
   </v-row>
@@ -44,27 +53,10 @@ export default {
     return {
       // terminals: [],
       dialog: false,
+      editDialog: false,
       loading: false,
       showPrompt: false,
-      editedIndex: -1,
-      terminalModel: {
-        terminalName: '',
-        terminalAddress: '',
-        terminalState: '',
-        terminalManager: '',
-        terminalEmail: '',
-        // to turn to array
-        terminalPhoneNumber: ['', ''],
-      },
-      defaultTerminalModel: {
-        terminalName: '',
-        terminalAddress: '',
-        terminalState: '',
-        terminalManager: '',
-        terminalEmail: '',
-        // to turn to array
-        terminalPhoneNumber: ['', ''],
-      },
+      selectedTerminal: {},
     }
   },
 
@@ -87,9 +79,18 @@ export default {
       deleteTerminal: 'terminals/deleteTerminal',
     }),
 
+    openEdit(evt) {
+      this.editDialog = true
+      this.selectedTerminal = evt
+    },
+
     create(evt) {
+      console.log('🚀 ~ create ~ evt', evt)
       this.loading = true
-      this.createTerminal(evt)
+      this.createTerminal({
+        ...evt,
+        terminalPhoneNumber: [evt.terminalPhoneNumber],
+      })
         .then(() => {
           this.dialog = false
           this.$toast.success('Terminal successfully created')
@@ -103,36 +104,23 @@ export default {
     },
 
     edit(evt) {
+      console.log('🚀 ~ edit ~ evt', evt)
       this.loading = true
-      this.editTerminal(evt)
+      this.editTerminal({
+        id: this.selectedTerminal.terminalId,
+        payload: { ...evt, terminalPhoneNumber: [evt.terminalPhoneNumber] },
+      })
         .then((resp) => {
           console.log('🚀 ~ .then ~ resp', resp)
-          this.dialog = false
+          this.editDialog = false
           this.$toast.success('Terminal successfully updated')
         })
         .catch((error) => {
-          // console.log('🚀 ~ create ~ errors', errors)
-          // errors.data.message.forEach((error) => {
           this.$toast.error(error.data.message)
-          // })
         })
         .finally(() => {
           this.loading = false
         })
-    },
-
-    openCreateDialog() {
-      this.editedIndex = -1
-      this.terminalModel = Object.assign({}, this.defaultTerminalModel)
-      this.dialog = true
-    },
-
-    openEditDialog(evt) {
-      this.editedIndex = this.terminals
-        .map((e) => e.terminalId)
-        .indexOf(evt.terminalId)
-      this.terminalModel = Object.assign({}, evt)
-      this.dialog = true
     },
 
     openDeleteDialog(evt) {

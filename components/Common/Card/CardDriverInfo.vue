@@ -5,18 +5,18 @@
         <v-col cols="12" class="d-flex align-center">
           <v-avatar size="60" color="primary"></v-avatar>
           <div class="ml-4">
-            <p class="mb-1">Created at</p>
+            <p class="mb-1">Full Name</p>
             <p class="mb-0 font-weight-bold text-subtitle-1">
-              {{ $dayjs(createdAt).format('Do MMMM, YYYY') }}
+              {{ driverName }}
             </p>
           </div>
         </v-col>
         <!-- ============ -->
         <v-col cols="12">
           <div class="">
-            <p class="mb-1">Full Name</p>
+            <p class="mb-1">Created on</p>
             <p class="mb-0 font-weight-bold text-subtitle-1">
-              {{ driverName }}
+              {{ $dayjs(createdAt).format('Do MMMM, YYYY') }}
             </p>
           </div>
         </v-col>
@@ -52,8 +52,18 @@
           <div class="">
             <p class="mb-1">License</p>
             <v-chip class="" color="primary" label outlined>
-              {{ driverNin }}
+              {{ driverLicenseNumber }}
             </v-chip>
+          </div>
+        </v-col>
+        <!-- ============ -->
+        <!-- ============ -->
+        <v-col cols="12">
+          <div class="">
+            <p class="mb-1">License Expiry Date</p>
+            <p class="mb-0 font-weight-bold text-subtitle-1">
+              {{ $dayjs(driverLicenseExpiryDate).format('DD MMMM, YYYY') }}
+            </p>
           </div>
         </v-col>
         <!-- ============ -->

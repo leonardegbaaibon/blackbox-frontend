@@ -16,6 +16,8 @@
       </div>
     </div>
     <v-select
+      :item-text="itemText"
+      :item-value="itemValue"
       :items="items"
       single-line
       :readonly="readonly"
@@ -154,6 +156,14 @@ export default {
     hideDetails: {
       type: [String, Boolean],
       default: false,
+    },
+    itemText: {
+      type: String,
+      default: '',
+    },
+    itemValue: {
+      type: String,
+      default: '',
     },
   },
 }

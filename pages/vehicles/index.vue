@@ -10,27 +10,37 @@
         v-else-if="vehicles.length === 0"
         title="No vehicles created yet"
         button-text="New Vehicle"
-        @clicked="openCreateDialog"
+        @clicked="dialog = true"
       ></CardNoState>
       <TableVehicles
         v-else
         :items="vehicles"
-        @clicked="openCreateDialog"
-        @clicked:edit="openEditDialog"
+        @clicked="dialog = true"
+        @clicked:edit="openEdit"
         @clicked:delete="openDeleteDialog"
       />
     </v-col>
 
     <!-- Dialogs -->
+    <!-- create dialog -->
     <DialogVehicle
+      v-if="dialog"
       v-model="dialog"
+      title="Create Vehicle"
       :loading="loading"
-      :model="vehicleModel"
-      :edited-index="editedIndex"
       @clicked:ok="create"
-      @clicked:edit="edit"
+    />
+    <!-- edit Dialog -->
+    <DialogVehicle
+      v-if="editDialog"
+      v-model="editDialog"
+      title="Edit Vehicle"
+      :loading="loading"
+      :vehicle="selectedVehicle"
+      @clicked:ok="edit"
     />
     <DialogPrompt ref="prompt" v-model="showPrompt" />
+    <!-- <v-btn @click="getMessage">Send message</v-btn> -->
   </v-row>
 </template>
 
@@ -44,35 +54,12 @@ export default {
     return {
       // vehicles: '',
       showPrompt: false,
-      editedIndex: -1,
       dialog: false,
+      editDialog: false,
       loading: false,
-      vehicleModel: {
-        model: '',
-        year: '',
-        vin: '',
-        color: '',
-        registrationNumber: '',
-        make: '',
-        name: '',
-        // owner info
-        vehicleOwnerAddress: '',
-        vehicleOwnerPhoneNumber: '',
-        vehicleOwnerName: '',
-      },
-      defaultVehicleModel: {
-        model: '',
-        year: '',
-        vin: '',
-        color: '',
-        registrationNumber: '',
-        make: '',
-        name: '',
-        // owner info
-        vehicleOwnerAddress: '',
-        vehicleOwnerPhoneNumber: '',
-        vehicleOwnerName: '',
-      },
+      selectedVehicle: {},
+
+      message: '',
     }
   },
 
@@ -87,7 +74,34 @@ export default {
     }),
   },
 
+  // mounted() {
+  //   this.socket = this.$nuxtSocket({
+  //     persist: 'chatSocket',
+  //     channel: '/',
+  //   })
+
+  //   this.socket.on('chat_message', (msg, cb) => {
+  //     /* Handle event */
+  //     console.log('🚀 ~ this.socket.on ~ msg', msg)
+  //     console.log('🚀 ~ this.socket.on ~ cb', cb)
+  //   })
+  // },
+
+  // created() {
+  //   console.log('dayjs', this.$dayjs().startOf('day').toISOString())
+  // },
+
   methods: {
+    // getMessage() {
+    //   return new Promise((resolve) => {
+    //     this.socket.emit('chat_message', { id: 'abc123' }, (resp) => {
+    //       console.log('🚀 ~ this.socket.emit ~ resp', resp)
+    //       // this.messageRxd = resp
+    //       resolve()
+    //     })
+    //   })
+    // },
+
     ...mapActions({
       getVehicles: 'vehicles/getVehicles',
       createVehicle: 'vehicles/createVehicle',
@@ -95,9 +109,14 @@ export default {
       deleteVehicle: 'vehicles/deleteVehicle',
     }),
 
+    openEdit(evt) {
+      this.editDialog = true
+      this.selectedVehicle = evt
+    },
+
     create(evt) {
       this.loading = true
-      this.createVehicle(evt)
+      this.createVehicle({ ...evt, make: evt.make.name })
         .then((resp) => {
           this.dialog = false
           this.$toast.success('Vehicle successfully created')
@@ -115,7 +134,7 @@ export default {
 
     edit(evt) {
       this.loading = true
-      this.editVehicle(evt)
+      this.editVehicle({ id: this.selectedVehicle.vehicleId, payload: evt })
         .then((resp) => {
           console.log('🚀 ~ .then ~ resp', resp)
           this.dialog = false
@@ -130,20 +149,6 @@ export default {
         .finally(() => {
           this.loading = false
         })
-    },
-
-    openCreateDialog() {
-      this.editedIndex = -1
-      this.vehicleModel = Object.assign({}, this.defaultVehicleModel)
-      this.dialog = true
-    },
-
-    openEditDialog(evt) {
-      this.editedIndex = this.vehicles
-        .map((e) => e.vehicleId)
-        .indexOf(evt.vehicleId)
-      this.vehicleModel = Object.assign({}, evt)
-      this.dialog = true
     },
 
     openDeleteDialog(evt) {

@@ -89,7 +89,7 @@ export default {
         { text: 'License', value: 'driverLicenseNumber' },
         { text: 'Phone', value: 'driverPhoneNumber' },
         // { text: 'NIN', value: 'driverNin' },
-        { text: 'Created at', value: 'createdAt' },
+        { text: 'Created on', value: 'createdAt' },
         { text: 'Actions', value: 'actions', sortable: false, width: 150 },
       ],
     }

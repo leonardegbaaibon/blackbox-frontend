@@ -20,8 +20,6 @@ export default {
   data() {
     return {
       driver: null,
-      // history: null,
-      // dialog: false,
       loading: false,
     }
   },

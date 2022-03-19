@@ -23,28 +23,17 @@
     >
       <template #selection="{ item }">
         <v-chip>
-          <v-avatar
-            left
-            :color="item.vehicleColor.split(/(?=[A-Z])/)
-          .join('-')
-          .toLowerCase(),"
-          >
-            <!-- <v-img :src="data.item.avatar"></v-img> -->
-          </v-avatar>
           {{ item.vehicleMake }}
-          {{ item.vehicleModel }} - {{ item.vehicleYear }}
+          {{ item.vehicleModel }} - {{ item.vehicleRegistrationNumber }}
         </v-chip>
       </template>
       <template #item="{ item }">
-        <v-list-item-avatar>
-          <v-icon class="primary lighten-1" dark>mdi-car</v-icon>
-        </v-list-item-avatar>
         <v-list-item-content>
           <v-list-item-title class="font-weight-bold">
-            {{ item.vehicleMake }}
+            {{ item.vehicleMake }} {{ `${item.vehicleModel}` }}
           </v-list-item-title>
           <v-list-item-subtitle>
-            {{ `${item.vehicleModel}, ${item.vehicleYear}` }}
+            {{ `${item.vehicleRegistrationNumber}` }}
           </v-list-item-subtitle>
         </v-list-item-content>
       </template>

@@ -34,7 +34,7 @@
     <DialogDevice
       v-if="editDialog"
       v-model="editDialog"
-      title="Create Device"
+      title="Edit Device"
       :loading="loading"
       :device="selectedDevice"
       @clicked:ok="edit"
@@ -101,7 +101,7 @@ export default {
 
     edit(evt) {
       this.loading = true
-      this.editTerminal(evt)
+      this.editDevice(evt)
         .then((resp) => {
           console.log('🚀 ~ .then ~ resp', resp)
           this.dialog = false

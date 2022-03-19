@@ -25,10 +25,6 @@
           </template>
         </FormInput>
         <FormButton block :loading="loading" type="submit">Login</FormButton>
-        <p class="mb-0 mt-7 text-center">
-          Don’t have an account?
-          <a class="font-weight-bold" @click="$emit('click:switch')">Sign up</a>
-        </p>
       </v-form>
     </ValidationObserver>
   </CardAuth>
@@ -53,10 +49,11 @@ export default {
     return {
       form: {
         email:
+          process.env.NODE_ENV === 'development' ? 'gigrcontact@gmail.com' : '',
+        password:
           process.env.NODE_ENV === 'development'
-            ? 'maildaniel.me1@gmail.com'
+            ? 'Glanks_integrated_global_resources'
             : '',
-        password: process.env.NODE_ENV === 'development' ? 'Password@1' : '',
       },
     }
   },

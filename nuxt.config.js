@@ -67,7 +67,45 @@ export default {
     '@nuxtjs/dayjs',
     '@nuxtjs/toast',
     'vue-swatches/nuxt',
+    'nuxt-socket-io',
   ],
+
+  // Socket IO options
+  io: {
+    server: {
+      // @ts-ignore
+      cors: {
+        credentials: true, // "Configures the Access-Control-Allow-Credentials CORS header. Set to true to pass the header, otherwise it is omitted."
+        origin: [
+          'https://nuxt-socket-io.herokuapp.com',
+          'http://localhost:3000',
+          'https://nuxt-socket-io.netlify.app',
+        ], // Array of whitelisted origin(s)
+      },
+    },
+    // Options
+    sockets: [
+      {
+        name: 'test',
+        url: 'http://localhost:3003',
+        default: true,
+        // vuex: {
+        //   mutations: [
+        //     // Alternatively, use arrow syntax
+        //     'chat_message --> socket/SET_DATA', // S/A
+        //   ],
+        //   actions: [
+        //     // When "chatMessage" is received,
+        //     // dispatch action "FORMAT_MESSAGE"
+        //     'chat_message --> DATA_ACTION',
+        //   ],
+        // },
+        // namespaces: {
+        //   /* see section below */
+        // },
+      },
+    ],
+  },
 
   toast: {
     position: 'top-right',
@@ -89,15 +127,15 @@ export default {
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    baseURL: 'https://blackbox-server-deploy.herokuapp.com/v1',
+    baseURL: 'https://blackbox-tsaron.herokuapp.com/v2',
   },
 
   auth: {
     redirect: {
       login: '/',
       logout: '/',
-      callback: '/',
-      home: '/dashboard',
+      callback: '/vehicles',
+      home: '/vehicles',
     },
 
     strategies: {
@@ -125,8 +163,8 @@ export default {
   // Optional
   dayjs: {
     // locales: ['en', 'ja'],
-    // defaultLocale: 'en',
-    // defaultTimeZone: 'Asia/Tokyo',
+    defaultLocale: 'en',
+    defaultTimeZone: 'Africa/Lagos',
     plugins: [
       'customParseFormat', // import 'dayjs/plugin/customParseFormat'
       'advancedFormat', // import 'dayjs/plugin/advancedFormat'
@@ -141,13 +179,13 @@ export default {
   publicRuntimeConfig: {
     baseURL: process.env.BASE_URL,
     mapsKey:
-      process.env.MAPS_API_KEY || 'AIzaSyBkqE0PkQC2o7dnPVaaO6M7uF-d_NXXyyc',
+      process.env.MAPS_API_KEY || 'AIzaSyDbBTLvWhFpBeu5eJuy1hx0BceEsJTI6qU',
     carsURL: process.env.CARS_API_KEY,
   },
 
   privateRuntimeConfig: {
     mapsKey:
-      process.env.MAPS_API_KEY || 'AIzaSyBkqE0PkQC2o7dnPVaaO6M7uF-d_NXXyyc',
+      process.env.MAPS_API_KEY || 'AIzaSyDbBTLvWhFpBeu5eJuy1hx0BceEsJTI6qU',
     carsURL: process.env.CARS_API_KEY,
   },
 

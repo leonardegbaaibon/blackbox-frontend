@@ -15,7 +15,7 @@ export const actions = {
   async getDevices({ commit }) {
     commit('SET_PROCESS', 'devices/getDevices', { root: true })
     try {
-      const resp = await this.$axios.$get('admin.devices')
+      const resp = await this.$axios.$get('devices')
       commit('SET_DEVICES', resp.data)
       return resp
     } catch (error) {
@@ -26,7 +26,7 @@ export const actions = {
   async createDevice({ commit, dispatch }, payload) {
     commit('SET_PROCESS', 'devices/createDevices', { root: true })
     try {
-      const resp = await this.$axios.$post('admin.devices', payload)
+      const resp = await this.$axios.$post('devices', payload)
       dispatch('getDevices')
       return resp
     } catch (error) {
@@ -37,7 +37,7 @@ export const actions = {
   async getOneDevice({ commit }, payload) {
     commit('SET_PROCESS', 'devices/getOneDevice', { root: true })
     try {
-      const resp = await this.$axios.$get(`admin.devices/${payload.id}`)
+      const resp = await this.$axios.$get(`devices/${payload.id}`)
       return resp
     } catch (error) {
       throw error
@@ -47,10 +47,7 @@ export const actions = {
   async updateDevice({ commit, dispatch }, payload) {
     commit('SET_PROCESS', 'devices/updateDevice', { root: true })
     try {
-      const resp = await this.$axios.$patch(
-        `admin.devices/${payload.id}`,
-        payload
-      )
+      const resp = await this.$axios.$patch(`devices/${payload.id}`, payload)
       dispatch('getDevices')
       return resp
     } catch (error) {
@@ -61,7 +58,7 @@ export const actions = {
   async assignDevice({ commit, dispatch }, { vehicleId, deviceId }) {
     commit('SET_PROCESS', 'devices/assignDevice', { root: true })
     try {
-      const resp = await this.$axios.$put(`admin.devices/${vehicleId}`, {
+      const resp = await this.$axios.$put(`devices/${vehicleId}`, {
         deviceId,
       })
       dispatch('getDevices')
@@ -74,12 +71,9 @@ export const actions = {
   async unassignDevice({ commit, dispatch }, { vehicleId, deviceId }) {
     commit('SET_PROCESS', 'devices/unassignDevice', { root: true })
     try {
-      const resp = await this.$axios.$put(
-        `admin.devices/unassign/${vehicleId}`,
-        {
-          deviceId,
-        }
-      )
+      const resp = await this.$axios.$put(`devices/unassign/${vehicleId}`, {
+        deviceId,
+      })
       dispatch('getDevices')
       return resp
     } catch (error) {
@@ -90,7 +84,7 @@ export const actions = {
   async deleteDevice({ commit, dispatch }, payload) {
     commit('SET_PROCESS', 'devices/deleteDevice', { root: true })
     try {
-      const resp = await this.$axios.$delete(`admin.devices/${payload.id}`)
+      const resp = await this.$axios.$delete(`devices/${payload.id}`)
       dispatch('getDevices')
       return resp
     } catch (error) {
@@ -101,7 +95,7 @@ export const actions = {
   async getUnassignedDevices({ commit }) {
     commit('SET_PROCESS', 'devices/getUnassignedDevices', { root: true })
     try {
-      const resp = await this.$axios.$get('admin.devices/unassigned/fetch')
+      const resp = await this.$axios.$get('devices/unassigned/fetch')
       commit('SET_DEVICES', resp.data)
       return resp.data
     } catch (error) {

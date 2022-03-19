@@ -88,7 +88,7 @@ export default {
         { text: 'Year', value: 'vehicleYear' },
         { text: 'VIN', value: 'vehicleVin' },
         { text: 'Device connected', value: 'device', width: '15%' },
-        { text: 'Created at', value: 'createdAt', width: '35%' },
+        { text: 'Created on', value: 'createdAt', width: '35%' },
         { text: 'Actions', value: 'actions', sortable: false, width: 150 },
       ],
     }
@@ -96,7 +96,6 @@ export default {
 
   methods: {
     navigateVehicle(evt) {
-      // console.log('🚀 ~ navigateVehicle ~ evt', evt)
       this.$router.push(`vehicles/${evt.vehicleId}`)
     },
   },

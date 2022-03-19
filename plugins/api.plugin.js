@@ -9,7 +9,7 @@ export default function ({ $axios, $config }, inject) {
   })
 
   // Set baseURL to something different
-  api.setBaseURL($config.carsURL)
+  api.setBaseURL('https://api.axamansard.com/api/insurance')
 
   // Inject to context as $api
   inject('api', api)
