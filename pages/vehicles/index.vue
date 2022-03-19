@@ -40,6 +40,7 @@
       @clicked:ok="edit"
     />
     <DialogPrompt ref="prompt" v-model="showPrompt" />
+    <!-- <v-btn @click="getMessage">Send message</v-btn> -->
   </v-row>
 </template>
 
@@ -57,6 +58,8 @@ export default {
       editDialog: false,
       loading: false,
       selectedVehicle: {},
+
+      message: '',
     }
   },
 
@@ -71,7 +74,34 @@ export default {
     }),
   },
 
+  // mounted() {
+  //   this.socket = this.$nuxtSocket({
+  //     persist: 'chatSocket',
+  //     channel: '/',
+  //   })
+
+  //   this.socket.on('chat_message', (msg, cb) => {
+  //     /* Handle event */
+  //     console.log('🚀 ~ this.socket.on ~ msg', msg)
+  //     console.log('🚀 ~ this.socket.on ~ cb', cb)
+  //   })
+  // },
+
+  // created() {
+  //   console.log('dayjs', this.$dayjs().startOf('day').toISOString())
+  // },
+
   methods: {
+    // getMessage() {
+    //   return new Promise((resolve) => {
+    //     this.socket.emit('chat_message', { id: 'abc123' }, (resp) => {
+    //       console.log('🚀 ~ this.socket.emit ~ resp', resp)
+    //       // this.messageRxd = resp
+    //       resolve()
+    //     })
+    //   })
+    // },
+
     ...mapActions({
       getVehicles: 'vehicles/getVehicles',
       createVehicle: 'vehicles/createVehicle',

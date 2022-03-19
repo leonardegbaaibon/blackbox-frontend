@@ -14,7 +14,7 @@
         <!-- ============ -->
         <v-col cols="12">
           <div class="">
-            <p class="mb-1">Created at</p>
+            <p class="mb-1">Created on</p>
             <p class="mb-0 font-weight-bold text-subtitle-1">
               {{ $dayjs(createdAt).format('Do MMMM, YYYY') }}
             </p>

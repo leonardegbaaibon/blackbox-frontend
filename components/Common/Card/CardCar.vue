@@ -45,6 +45,9 @@
         </v-col>
         <v-col cols="">
           <div class="d-flex">
+            <p class="text-h6 mb-0 font-weight-bold">
+              {{ vehicleColor ? `${vehicleColor}` : '' }}
+            </p>
             <v-avatar
               size="24"
               class="mr-3"
@@ -55,11 +58,7 @@
                   .toLowerCase()
               "
             ></v-avatar>
-            <p class="text-h6 mb-0 font-weight-bold">
-              {{ vehicleColor ? `${vehicleColor}` : '' }}
-            </p>
           </div>
-
           <p class="text-caption">Vehicle Color</p>
         </v-col>
         <v-col cols="">
