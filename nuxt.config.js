@@ -67,45 +67,45 @@ export default {
     '@nuxtjs/dayjs',
     '@nuxtjs/toast',
     'vue-swatches/nuxt',
-    'nuxt-socket-io',
+    // 'nuxt-socket-io',
   ],
 
   // Socket IO options
-  io: {
-    server: {
-      // @ts-ignore
-      cors: {
-        credentials: true, // "Configures the Access-Control-Allow-Credentials CORS header. Set to true to pass the header, otherwise it is omitted."
-        origin: [
-          'https://nuxt-socket-io.herokuapp.com',
-          'http://localhost:3000',
-          'https://nuxt-socket-io.netlify.app',
-        ], // Array of whitelisted origin(s)
-      },
-    },
-    // Options
-    sockets: [
-      {
-        name: 'test',
-        url: 'http://localhost:3003',
-        default: true,
-        // vuex: {
-        //   mutations: [
-        //     // Alternatively, use arrow syntax
-        //     'chat_message --> socket/SET_DATA', // S/A
-        //   ],
-        //   actions: [
-        //     // When "chatMessage" is received,
-        //     // dispatch action "FORMAT_MESSAGE"
-        //     'chat_message --> DATA_ACTION',
-        //   ],
-        // },
-        // namespaces: {
-        //   /* see section below */
-        // },
-      },
-    ],
-  },
+  // io: {
+  //   server: {
+  //     // @ts-ignore
+  //     cors: {
+  //       credentials: true, // "Configures the Access-Control-Allow-Credentials CORS header. Set to true to pass the header, otherwise it is omitted."
+  //       origin: [
+  //         'https://nuxt-socket-io.herokuapp.com',
+  //         'http://localhost:3000',
+  //         'https://nuxt-socket-io.netlify.app',
+  //       ], // Array of whitelisted origin(s)
+  //     },
+  //   },
+  //   // Options
+  //   sockets: [
+  //     {
+  //       name: 'test',
+  //       url: 'http://localhost:3003',
+  //       default: true,
+  //       // vuex: {
+  //       //   mutations: [
+  //       //     // Alternatively, use arrow syntax
+  //       //     'chat_message --> socket/SET_DATA', // S/A
+  //       //   ],
+  //       //   actions: [
+  //       //     // When "chatMessage" is received,
+  //       //     // dispatch action "FORMAT_MESSAGE"
+  //       //     'chat_message --> DATA_ACTION',
+  //       //   ],
+  //       // },
+  //       // namespaces: {
+  //       //   /* see section below */
+  //       // },
+  //     },
+  //   ],
+  // },
 
   toast: {
     position: 'top-right',
