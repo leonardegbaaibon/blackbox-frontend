@@ -56,6 +56,12 @@
         </v-icon>
         {{ item.device ? 'Assigned' : 'Unassigned' }}
       </template>
+      <template #[`item.chauffeur`]="{ item }">
+        <v-icon :color="item.chauffeur ? 'success' : 'error'" small>
+          {{ item.chauffeur ? 'mdi-check-circle' : 'mdi-close-circle' }}
+        </v-icon>
+        {{ item.chauffeur ? 'Assigned' : 'Unassigned' }}
+      </template>
       <template #no-data>
         <v-btn color="primary" @click="initialize">Reset</v-btn>
       </template>
@@ -88,6 +94,7 @@ export default {
         { text: 'Year', value: 'vehicleYear' },
         { text: 'VIN', value: 'vehicleVin' },
         { text: 'Device connected', value: 'device', width: '15%' },
+        { text: 'Driver Assigned', value: 'chauffeur', width: '15%' },
         { text: 'Created on', value: 'createdAt', width: '35%' },
         { text: 'Actions', value: 'actions', sortable: false, width: 150 },
       ],

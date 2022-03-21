@@ -88,7 +88,7 @@ export default {
         .show({
           title: 'Confirmation',
           message: `Are you sure you want to unassign ${this.vehicle.vehicleMake} ${this.vehicle.vehicleModel} from ${this.vehicle.device}`,
-          okButton: 'Yes, Delete',
+          okButton: 'Yes, Unassign Device',
           cancelButton: 'No',
         })
         .then(async (ok) => {
@@ -102,7 +102,7 @@ export default {
               this.$fetch()
               this.$toast.success(response.meta.message)
             } catch (error) {
-              this.$toast.error(`Delete failed`)
+              this.$toast.error(`Error Unassigning Device`)
             } finally {
               this.loading = false
             }
@@ -116,8 +116,8 @@ export default {
       this.$refs.prompt
         .show({
           title: 'Confirmation',
-          message: `Are you sure you want to unassign ${this.vehicle.vehicleMake} ${this.vehicle.vehicleModel} from ${this.vehicle.driver}`,
-          okButton: 'Yes, Delete',
+          message: `Are you sure you want to unassign ${this.vehicle.vehicleMake} ${this.vehicle.vehicleModel} from driver`,
+          okButton: 'Yes, Unassign Driver',
           cancelButton: 'No',
         })
         .then(async (ok) => {
@@ -126,12 +126,12 @@ export default {
             try {
               const response = await this.unassignDriver({
                 vehicleId: this.$route.params.id,
-                driverId: this.vehicle.driver,
+                driverId: evt.id,
               })
               this.$fetch()
               this.$toast.success(response.meta.message)
             } catch (error) {
-              this.$toast.error(`Delete failed`)
+              this.$toast.error(`Error Unassigning Driver`)
             } finally {
               this.loading = false
             }

@@ -30,7 +30,7 @@
         </v-btn>
         <!-- Assign Driver -->
         <v-btn
-          v-if="!driver"
+          v-if="!chauffeur"
           depressed
           color="primary"
           @click="$emit('clicked:assignDriver', { id: vehicleId })"
@@ -42,7 +42,7 @@
           v-else
           depressed
           color="error"
-          @click="$emit('clicked:unassignDriver', { id: vehicleId })"
+          @click="$emit('clicked:unassignDriver', { id: chauffeur })"
         >
           <v-icon left dark>mdi-steering</v-icon>
           Unassign Driver
@@ -64,7 +64,7 @@
         </v-col>
         <v-col cols="">
           <div class="d-flex">
-            <p class="text-h6 mb-0 font-weight-bold">
+            <p class="text-h6 mb-0 font-weight-bold mr-1">
               {{ vehicleColor ? `${vehicleColor}` : '' }}
             </p>
             <v-avatar
@@ -141,6 +141,10 @@ export default {
       default: null,
     },
     driver: {
+      type: String,
+      default: null,
+    },
+    chauffeur: {
       type: String,
       default: null,
     },
