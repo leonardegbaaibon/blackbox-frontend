@@ -12,7 +12,7 @@
       <v-form>
         <v-select
           v-model="form.id"
-          label="Devices"
+          label="Drivers"
           :items="drivers"
           outlined
           item-text="driverName"
