@@ -9,13 +9,15 @@
       position="center center"
     >
       <div style="position: absolute; top: 16px; right: 16px">
+        <!-- Assign Device  -->
         <v-btn
           v-if="!device"
           depressed
           color="primary"
           @click="$emit('clicked:assign', { id: vehicleId })"
         >
-          Assign device
+          <v-icon left dark>mdi-tablet-cellphone</v-icon>
+          Assign Device
         </v-btn>
         <v-btn
           v-else
@@ -23,11 +25,28 @@
           color="error"
           @click="$emit('clicked:unassign', { id: vehicleId })"
         >
-          Unassign device
+          <v-icon left dark>mdi-tablet-cellphone</v-icon>
+          Unassign Device
         </v-btn>
-        <!-- <v-chip :color="device ? 'success' : 'error'" label>
-          {{ device ? `Connected` : 'Disconnected' }}
-        </v-chip> -->
+        <!-- Assign Driver -->
+        <v-btn
+          v-if="!driver"
+          depressed
+          color="primary"
+          @click="$emit('clicked:assignDriver', { id: vehicleId })"
+        >
+          <v-icon left dark>mdi-steering</v-icon>
+          Assign Driver
+        </v-btn>
+        <v-btn
+          v-else
+          depressed
+          color="error"
+          @click="$emit('clicked:unassignDriver', { id: vehicleId })"
+        >
+          <v-icon left dark>mdi-steering</v-icon>
+          Unassign Driver
+        </v-btn>
       </div>
 
       <v-card-title class="font-weight-bold text-h3">
@@ -118,6 +137,10 @@ export default {
       default: '',
     },
     device: {
+      type: String,
+      default: null,
+    },
+    driver: {
       type: String,
       default: null,
     },
