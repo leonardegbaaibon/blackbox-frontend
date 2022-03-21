@@ -10,7 +10,7 @@
         placeholder="Search Devices"
         :hide-details="true"
       />
-      <FormButton @click.native="$emit('clicked')">New Device</FormButton>
+      <!-- <FormButton @click.native="$emit('clicked')">New Device</FormButton> -->
       <!-- <v-text-field
         v-model="search"
         append-icon="mdi-magnify"
