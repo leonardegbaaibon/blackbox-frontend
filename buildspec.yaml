@@ -1,0 +1,26 @@
+version: 0.2
+phases:
+  install:
+    runtime-versions:
+      nodejs: 14
+    commands:
+      - echo Installing
+  pre_build:
+    commands:
+      - echo Installing source NPM dependencies.
+      - npm install
+  build:
+    commands:
+      - echo Build started on `date`
+      - echo Compiling the Node.js code
+      - echo Running unit tests
+      - npm test
+      - npm run build
+      - npm run start
+  post_build:
+    commands:
+      - echo Build completed on `date`
+artifacts:
+  files:
+     - source: /index.html
+       destination: /var/www/html/
