@@ -41,7 +41,11 @@ export default {
     geocoder
       .geocode({ location: { lat: this.lat, lng: this.lat } })
       .then((response) => {
+        console.log('🚀 ~ .then ~ response', response)
         this.address = response.results[0].formatted_address
+      })
+      .catch((error) => {
+        console.log('🚀 ~ .then ~ error', error)
       })
     // let icon
 

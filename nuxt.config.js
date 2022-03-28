@@ -1,4 +1,6 @@
 import colors from 'vuetify/es5/util/colors'
+// eslint-disable-next-line nuxt/no-cjs-in-config
+// const fs = require('fs')
 // console.log('process.env :>> ', process.env)
 export default {
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
@@ -67,8 +69,35 @@ export default {
     '@nuxtjs/dayjs',
     '@nuxtjs/toast',
     'vue-swatches/nuxt',
+    '@nuxtjs/firebase',
     // 'nuxt-socket-io',
   ],
+
+  // firebase: {
+  //   config: {
+  //     apiKey: 'AIzaSyDbBTLvWhFpBeu5eJuy1hx0BceEsJTI6qU',
+  //     authDomain: 'tsaron-technologies.firebaseapp.com',
+  //     projectId: 'tsaron-technologies',
+  //     storageBucket: 'tsaron-technologies.appspot.com',
+  //     messagingSenderId: '659212583390',
+  //     appId: '1:659212583390:web:46360c0bdeb9db83729d4f',
+  //     measurementId: 'G-B3SNNS6ZCT',
+  //   },
+  //   services: {
+  //     messaging: {
+  //       createServiceWorker: true,
+  //       actions: [
+  //         {
+  //           action: 'randomName',
+  //           url: 'randomUrl',
+  //         },
+  //       ],
+  //       fcmPublicVapidKey:
+  //         'BDF3SGW3zuWOmHKdbBBT_6nv5OZxPQxuKoIRY1S2yrlpOgSLpIyqsVyO765p35WD7nZxNYu0IM0PdC9KH8kw7iw',
+  //       inject: fs.readFileSync('./static/firebase-messaging-sw.js'),
+  //     },
+  //   },
+  // },
 
   // Socket IO options
   // io: {
@@ -164,7 +193,7 @@ export default {
   dayjs: {
     // locales: ['en', 'ja'],
     defaultLocale: 'en',
-    defaultTimeZone: 'Africa/Lagos',
+    // defaultTimeZone: 'Africa/Lagos',
     plugins: [
       'customParseFormat', // import 'dayjs/plugin/customParseFormat'
       'advancedFormat', // import 'dayjs/plugin/advancedFormat'

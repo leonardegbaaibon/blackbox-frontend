@@ -26,7 +26,7 @@
       class="elevation-1"
     >
       <template #[`item.lastUpdate`]="{ item }">
-        {{ $dayjs(item.lastUpdate).format('DD MMMM, YYYY • hh:mm A') }}
+        {{ item.lastUpdate ? $dayjs(item.lastUpdate).fromNow() : '' }}
       </template>
       <template #[`item.status`]="{ item }">
         <v-chip
@@ -91,6 +91,7 @@ export default {
         // { text: 'Position Id', value: 'positionId' },
         { text: 'Status', value: 'status' },
         { text: 'Unique ID', value: 'uniqueId' },
+        { text: 'Last Update', value: 'lastUpdate' },
         // { text: 'Disabled', value: 'disabled' },
         // { text: 'Actions', value: 'actions', sortable: false, width: 150 },
       ],

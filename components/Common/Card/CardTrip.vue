@@ -22,15 +22,18 @@
               <v-icon size="64">mdi-send-circle</v-icon>
               <v-timeline dense>
                 <v-timeline-item>
-                  <MapAddressRender :lat="trip.startLat" :lon="trip.startLon" />
+                  {{ trip.startAddress }}
+                  <!-- <MapAddressRender :lat="trip.startLat" :lon="trip.startLon" /> -->
                 </v-timeline-item>
                 <v-timeline-item>
-                  <MapAddressRender :lat="trip.endLat" :lon="trip.endLon" />
+                  {{ trip.endAddress }}
+
+                  <!-- <MapAddressRender :lat="trip.endLat" :lon="trip.endLon" /> -->
                 </v-timeline-item>
               </v-timeline>
             </v-col>
             <!-- trip stats -->
-            <v-col cols="8" class="d-flex justify-space-between">
+            <!-- <v-col cols="8" class="d-flex justify-space-between">
               <div class="">
                 <p class="mb-0">Distance travelled</p>
                 <p class="mb-0 text-h5">
@@ -49,12 +52,12 @@
                 <p class="mb-0">Trip Duration</p>
                 <p class="mb-0 text-h5">{{ timeComputed }}</p>
               </div>
-            </v-col>
+            </v-col> -->
           </v-row>
           <v-row></v-row>
         </v-card-text>
         <v-card-actions>
-          <v-btn @click="handleClick">go to trip</v-btn>
+          <v-btn outlined @click="handleClick">View Trip</v-btn>
         </v-card-actions>
       </v-card>
     </v-hover>
