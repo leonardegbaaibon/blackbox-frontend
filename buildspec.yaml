@@ -19,7 +19,6 @@ phases:
       
   post_build:
     commands:
-      - npm run start
       - echo Build completed on `date`
 artifacts:
   files:
