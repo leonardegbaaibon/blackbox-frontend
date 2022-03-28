@@ -69,7 +69,7 @@ export default {
     '@nuxtjs/dayjs',
     '@nuxtjs/toast',
     'vue-swatches/nuxt',
-    '@nuxtjs/firebase',
+    // '@nuxtjs/firebase',
     // 'nuxt-socket-io',
   ],
 
