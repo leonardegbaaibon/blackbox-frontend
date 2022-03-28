@@ -1,5 +1,5 @@
 version: 0.0
 os: linux
 files:
-  - source: .nuxt/index.js
+  - source: .nuxt/
     destination: /var/www/html/
