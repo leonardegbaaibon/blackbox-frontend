@@ -29,12 +29,12 @@
         </p>
         <p class="text-caption">Fuel Consumed</p>
       </v-col>
-      <!-- <v-col cols="">
-          <p class="text-h6 mb-0 font-weight-bold">
-            {{ device ? `Connected` : 'Disconnected' }}
-          </p>
-          <p class="text-caption">Status</p>
-        </v-col> -->
+      <v-col cols="">
+        <p class="text-h6 mb-0 font-weight-bold">
+          {{ duration }}
+        </p>
+        <p class="text-caption">Trip Duration</p>
+      </v-col>
     </v-row>
     <MapTrips height="800" :items="trips" />
     <!-- <v-row>
@@ -81,6 +81,7 @@ export default {
     averageSpeed: String,
     averageDistance: String,
     averageFuelConsumption: String,
+    duration: String,
   },
 
   // created() {

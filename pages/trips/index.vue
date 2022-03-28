@@ -50,6 +50,7 @@
       v-if="showDialog"
       v-model="showDialog"
       v-bind="{ ...tripData }"
+      :duration="singleTripDuration"
     />
   </div>
 </template>
@@ -76,6 +77,7 @@ export default {
       loading: false,
       showDialog: false,
       error: 'No trips found',
+      singleTripDuration: null,
     }
   },
 
@@ -166,17 +168,21 @@ export default {
     //   })
     // },
 
-    openTripDialog(evt) {
-      console.log('🚀 ~ openTripDialog ~ evt', evt)
-      this.showDialog = true
-      // const timezone = this.$dayjs.tz.guess()
+    async openTripDialog(evt) {
+      this.loading = true
+      this.singleTripDuration = evt.time
       const payload = {
         id: this.form.chosenVehicle.vehicleId,
         from: this.$dayjs(evt.from).toISOString(),
         to: this.$dayjs(evt.to).toISOString(),
       }
-      console.log('🚀 ~ openTripDialog ~ payload', payload)
-      this.getSingleTrip(payload)
+      try {
+        await this.getSingleTrip(payload)
+        this.showDialog = true
+        this.loading = false
+      } catch (error) {
+        console.log('🚀 ~ openTripDialog ~ error', error)
+      }
     },
   },
 }

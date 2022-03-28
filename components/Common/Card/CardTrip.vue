@@ -33,8 +33,8 @@
               </v-timeline>
             </v-col>
             <!-- trip stats -->
-            <!-- <v-col cols="8" class="d-flex justify-space-between">
-              <div class="">
+            <v-col cols="8" class="d-flex justify-space-between">
+              <!-- <div class="">
                 <p class="mb-0">Distance travelled</p>
                 <p class="mb-0 text-h5">
                   {{ (trip.distance / 1000).toFixed(2) }}km
@@ -47,12 +47,12 @@
               <div class="">
                 <p class="mb-0">Fuel Spent</p>
                 <p class="mb-0 text-h5">{{ trip.spentFuel }}</p>
-              </div>
+              </div> -->
               <div class="">
                 <p class="mb-0">Trip Duration</p>
                 <p class="mb-0 text-h5">{{ timeComputed }}</p>
               </div>
-            </v-col> -->
+            </v-col>
           </v-row>
           <v-row></v-row>
         </v-card-text>
@@ -101,6 +101,7 @@ export default {
   methods: {
     handleClick() {
       this.$emit('clicked:open', {
+        time: this.timeComputed,
         from: this.trip.startTime,
         to: this.trip.endTime,
       })
