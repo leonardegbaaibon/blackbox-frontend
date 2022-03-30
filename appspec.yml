@@ -1,5 +1,15 @@
 version: 0.0
 os: linux
 files:
-  - source: /dist/index.html
+  - source: .nuxt/
     destination: /var/www/html/
+
+hooks:
+  BeforeInstall:
+    - location: scripts/before_install.sh
+      timeout: 300
+      runas: ec2-user
+  AfterInstall:
+    - location: scripts/after_install.sh
+      timeout: 300
+      runas: ec2-user
