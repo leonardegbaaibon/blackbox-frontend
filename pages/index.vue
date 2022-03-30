@@ -91,16 +91,16 @@ export default {
           },
         })
 
-        const traccarResponse = await this.$traccarApi.$get('/session', {
-          withCredentials: true,
-          params: { token: loginResponse.data.data.session },
-          auth: {
-            username: evt.email,
-            password: evt.password,
-          },
-        })
+        // const traccarResponse = await this.$traccarApi.$get('/session', {
+        //   withCredentials: true,
+        //   params: { token: loginResponse.data.data.session },
+        //   auth: {
+        //     username: evt.email,
+        //     password: evt.password,
+        //   },
+        // })
+        // console.log('🚀 ~ login ~ traccarResponse', traccarResponse)
 
-        console.log('🚀 ~ login ~ traccarResponse', traccarResponse)
         const userResponse = await this.getUser({
           id: loginResponse.data.data.sub,
         })
