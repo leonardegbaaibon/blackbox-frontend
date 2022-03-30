@@ -89,7 +89,7 @@ export default {
 
     create(evt) {
       this.loading = true
-      this.createVehicle({ ...evt, make: evt.make.name })
+      this.createVehicle({ ...evt })
         .then((resp) => {
           this.dialog = false
           this.$toast.success('Vehicle successfully created')

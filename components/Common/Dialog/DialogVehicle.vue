@@ -17,54 +17,20 @@
         </p>
         <v-row>
           <v-col class="pb-0">
-            <!-- vehicle Make  -->
-            <div class="mb-1 d-flex">
-              <p
-                class="
-                  mb-0
-                  text-uppercase text--black
-                  font-weight-bold
-                  text-caption
-                "
-              >
-                Make *
-              </p>
-            </div>
-            <v-select
+            <FormInput
               v-model="form.make"
-              outlined
-              dense
-              return-object
-              :items="makes"
-              item-text="name"
-              item-value="name"
-              @change="updateMake"
-              @input="updateMake"
-            ></v-select>
-            <!-- END vehicle Make  -->
+              label="Make *"
+              rules="required"
+              type="text"
+            />
           </v-col>
           <v-col class="pb-0">
             <!-- vehicle Model  -->
-            <div class="mb-1 d-flex">
-              <p
-                class="
-                  mb-0
-                  text-uppercase text--black
-                  font-weight-bold
-                  text-caption
-                "
-              >
-                Model *
-              </p>
-            </div>
-            <v-select
+            <FormInput
               v-model="form.model"
-              outlined
-              dense
-              :loading="tmpLoading"
-              :items="models"
-              item-text="name"
-              item-value="name"
+              label="Model *"
+              rules="required"
+              type="text"
             />
             <!-- END vehicle Model  -->
           </v-col>
@@ -187,9 +153,7 @@
 
 <script>
 import { ValidationObserver } from 'vee-validate'
-import { mapActions } from 'vuex'
-// import COLORS from 'vuetify/lib/util/colors'
-// import VSwatches from 'vue-swatches'
+
 const SWATCHES = [
   { color: '#A52A2A', label: 'Brown' },
   { color: '#808080', label: 'Gray' },
@@ -264,30 +228,13 @@ export default {
     }
   },
 
-  async created() {
-    this.makes = await this.getMakes()
-  },
-
   methods: {
-    ...mapActions({
-      getMakes: 'vehicles/getMakes',
-      getModels: 'vehicles/getModels',
-    }),
     submit() {
       this.$refs.observer.validate().then((success) => {
         if (success) {
           this.$emit('clicked:ok', this.form)
         }
       })
-    },
-    async updateMake(evt) {
-      console.log('🚀 ~ updateMake ~ evt', evt)
-      this.tmpLoading = true
-      try {
-        this.models = await this.getModels(evt.id)
-      } finally {
-        this.tmpLoading = false
-      }
     },
   },
 }
