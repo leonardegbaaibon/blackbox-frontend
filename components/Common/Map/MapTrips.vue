@@ -1,6 +1,6 @@
 <template>
   <MapHandler
-    :style="{ height: `${height}px` }"
+    :style="{ height: height }"
     :map-config="mapConfig"
     class="rounded-lg"
   >
@@ -28,7 +28,7 @@ export default {
   props: {
     height: {
       type: [Number, String],
-      default: 500,
+      default: '100%',
     },
 
     items: {

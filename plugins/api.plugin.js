@@ -8,9 +8,23 @@ export default function ({ $axios, $config }, inject) {
     },
   })
 
-  // Set baseURL to something different
-  api.setBaseURL('https://api.axamansard.com/api/insurance')
+  const traccarApi = $axios.create({
+    // withCredentials: true,
+    headers: {
+      common: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    },
+  })
 
-  // Inject to context as $api
+  api.setBaseURL('https://api.axamansard.com/api/insurance')
+  traccarApi.setBaseURL('http://3.133.13.158:8082/api')
+
+  traccarApi.interceptors.response.use(function (response) {
+    console.log('🚀 ~ plugin - response', response)
+    return response
+  })
+
   inject('api', api)
+  inject('traccarApi', traccarApi)
 }

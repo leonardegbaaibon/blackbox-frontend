@@ -46,6 +46,7 @@ export default {
     '~/plugins/vee-validate.plugin',
     '~/plugins/datetimepicker.plugin',
     '~/plugins/persistedState.plugin.js',
+    // '~/plugins/firebase.plugin.js',
   ],
 
   // Auto import onents: https://go.nuxtjs.dev/config-components

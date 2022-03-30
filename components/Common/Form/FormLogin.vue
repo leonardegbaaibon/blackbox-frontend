@@ -4,7 +4,7 @@
       <v-form
         @submit.prevent="
           handleSubmit(() => {
-            $emit('submit', form)
+            $emit('submit', { ...form })
           })
         "
       >

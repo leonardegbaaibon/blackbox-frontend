@@ -10,23 +10,6 @@
         </v-footer>
       </v-container>
     </v-main>
-    <!-- <v-footer fixed app>
-      <span>&copy; {{ new Date().getFullYear() }}</span>
-    </v-footer> -->
-
-    <!-- Snackbar -->
-    <!-- <v-snackbar
-      v-for="(snackbar, index) in snackbars.filter((s) => s.showing)"
-      :key="index"
-      :value="snackbar.showing"
-      :timeout="-1"
-      :color="snackbar.variant || 'success'"
-      outlined
-    >
-      {{ snackbar.text }}
-
-      <v-btn :color="snackbar.variant" text @click="close">Close</v-btn>
-    </v-snackbar> -->
   </v-app>
 </template>
 
@@ -41,25 +24,29 @@ export default {
     }
   },
 
-  computed: {
-    // ...mapState({ snackbars: (state) => state.snackbars }),
-  },
-
   created() {
-    // this.$toast.success('Success', { position: 'top-right' })
-    // console.log('here')
     this.getUser({}).then((response) => {
       this.$auth.setUser(response)
     })
+
+    // Websockets
+    console.log('Starting connection to WebSocket Server')
+    this.connection = new WebSocket('ws://3.133.13.158:8082/api/socket')
+
+    this.connection.onmessage = function (event) {
+      console.log(event)
+    }
+
+    this.connection.onopen = function (event) {
+      console.log(event)
+      console.log('Successfully connected to the echo websocket server...')
+    }
   },
 
   methods: {
     ...mapActions({
       getUser: 'user/authentication/getUserInfo',
     }),
-    // close() {
-    //   this.$store.dispatch('setSnackbar', { showing: false })
-    // },
   },
 }
 </script>
