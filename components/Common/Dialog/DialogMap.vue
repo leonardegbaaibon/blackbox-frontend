@@ -6,9 +6,9 @@
     fullscreen
     :loading="loading"
     :ok-button="'Done'"
+    :cancel-disabled="false"
     @input="$emit('input', $event)"
     @clicked:ok="$emit('input', false)"
-    @clicked:cancel="$emit('input', false)"
   >
     <v-row>
       <v-col cols="">
@@ -36,7 +36,7 @@
         <p class="text-caption">Trip Duration</p>
       </v-col>
     </v-row>
-    <MapTrips height="800" :items="trips" />
+    <MapTrips height="90%" :items="trips" />
     <!-- <v-row>
       <v-col class="overline d-flex justify-space-between">
         <p class="mb-0">
