@@ -7,11 +7,9 @@
             <!-- trip time -->
             <v-col cols="12" class="overline d-flex justify-space-between">
               <p class="mb-0">
-                {{
-                  $dayjs(trip.startTime).utc().format('DD MMMM, YYYY. HH:mmA')
-                }}
+                {{ $dayjs(trip.startTime).format('DD MMMM, YYYY. HH:mmA') }}
                 -
-                {{ $dayjs(trip.endTime).utc().format('DD MMMM, YYYY. HH:mmA') }}
+                {{ $dayjs(trip.endTime).format('DD MMMM, YYYY. HH:mmA') }}
               </p>
               <v-scale-transition leave-absolute>
                 <v-chip v-show="hover">{{ trip.deviceName }}</v-chip>
