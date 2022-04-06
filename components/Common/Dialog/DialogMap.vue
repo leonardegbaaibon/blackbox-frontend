@@ -36,16 +36,37 @@
         <p class="text-caption">Trip Duration</p>
       </v-col>
     </v-row>
+    <!-- for events  -->
+    <v-expansion-panels class="mb-4" popout>
+      <v-expansion-panel>
+        <v-expansion-panel-header>
+          <p class="font-weight-bold mb-0 primary--text">View Events</p>
+        </v-expansion-panel-header>
+        <v-expansion-panel-content>
+          <v-timeline dense align-top>
+            <v-timeline-item
+              v-for="(event, index) in events"
+              :key="index"
+              class=""
+            >
+              <v-row class="pt-1">
+                <v-col cols="3">
+                  <strong>
+                    {{ $dayjs(event.eventTime).format('hh:mm A') }}
+                  </strong>
+                </v-col>
+                <v-col>
+                  <strong>{{ event.type }}</strong>
+                  <!-- <div class="text-caption">{{ event.type }}</div> -->
+                </v-col>
+              </v-row>
+            </v-timeline-item>
+          </v-timeline>
+        </v-expansion-panel-content>
+      </v-expansion-panel>
+    </v-expansion-panels>
+
     <MapTrips height="90%" :items="trips" />
-    <!-- <v-row>
-      <v-col class="overline d-flex justify-space-between">
-        <p class="mb-0">
-          {{ $dayjs(trip.startTime).format('DD MMMM, YYYY. HH:mmA') }}
-          -
-          {{ $dayjs(trip.endTime).format('DD MMMM, YYYY. HH:mmA') }}
-        </p>
-      </v-col>
-    </v-row> -->
   </DialogHandler>
 </template>
 
@@ -71,6 +92,10 @@ export default {
       default: '',
     },
     trips: {
+      type: Array,
+      default: () => [],
+    },
+    events: {
       type: Array,
       default: () => [],
     },
