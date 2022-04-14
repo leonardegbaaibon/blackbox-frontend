@@ -51,6 +51,7 @@
       v-model="showDialog"
       v-bind="{ ...tripData }"
       :duration="singleTripDuration"
+      :events="events"
     />
   </div>
 </template>
@@ -91,6 +92,7 @@ export default {
       trips: (state) => state.trips.trips,
       tripData: (state) => state.trips.tripData,
       vehicles: (state) => state.vehicles.all,
+      events: (state) => state.events.events,
     }),
   },
 
@@ -135,6 +137,7 @@ export default {
       getVehicles: 'vehicles/getVehicles',
       getTrip: 'trips/getTrips',
       getSingleTrip: 'trips/getSingleTrip',
+      getEvents: 'events/getEvents',
     }),
 
     selectVehicle(evt) {
@@ -177,7 +180,11 @@ export default {
         to: this.$dayjs(evt.to).toISOString(),
       }
       try {
-        await this.getSingleTrip(payload)
+        // await this.getSingleTrip(payload)
+        await Promise.all([
+          this.getSingleTrip(payload),
+          this.getEvents(payload),
+        ])
         this.showDialog = true
         this.loading = false
       } catch (error) {

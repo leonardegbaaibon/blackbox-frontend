@@ -7,10 +7,12 @@
     app
     color="secondary"
   >
-    <v-list-item class="px-2">
-      <Logo style="margin: 80px 0 50px 24px" class="" />
-
-      <v-btn icon @click.stop="mini = !mini">
+    <v-list-item
+      class="px-2 d-flex justify-space-between align-center mt-12 mb-8"
+    >
+      <Logo v-if="!mini" style="margin-left: 8px" />
+      <img v-else class="pa-2" src="~/assets/svg/icon-white.svg" />
+      <v-btn fab x-small @click.stop="mini = !mini">
         <v-icon>mdi-chevron-left</v-icon>
       </v-btn>
     </v-list-item>
@@ -91,4 +93,9 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.collapse-button {
+  position: absolute;
+  right: -7%;
+}
+</style>
