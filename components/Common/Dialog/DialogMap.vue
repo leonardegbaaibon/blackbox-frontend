@@ -48,6 +48,12 @@
               v-for="(event, index) in events"
               :key="index"
               class=""
+              :color="event.type === 'alarm' ? 'error' : 'success'"
+              :icon="
+                event.type === 'alarm'
+                  ? 'mdi-alert-rhombus'
+                  : 'mdi-arrow-down-thin'
+              "
             >
               <v-row class="pt-1">
                 <v-col cols="3">
@@ -56,7 +62,15 @@
                   </strong>
                 </v-col>
                 <v-col>
-                  <strong>{{ event.type }}</strong>
+                  <strong v-if="event.type === 'alarm'" class="red--text">
+                    <span>Alarm:</span>
+                    {{
+                      event.attributes.alarm.replace(/([a-z])([A-Z])/g, '$1 $2')
+                    }}
+                  </strong>
+                  <strong v-else>
+                    {{ event.type.replace(/([a-z])([A-Z])/g, '$1 $2') }}
+                  </strong>
                   <!-- <div class="text-caption">{{ event.type }}</div> -->
                 </v-col>
               </v-row>
