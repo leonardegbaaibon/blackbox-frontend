@@ -1,6 +1,6 @@
 <template>
-  <v-card class="mt-0 pt-0" flat>
-    <v-card-text class="mt-5">
+  <v-card class="" flat>
+    <v-card-text class="">
       <v-row>
         <v-col cols="12" class="d-flex align-center">
           <v-avatar size="60" color="primary"></v-avatar>

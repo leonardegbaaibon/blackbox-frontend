@@ -1,12 +1,13 @@
 <template>
   <!-- <v-container fluid class="fill-height"> -->
-  <v-row justify="center" align="center">
-    <v-col md="12" class="">
-      <v-progress-circular
-        v-if="$fetchState.pending"
-        indeterminate
-      ></v-progress-circular>
-      <div v-else class=""><CardDriverInfo v-bind="driver" /></div>
+  <v-progress-circular
+    v-if="$fetchState.pending"
+    indeterminate
+  ></v-progress-circular>
+  <v-row v-else justify="center" align="start">
+    <v-col md="8"><CardScorecard /></v-col>
+    <v-col md="4" class="">
+      <div class=""><CardDriverInfo v-bind="driver" /></div>
     </v-col>
   </v-row>
 </template>
