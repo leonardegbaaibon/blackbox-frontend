@@ -74,6 +74,11 @@ export default {
           title: 'Devices',
           to: '/devices',
         },
+        {
+          icon: 'mdi-alert',
+          title: 'Faults Monitor',
+          to: '/fault-monitor',
+        },
       ],
       mini: true,
     }

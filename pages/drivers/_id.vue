@@ -1,15 +1,26 @@
 <template>
-  <!-- <v-container fluid class="fill-height"> -->
-  <v-progress-circular
-    v-if="$fetchState.pending"
-    indeterminate
-  ></v-progress-circular>
-  <v-row v-else justify="center" align="start">
-    <v-col md="8"><CardScorecard /></v-col>
-    <v-col md="4" class="">
-      <div class=""><CardDriverInfo v-bind="driver" /></div>
-    </v-col>
-  </v-row>
+  <div>
+    <!-- <v-container fluid class="fill-height"> -->
+    <v-progress-circular
+      v-if="$fetchState.pending"
+      indeterminate
+    ></v-progress-circular>
+    <v-row v-else justify="center" align="start">
+      <v-col md="8">
+        <CardScorecard class="mb-7" />
+        <CardScoreTable class="mb-7" />
+      </v-col>
+      <v-col md="4" class="">
+        <div class=""><CardDriverInfo v-bind="driver" /></div>
+      </v-col>
+    </v-row>
+
+    <v-row>
+      <v-col md="12" class="">
+        <div class=""><TripRanking /></div>
+      </v-col>
+    </v-row>
+  </div>
 </template>
 
 <script>

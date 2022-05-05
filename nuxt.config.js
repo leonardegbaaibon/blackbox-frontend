@@ -86,6 +86,7 @@ export default {
     '@nuxtjs/eslint-module',
     // https://go.nuxtjs.dev/vuetify
     '@nuxtjs/vuetify',
+    'faker-nuxt',
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
