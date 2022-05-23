@@ -4,7 +4,7 @@
     :map-config="mapConfig"
     class="rounded-lg"
   >
-    <template v-if="items.length !== 0" slot-scope="{ google, map }">
+    <template v-if="items.length !== 0" slot-scope="{ google, map, bounds }">
       <MapMarkers
         v-for="(marker, index) in items"
         :key="marker.id"
@@ -12,6 +12,7 @@
         :index="index"
         :marker="marker"
         :google="google"
+        :bounds="bounds"
         :map="map"
       />
       <MapPolygons :google="google" :map="map" :markers="items" />

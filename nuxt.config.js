@@ -99,72 +99,15 @@ export default {
     '@nuxtjs/dayjs',
     '@nuxtjs/toast',
     'vue-swatches/nuxt',
+    '@deepsource/nuxt-websocket',
     // '@nuxtjs/firebase',
     // 'nuxt-socket-io',
   ],
 
-  // firebase: {
-  //   config: {
-  //     apiKey: 'AIzaSyDbBTLvWhFpBeu5eJuy1hx0BceEsJTI6qU',
-  //     authDomain: 'tsaron-technologies.firebaseapp.com',
-  //     projectId: 'tsaron-technologies',
-  //     storageBucket: 'tsaron-technologies.appspot.com',
-  //     messagingSenderId: '659212583390',
-  //     appId: '1:659212583390:web:46360c0bdeb9db83729d4f',
-  //     measurementId: 'G-B3SNNS6ZCT',
-  //   },
-  //   services: {
-  //     messaging: {
-  //       createServiceWorker: true,
-  //       actions: [
-  //         {
-  //           action: 'randomName',
-  //           url: 'randomUrl',
-  //         },
-  //       ],
-  //       fcmPublicVapidKey:
-  //         'BDF3SGW3zuWOmHKdbBBT_6nv5OZxPQxuKoIRY1S2yrlpOgSLpIyqsVyO765p35WD7nZxNYu0IM0PdC9KH8kw7iw',
-  //       inject: fs.readFileSync('./static/firebase-messaging-sw.js'),
-  //     },
-  //   },
-  // },
-
-  // Socket IO options
-  // io: {
-  //   server: {
-  //     // @ts-ignore
-  //     cors: {
-  //       credentials: true, // "Configures the Access-Control-Allow-Credentials CORS header. Set to true to pass the header, otherwise it is omitted."
-  //       origin: [
-  //         'https://nuxt-socket-io.herokuapp.com',
-  //         'http://localhost:3000',
-  //         'https://nuxt-socket-io.netlify.app',
-  //       ], // Array of whitelisted origin(s)
-  //     },
-  //   },
-  //   // Options
-  //   sockets: [
-  //     {
-  //       name: 'test',
-  //       url: 'http://localhost:3003',
-  //       default: true,
-  //       // vuex: {
-  //       //   mutations: [
-  //       //     // Alternatively, use arrow syntax
-  //       //     'chat_message --> socket/SET_DATA', // S/A
-  //       //   ],
-  //       //   actions: [
-  //       //     // When "chatMessage" is received,
-  //       //     // dispatch action "FORMAT_MESSAGE"
-  //       //     'chat_message --> DATA_ACTION',
-  //       //   ],
-  //       // },
-  //       // namespaces: {
-  //       //   /* see section below */
-  //       // },
-  //     },
-  //   ],
-  // },
+  websocket: {
+    url: 'ws://3.129.204.142:6060',
+    reconnectInterval: 1000,
+  },
 
   toast: {
     position: 'top-right',
@@ -193,8 +136,8 @@ export default {
     redirect: {
       login: '/',
       logout: '/',
-      callback: '/vehicles',
-      home: '/vehicles',
+      callback: '/dashboard',
+      home: '/dashboard',
     },
 
     strategies: {
