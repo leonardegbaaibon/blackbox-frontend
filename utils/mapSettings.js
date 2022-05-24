@@ -179,6 +179,10 @@ const POINT_MARKER_ICON_CONFIG = {
   end: 'https://firebasestorage.googleapis.com/v0/b/fir-5fa64.appspot.com/o/end.svg?alt=media&token=c85454b8-4d35-4bf2-8bc2-9ff80c70bf96',
   on: 'https://firebasestorage.googleapis.com/v0/b/fir-5fa64.appspot.com/o/on.svg?alt=media&token=f9e21630-9d82-4f81-8b6b-5d1d6e01efb9',
   off: 'https://firebasestorage.googleapis.com/v0/b/fir-5fa64.appspot.com/o/off.svg?alt=media&token=eadefb7c-e996-4c0f-8590-cc194e9a75b7',
+  carGreen:
+    'https://firebasestorage.googleapis.com/v0/b/tsaron-technologies.appspot.com/o/map-icons%2Fcar-48-green.png?alt=media&token=5abd5a55-586c-4518-93c1-1d528f252b8d',
+  carRed:
+    'https://firebasestorage.googleapis.com/v0/b/tsaron-technologies.appspot.com/o/map-icons%2Fcar-48-red.png?alt=media&token=59bfa472-c5dc-44dc-bafd-6095a3caf295',
 }
 
 export { mapSettings, POINT_MARKER_ICON_CONFIG }

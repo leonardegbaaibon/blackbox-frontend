@@ -44,11 +44,11 @@ export default {
   data() {
     return {
       items: [
-        // {
-        //   icon: 'mdi-apps',
-        //   title: 'Overview',
-        //   to: '/dashboard',
-        // },
+        {
+          icon: 'mdi-apps',
+          title: 'Overview',
+          to: '/dashboard',
+        },
         {
           icon: 'mdi-account-multiple-outline',
           title: 'Drivers',
@@ -73,6 +73,11 @@ export default {
           icon: 'mdi-devices',
           title: 'Devices',
           to: '/devices',
+        },
+        {
+          icon: 'mdi-alert',
+          title: 'Faults Monitor',
+          to: '/fault-monitor',
         },
       ],
       mini: true,

@@ -53,7 +53,7 @@ export const actions = {
           )
         : null
       if (resp.data.length !== 0) {
-        console.log('🚀 ~ getSingleTrip ~ resp.data', resp.data)
+        // console.log('🚀 ~ getSingleTrip ~ resp.data', resp.data)
         commit('SET_TRIP_ITEM', resp.data)
       } else {
         // commit('RESET')

@@ -34,23 +34,9 @@ export default {
     const { InfoWindow } = this.google.maps
     const { Size } = this.google.maps
 
-    let icon
-    if (this.index === 0) {
-      icon = { url: POINT_MARKER_ICON_CONFIG.start }
-    } else if (this.index !== this.length - 1) {
-      if (this.marker.attributes.motion) {
-        icon = {
-          url: POINT_MARKER_ICON_CONFIG.on,
-          scaledSize: new Size(10, 10),
-        }
-      } else {
-        icon = {
-          url: POINT_MARKER_ICON_CONFIG.off,
-          scaledSize: new Size(10, 10),
-        }
-      }
-    } else {
-      icon = { url: POINT_MARKER_ICON_CONFIG.end }
+    const icon = {
+      url: POINT_MARKER_ICON_CONFIG.carGreen,
+      scaledSize: new Size(40, 40),
     }
 
     // Re center map according to location
@@ -78,41 +64,7 @@ export default {
 
     // Info Window
     const contentString = `
-    <div class="rich-info-window">
-	<div class="d-flex justify-space-between">
-		<div>Speed</div>
-		<div class="font-weight-bold">${this.marker.speed}</div>
-	</div>
-	<hr class="my-3" />
-	<div class="d-flex justify-space-between">
-		<div>Fuel Consumed</div>
-		<div class="font-weight-bold">${this.marker.attributes.fuelConsumption}</div>
-	</div>
-	<hr class="my-3" />
-	<div class="d-flex justify-space-between">
-		<div>Total Distance</div>
-		<div class="font-weight-bold">${this.marker.attributes.totalDistance}</div>
-	</div>
-	<hr class="my-3" />
-	<div class="d-flex justify-space-between">
-		<div>Time</div>
-		<div class="font-weight-bold">${this.$dayjs(this.marker.deviceTime).format(
-      'Do MMM YYYY, hh:MM A'
-    )}</div>
-	</div>
-	<hr class="my-3" />
-	<div class="d-flex justify-space-between">
-		<div>In Motion</div>
-		<div class="font-weight-bold">${
-      this.marker.attributes.motion ? 'TRUE' : 'FALSE'
-    }</div>
-	</div>
-	<hr class="my-3" />
-	<div class="d-flex justify-space-between">
-		<div>Ignition</div>
-		<div>${this.marker.attributes.ignition ? 'TRUE' : 'FALSE'}</div>
-	</div>
-</div>
+    hello
 `
 
     const infoWindow = new InfoWindow({ content: contentString })

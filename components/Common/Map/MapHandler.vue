@@ -2,7 +2,7 @@
   <div>
     <div ref="googleMap" class="google-map"></div>
     <template v-if="Boolean(google) && Boolean(map)">
-      <slot :google="google" :map="map" />
+      <slot :google="google" :map="map" :bounds="bounds" />
     </template>
   </div>
 </template>
@@ -24,6 +24,7 @@ export default {
       google: null,
       map: null,
       loader: null,
+      bounds: null,
     }
   },
 
@@ -47,6 +48,8 @@ export default {
             ...this.mapConfig,
             // center: this.center,
           })
+          const { LatLngBounds } = this.google.maps
+          this.bounds = new LatLngBounds()
         }
       })
       //* using promise
