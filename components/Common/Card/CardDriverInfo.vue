@@ -3,7 +3,9 @@
     <v-card-text class="">
       <v-row>
         <v-col cols="12" class="d-flex align-center">
-          <v-avatar size="60" color="primary"></v-avatar>
+          <v-avatar size="60" color="primary">
+            <img :src="driverPhoto" alt="John" />
+          </v-avatar>
           <div class="ml-4">
             <p class="mb-1">Full Name</p>
             <p class="mb-0 font-weight-bold text-subtitle-1">

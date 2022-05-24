@@ -15,6 +15,35 @@
         <p class="primary--text text-overline font-weight-bold text-center">
           Driver's Information
         </p>
+        <!-- file input -->
+        <p
+          class="mb-1 text-uppercase text--black font-weight-bold text-caption"
+        >
+          Driver Photo
+        </p>
+        <v-file-input
+          v-model="form.driverPhoto"
+          counter
+          dense
+          prepend-icon="mdi-camera"
+          outlined
+          :show-size="1000"
+        >
+          <template #selection="{ text, index }">
+            <v-chip v-if="index < 2" color="primary" dark label small>
+              {{ text }}
+            </v-chip>
+
+            <span
+              v-else-if="index === 2"
+              class="text-overline grey--text text--darken-3 mx-2"
+            >
+              +{{ files.length - 2 }} File(s)
+            </span>
+          </template>
+        </v-file-input>
+        <!-- END file input -->
+
         <FormInput
           v-model="form.driverName"
           label="Driver Name *"
@@ -162,6 +191,7 @@ export default {
   data() {
     return {
       form: {
+        driverPhoto: null,
         driverName: this.driver?.driverName || '',
         driverEmail: this.driver?.driverEmail || '',
         driverAge: this.driver?.driverAge || '',

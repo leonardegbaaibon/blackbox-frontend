@@ -100,8 +100,23 @@ export default {
     '@nuxtjs/toast',
     'vue-swatches/nuxt',
     '@deepsource/nuxt-websocket',
-    // '@nuxtjs/firebase',
-    // 'nuxt-socket-io',
+    [
+      '@nuxtjs/firebase',
+      {
+        config: {
+          apiKey: 'AIzaSyDbBTLvWhFpBeu5eJuy1hx0BceEsJTI6qU',
+          authDomain: 'tsaron-technologies.firebaseapp.com',
+          projectId: 'tsaron-technologies',
+          storageBucket: 'tsaron-technologies.appspot.com',
+          messagingSenderId: '659212583390',
+          appId: '1:659212583390:web:46360c0bdeb9db83729d4f',
+          measurementId: 'G-B3SNNS6ZCT',
+        },
+        services: {
+          storage: true, // Just as example. Can be any other service.
+        },
+      },
+    ],
   ],
 
   websocket: {

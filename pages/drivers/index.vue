@@ -82,10 +82,25 @@ export default {
       this.selectedDriver = evt
     },
 
-    create(evt) {
+    async uploadFile(file) {
+      const storageRef = this.$fire.storage
+        .ref()
+        .child(`driver-images/${file.name}_${new Date().getTime()}`)
+      try {
+        await storageRef.put(file)
+        const url = await storageRef.getDownloadURL()
+        return url
+      } catch (e) {
+        alert(e.message)
+      }
+    },
+
+    async create(evt) {
       this.loading = true
+      const url = await this.uploadFile(evt.driverPhoto)
       this.createDriver({
         ...evt,
+        driverPhoto: [url],
         driverPhoneNumber: [evt.driverPhoneNumber],
         driverDeviceDeliveryAddress: 'string',
         driverQuarantor: 'string',
@@ -105,12 +120,16 @@ export default {
         })
     },
 
-    edit(evt) {
-      console.log('🚀 ~ edit ~ evt', evt)
+    async edit(evt) {
       this.loading = true
+      const url = await this.uploadFile(evt.driverPhoto)
       this.editDriver({
         id: this.selectedDriver.driverId,
-        payload: { ...evt, driverPhoneNumber: [evt.driverPhoneNumber] },
+        payload: {
+          ...evt,
+          driverPhoto: [url],
+          driverPhoneNumber: [evt.driverPhoneNumber],
+        },
       })
         .then((resp) => {
           this.editDialog = false
