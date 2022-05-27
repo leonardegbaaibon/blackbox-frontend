@@ -49,12 +49,12 @@ export default {
   },
 
   mounted() {
-    this.$socket.$on('message', (data) => {
-      const message = JSON.parse(JSON.parse(data.data).utf8Data)
-      if (!_.isEmpty(message)) {
-        this.positions = message.positions
-      }
-    })
+    // this.$socket.$on('message', (data) => {
+    //   const message = JSON.parse(JSON.parse(data.data).utf8Data)
+    //   if (!_.isEmpty(message)) {
+    //     this.positions = message.positions
+    //   }
+    // })
   },
 
   methods: {},
