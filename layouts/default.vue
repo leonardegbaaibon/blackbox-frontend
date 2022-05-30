@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapMutations } from 'vuex'
 export default {
   data() {
     return {
@@ -25,36 +25,29 @@ export default {
   },
 
   created() {
-    this.getUser({}).then((response) => {
+    this.getUser({}).then(async (response) => {
       this.$auth.setUser(response)
+      const dataRef = this.$fire.database.ref(`users/${response.userId}`)
+      // recieve data
+      try {
+        // const snapshot = await dataRef.once('value')
+        await dataRef.on('value', (snapshot) => {
+          this.setRealtime(snapshot.val())
+        })
+      } catch (e) {
+        alert(e)
+      }
     })
   },
 
-  // async mounted() {
-  //   const userRef = this.$fire.database.ref(`user`)
-  //   console.log('this.$auth.user', this.$auth.user)
-  //   // write data to the database
-  //   try {
-  //     await userRef.set({
-  //       message: 'Nuxt-Fire with Firebase Realtime Database rocks!',
-  //     })
-  //   } catch (e) {
-  //     alert(e)
-  //     return
-  //   }
-  //   alert('Success.')
-  //   // recieve
-  //   try {
-  //     const snapshot = await userRef.once('value')
-  //     alert(snapshot.val().message)
-  //   } catch (e) {
-  //     alert(e)
-  //   }
-  // },
+  // async mounted() {},
 
   methods: {
     ...mapActions({
       getUser: 'user/authentication/getUserInfo',
+    }),
+    ...mapMutations({
+      setRealtime: 'SET_REALTIME',
     }),
   },
 }
