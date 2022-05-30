@@ -1,7 +1,6 @@
 import colors from 'vuetify/es5/util/colors'
 // eslint-disable-next-line nuxt/no-cjs-in-config
 // const fs = require('fs')
-// console.log('process.env :>> ', process.env)
 // const isDev = process.env.NODE_ENV === 'development'
 // const useEmulators = false
 export default {

@@ -86,28 +86,12 @@ export default {
     }),
   },
 
-  // mounted() {
-  //   this.$nextTick(() => {
-  //     console.log('🚀 ~ mounted ~ this.items', this.items)
-  //     this.dValue = this.vehicles[0]
-  //     this.$emit('change', this.dValue)
-  //   })
-  // },
-
-  // mounted() {
-  //   console.log('🚀 ~ mounted ~ this.items', this.items)
-  //   this.dValue = this.items[0]
-  //   this.$emit('change', this.dValue)
-  // },
-
   methods: {
     ...mapActions({
       getVehicles: 'vehicles/getVehicles',
     }),
     change(evt) {
-      // console.log('🚀 ~ change ~ evt', evt)
       this.$emit('change', evt)
-      // console.log(evt)
     },
   },
 }

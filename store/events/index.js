@@ -25,7 +25,6 @@ export const actions = {
       commit('SET_EVENTS', resp.data)
       return resp
     } catch (error) {
-      console.log('🚀 ~ getEvents ~ error', error)
       throw error
     }
   },

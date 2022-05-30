@@ -95,10 +95,7 @@ export default {
           this.$toast.success('Vehicle successfully created')
         })
         .catch((error) => {
-          // console.log('🚀 ~ create ~ errors', errors)
-          // errors.data.message.forEach((error) => {
           this.$toast.error(error.data.message)
-          // })
         })
         .finally(() => {
           this.loading = false
@@ -109,15 +106,11 @@ export default {
       this.loading = true
       this.editVehicle({ id: this.selectedVehicle.vehicleId, payload: evt })
         .then((resp) => {
-          console.log('🚀 ~ .then ~ resp', resp)
           this.dialog = false
           this.$toast.success('Vehicle successfully updated')
         })
         .catch((error) => {
-          // console.log('🚀 ~ create ~ errors', errors)
-          // errors.data.message.forEach((error) => {
           this.$toast.error(error.data.message)
-          // })
         })
         .finally(() => {
           this.loading = false

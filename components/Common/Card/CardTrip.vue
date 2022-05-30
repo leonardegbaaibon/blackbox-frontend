@@ -70,15 +70,6 @@ export default {
       default: () => {},
     },
   },
-  // filters: {
-  //   calculateTime(value) {
-  //     console.log('🚀 ~ calculateTime ~ value', value)
-  //     if (!value) return ''
-  //     const hour = this.$dayjs.duration(value).hours()
-  //     const minutes = this.$dayjs.duration(value).minutes()
-  //     return `${hour}h ${minutes}m`
-  //   },
-  // },
   data() {
     return {
       date: this.$dayjs,
@@ -89,7 +80,6 @@ export default {
   computed: {
     timeComputed() {
       if (!this.trip.duration) return ''
-      // console.log(`this.trip.duration`, this.trip.duration)
       const hour = this.date.duration(this.trip.duration).hours()
       const minutes = this.date.duration(this.trip.duration).minutes()
       return `${hour}h ${minutes}m`

@@ -1,5 +1,4 @@
 export const getRandom = (arr, n) => {
-  console.log('🚀 ~ getRandom ~ arr', arr)
   const result = new Array(n)
   let len = arr.length
   const taken = new Array(len)

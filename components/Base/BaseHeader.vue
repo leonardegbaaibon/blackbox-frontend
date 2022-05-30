@@ -69,9 +69,7 @@ export default {
 
     isCompoundRoute() {
       const route = this.$route.path.split('/')
-      // let state = false
       // route.length < 2 ? (state = true) : (state = false)
-      // console.log('route length', route.length)
       if (route.length > 2) {
         return true
       } else {
@@ -95,9 +93,7 @@ export default {
       getUser: 'user/authentication/getUserInfo',
     }),
     reRoute() {
-      // console.log(`object`, this.$route.path.split('/').slice(0, 2).join('/'))
       this.$router.go(-1)
-      // this.$router.push(`/${this.$route.path.split('/').slice(0, 2).join('/')}`)
     },
   },
 }

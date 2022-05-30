@@ -14,7 +14,6 @@ export default {
   /* eslint-disable vue/require-default-prop */
 
   provide: () => {
-    console.log(`this.google`, this.google)
     if (this.google) {
       return { googleLoader: this.google }
     }
@@ -47,7 +46,7 @@ export default {
       //* using callback
       this.loader.loadCallback((e) => {
         if (e) {
-          console.log('map error', e)
+          console.error('map error', e)
         } else {
           this.google = window.google
           this.map = new this.google.maps.Map(this.$refs.googleMap, {
