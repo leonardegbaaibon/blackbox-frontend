@@ -7,6 +7,9 @@ export default {
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
   ssr: false,
 
+  // Target: https://go.nuxtjs.dev/config-target
+  // target: 'static',
+
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     titleTemplate: '%s | BlackBox Admin',
@@ -37,10 +40,6 @@ export default {
         type: 'image/png',
         sizes: '64x64',
         href: '/favicon-64x64.png',
-      },
-      {
-        rel: 'manifest',
-        href: '/site.webmanifest',
       },
       {
         rel: 'mask-icon',
@@ -87,14 +86,14 @@ export default {
     '@nuxtjs/eslint-module',
     // https://go.nuxtjs.dev/vuetify
     '@nuxtjs/vuetify',
-    '@nuxtjs/pwa',
     'faker-nuxt',
+    // '@nuxtjs/pwa',
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     '@nuxtjs/axios',
-    // '@nuxtjs/pwa',
+    '@nuxtjs/pwa',
     '@nuxtjs/auth-next',
     '@nuxtjs/dayjs',
     '@nuxtjs/toast',
@@ -210,9 +209,13 @@ export default {
   // PWA module configuration: https://go.nuxtjs.dev/pwa
   pwa: {
     manifest: {
+      name: 'Blackbox Admin',
+      short_name: 'blackboxservice.monster',
+      description: 'Fleet and Vehicle Management System',
       lang: 'en',
+      useWebmanifestExtension: false,
+      theme_color: '#0F084B',
     },
-    meta: { name: 'Blackbox', author: 'Tsaron Tech' },
   },
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
