@@ -7,6 +7,9 @@ export default {
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
   ssr: false,
 
+  // Target: https://go.nuxtjs.dev/config-target
+  // target: 'static',
+
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     titleTemplate: '%s | BlackBox Admin',
@@ -37,10 +40,6 @@ export default {
         type: 'image/png',
         sizes: '64x64',
         href: '/favicon-64x64.png',
-      },
-      {
-        rel: 'manifest',
-        href: '/site.webmanifest',
       },
       {
         rel: 'mask-icon',
@@ -88,6 +87,7 @@ export default {
     // https://go.nuxtjs.dev/vuetify
     '@nuxtjs/vuetify',
     'faker-nuxt',
+    // '@nuxtjs/pwa',
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -207,12 +207,12 @@ export default {
   },
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa
-  // pwa: {
-  //   manifest: {
-  //     lang: 'en',
-  //   },
-  //   meta: { name: 'Blackbox', author: 'Tsaron Tech' },
-  // },
+  pwa: {
+    manifest: {
+      lang: 'en',
+      useWebmanifestExtension: false,
+    },
+  },
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
   vuetify: {
