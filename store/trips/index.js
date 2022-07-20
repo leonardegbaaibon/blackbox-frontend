@@ -38,7 +38,6 @@ export const actions = {
       commit('SET_TRIPS', resp.data)
       return resp
     } catch (error) {
-      console.log('🚀 ~ getTrips ~ error', error)
       throw error
     }
   },
@@ -53,7 +52,6 @@ export const actions = {
           )
         : null
       if (resp.data.length !== 0) {
-        // console.log('🚀 ~ getSingleTrip ~ resp.data', resp.data)
         commit('SET_TRIP_ITEM', resp.data)
       } else {
         // commit('RESET')
@@ -73,7 +71,6 @@ export const actions = {
       )
       return resp.data
     } catch (error) {
-      console.log('🚀 ~ getVehicleTrips ~ error', error)
       throw error.response
     }
   },

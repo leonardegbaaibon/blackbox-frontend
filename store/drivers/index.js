@@ -1,5 +1,4 @@
 /* eslint-disable no-useless-catch */
-// console.log('this :>> ', this)
 export const state = () => ({
   state: 'drivers',
   all: [],
@@ -30,7 +29,6 @@ export const actions = {
       dispatch('getDrivers')
       return resp
     } catch (error) {
-      console.log('🚀 ~ createDriver ~ error', error)
       throw error.response
     }
   },

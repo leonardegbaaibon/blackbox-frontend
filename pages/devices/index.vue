@@ -103,15 +103,11 @@ export default {
       this.loading = true
       this.editDevice(evt)
         .then((resp) => {
-          console.log('🚀 ~ .then ~ resp', resp)
           this.dialog = false
           this.$toast.success('Device successfully updated')
         })
         .catch((error) => {
-          // console.log('🚀 ~ create ~ errors', errors)
-          // errors.data.message.forEach((error) => {
           this.$toast.error(error.data.message)
-          // })
         })
         .finally(() => {
           this.loading = false

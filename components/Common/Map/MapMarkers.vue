@@ -69,7 +69,7 @@ export default {
             })
           : null,
       title: this.marker.protocol,
-      // marker: this.marker,
+      optimized: true,
       map: this.map,
       icon,
     })

@@ -1,5 +1,4 @@
 /* eslint-disable no-useless-catch */
-// console.log('this :>> ', this)
 export const state = () => ({
   state: 'terminals',
   all: [],

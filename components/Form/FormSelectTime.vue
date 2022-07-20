@@ -349,12 +349,9 @@ export default {
         const { outside, ...rest } = evt
         this.dValue = rest
       }
-      // console.log(evt)
     },
 
-    toggle() {
-      console.log(`click`)
-    },
+    toggle() {},
   },
 }
 </script>

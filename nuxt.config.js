@@ -1,7 +1,8 @@
 import colors from 'vuetify/es5/util/colors'
 // eslint-disable-next-line nuxt/no-cjs-in-config
 // const fs = require('fs')
-// console.log('process.env :>> ', process.env)
+// const isDev = process.env.NODE_ENV === 'development'
+// const useEmulators = false
 export default {
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
   ssr: false,
@@ -91,15 +92,13 @@ export default {
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
-    // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
-    // https://go.nuxtjs.dev/pwa
     '@nuxtjs/pwa',
     '@nuxtjs/auth-next',
     '@nuxtjs/dayjs',
     '@nuxtjs/toast',
     'vue-swatches/nuxt',
-    '@deepsource/nuxt-websocket',
+    // '@deepsource/nuxt-websocket',
     [
       '@nuxtjs/firebase',
       {
@@ -114,15 +113,16 @@ export default {
         },
         services: {
           storage: true, // Just as example. Can be any other service.
+          database: true,
         },
       },
     ],
   ],
 
-  websocket: {
-    url: 'ws://3.129.204.142:6060',
-    reconnectInterval: 1000,
-  },
+  // websocket: {
+  //   url: 'ws://3.129.204.142:6060',
+  //   reconnectInterval: 1000,
+  // },
 
   toast: {
     position: 'top-right',
@@ -144,7 +144,7 @@ export default {
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    baseURL: 'https://blackbox-tsaron.herokuapp.com/v2',
+    baseURL: 'https://blackbox-service.herokuapp.com/v2',
   },
 
   auth: {
@@ -207,11 +207,12 @@ export default {
   },
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa
-  pwa: {
-    manifest: {
-      lang: 'en',
-    },
-  },
+  // pwa: {
+  //   manifest: {
+  //     lang: 'en',
+  //   },
+  //   meta: { name: 'Blackbox', author: 'Tsaron Tech' },
+  // },
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
   vuetify: {

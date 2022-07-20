@@ -29,17 +29,20 @@
 <script>
 // eslint-disable-next-line no-unused-vars
 import _, { isEmpty } from 'underscore'
+import { mapState } from 'vuex'
 import { mapSettings } from '@/utils/mapSettings'
-// import { mapActions } from 'vuex'
 
 export default {
   middleware: 'auth',
 
   data() {
-    return { message: null, positions: [], count: 0 }
+    return { message: null, count: 0 }
   },
 
   computed: {
+    ...mapState({
+      positions: (state) => state.positions,
+    }),
     mapConfig() {
       return {
         ...mapSettings,
@@ -49,12 +52,12 @@ export default {
   },
 
   mounted() {
-    this.$socket.$on('message', (data) => {
-      const message = JSON.parse(JSON.parse(data.data).utf8Data)
-      if (!_.isEmpty(message)) {
-        this.positions = message.positions
-      }
-    })
+    // this.$socket.$on('message', (data) => {
+    //   const message = JSON.parse(JSON.parse(data.data).utf8Data)
+    //   if (!_.isEmpty(message)) {
+    //     this.positions = message.positions
+    //   }
+    // })
   },
 
   methods: {},

@@ -3,6 +3,7 @@ export const state = () => ({
   drawer: true,
   process: '',
   snackbar: [],
+  positions: [],
 })
 
 export const mutations = {
@@ -14,6 +15,11 @@ export const mutations = {
   },
   SET_SNACKBAR(state, snackbar) {
     state.snackbar = snackbar
+  },
+  SET_REALTIME(state, payload) {
+    if (payload.positions) {
+      state.positions = [...payload.positions]
+    }
   },
 }
 

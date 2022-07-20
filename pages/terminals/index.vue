@@ -85,7 +85,6 @@ export default {
     },
 
     create(evt) {
-      console.log('🚀 ~ create ~ evt', evt)
       this.loading = true
       this.createTerminal({
         ...evt,
@@ -104,14 +103,12 @@ export default {
     },
 
     edit(evt) {
-      console.log('🚀 ~ edit ~ evt', evt)
       this.loading = true
       this.editTerminal({
         id: this.selectedTerminal.terminalId,
         payload: { ...evt, terminalPhoneNumber: [evt.terminalPhoneNumber] },
       })
         .then((resp) => {
-          console.log('🚀 ~ .then ~ resp', resp)
           this.editDialog = false
           this.$toast.success('Terminal successfully updated')
         })

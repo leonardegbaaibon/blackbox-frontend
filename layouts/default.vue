@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapMutations } from 'vuex'
 export default {
   data() {
     return {
@@ -25,14 +25,29 @@ export default {
   },
 
   created() {
-    this.getUser({}).then((response) => {
+    this.getUser({}).then(async (response) => {
       this.$auth.setUser(response)
+      const dataRef = this.$fire.database.ref(`users/${response.userId}`)
+      // recieve data
+      try {
+        // const snapshot = await dataRef.once('value')
+        await dataRef.on('value', (snapshot) => {
+          this.setRealtime(snapshot.val())
+        })
+      } catch (e) {
+        alert(e)
+      }
     })
   },
+
+  // async mounted() {},
 
   methods: {
     ...mapActions({
       getUser: 'user/authentication/getUserInfo',
+    }),
+    ...mapMutations({
+      setRealtime: 'SET_REALTIME',
     }),
   },
 }

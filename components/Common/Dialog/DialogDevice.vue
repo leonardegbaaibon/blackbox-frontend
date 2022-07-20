@@ -30,7 +30,6 @@
 
 <script>
 import { ValidationObserver } from 'vee-validate'
-// console.log('🚀 ~ COLORS', COLORS)
 export default {
   components: {
     ValidationObserver,
