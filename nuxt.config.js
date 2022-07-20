@@ -209,8 +209,12 @@ export default {
   // PWA module configuration: https://go.nuxtjs.dev/pwa
   pwa: {
     manifest: {
+      name: 'Blackbox Admin',
+      short_name: 'blackboxservice.monster',
+      description: 'Fleet and Vehicle Management System',
       lang: 'en',
       useWebmanifestExtension: false,
+      theme_color: '#0F084B',
     },
   },
 

@@ -5,7 +5,7 @@
     permanent
     dark
     app
-    color="secondary"
+    color="primary"
   >
     <v-list-item
       class="px-2 d-flex justify-space-between align-center mt-12 mb-8"
