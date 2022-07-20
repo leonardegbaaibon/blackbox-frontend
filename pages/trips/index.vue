@@ -141,35 +141,14 @@ export default {
     }),
 
     selectVehicle(evt) {
-      // this.$nextTick(() => {
-      //   this.$refs.carCard.setShow(false)
-      // })
       if (evt) {
         this.form.chosenVehicle = evt
-        // const data = await this.$api.get(
-        //   `/GetImageUrl?searchTerm=${evt.vehicleMakee}`
-        // )
-        // parseString(data.data, (_, result) => {
-        //   this.image = result.string._
-        // })
       }
-      // this.getTrips({ id: evt.vehicleId })
-      // console.log('🚀 ~ selectVehicle ~ evt', evt)
     },
 
     setTime(evt) {
       this.form.time = { ...evt }
-      // console.log('🚀 ~ evt', evt)
     },
-
-    // getTripMethod() {
-    //   this.showDialog = true
-    //   this.getTrip({
-    //     vehicleId: this.form.chosenVehicle.vehicleId,
-    //     from: this.form.time.start,
-    //     to: this.form.time.end,
-    //   })
-    // },
 
     async openTripDialog(evt) {
       this.loading = true
@@ -180,7 +159,6 @@ export default {
         to: this.$dayjs(evt.to).toISOString(),
       }
       try {
-        // await this.getSingleTrip(payload)
         await Promise.all([
           this.getSingleTrip(payload),
           this.getEvents(payload),
@@ -188,7 +166,7 @@ export default {
         this.showDialog = true
         this.loading = false
       } catch (error) {
-        console.log('🚀 ~ openTripDialog ~ error', error)
+        console.error('🚀 ~ openTripDialog ~ error', error)
       }
     },
   },

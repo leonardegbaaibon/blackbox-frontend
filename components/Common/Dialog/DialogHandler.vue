@@ -102,7 +102,6 @@ export default {
   methods: {
     ok(evt) {
       this.$emit('clicked:ok')
-      // console.log(evt)
     },
     cancel() {
       this.$emit('clicked:cancel')

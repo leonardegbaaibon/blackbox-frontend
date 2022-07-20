@@ -1,7 +1,6 @@
 import colors from 'vuetify/es5/util/colors'
 // eslint-disable-next-line nuxt/no-cjs-in-config
 // const fs = require('fs')
-// console.log('process.env :>> ', process.env)
 // const isDev = process.env.NODE_ENV === 'development'
 // const useEmulators = false
 export default {
@@ -88,15 +87,14 @@ export default {
     '@nuxtjs/eslint-module',
     // https://go.nuxtjs.dev/vuetify
     '@nuxtjs/vuetify',
+    '@nuxtjs/pwa',
     'faker-nuxt',
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
-    // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
-    // https://go.nuxtjs.dev/pwa
-    '@nuxtjs/pwa',
+    // '@nuxtjs/pwa',
     '@nuxtjs/auth-next',
     '@nuxtjs/dayjs',
     '@nuxtjs/toast',
@@ -214,6 +212,7 @@ export default {
     manifest: {
       lang: 'en',
     },
+    meta: { name: 'Blackbox', author: 'Tsaron Tech' },
   },
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify

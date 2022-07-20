@@ -30,7 +30,6 @@
 <script>
 import { ValidationObserver } from 'vee-validate'
 import { mapActions } from 'vuex'
-// console.log('🚀 ~ COLORS', COLORS)
 export default {
   components: {
     ValidationObserver,
@@ -90,7 +89,6 @@ export default {
         this.$emit('input', false)
         this.$emit('reload')
       } catch (error) {
-        console.log('🚀 ~ submit ~ error', error)
         this.$toast.error(error.data.message)
       }
     },
