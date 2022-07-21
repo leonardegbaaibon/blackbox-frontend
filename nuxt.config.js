@@ -210,7 +210,7 @@ export default {
   pwa: {
     manifest: {
       name: 'Blackbox Admin',
-      short_name: 'blackboxservice.monster',
+      short_name: 'Blackbox Admin',
       description: 'Fleet and Vehicle Management System',
       lang: 'en',
       useWebmanifestExtension: false,
