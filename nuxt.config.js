@@ -144,7 +144,7 @@ export default {
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    baseURL: 'https://blackbox-service.herokuapp.com/v2',
+    baseURL: 'https://api.blackboxservice.monster/v2',
   },
 
   auth: {
