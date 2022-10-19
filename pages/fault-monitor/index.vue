@@ -15,38 +15,83 @@
       <ListFaults
         v-else
         :faults="[
-          { fault: 'Engine Breakdown', solution: 'Find closest mechanic' },
-          { fault: 'Engine Breakdown', solution: 'Find closest mechanic' },
-          { fault: 'Engine Breakdown', solution: 'Find closest mechanic' },
-          { fault: 'Engine Breakdown', solution: 'Find closest mechanic' },
-          { fault: 'Engine Breakdown', solution: 'Find closest mechanic' },
-          { fault: 'Engine Breakdown', solution: 'Find closest mechanic' },
-          { fault: 'Engine Breakdown', solution: 'Find closest mechanic' },
-          { fault: 'Engine Breakdown', solution: 'Find closest mechanic' },
-          { fault: 'Engine Breakdown', solution: 'Find closest mechanic' },
-          { fault: 'Engine Breakdown', solution: 'Find closest mechanic' },
-          { fault: 'Engine Breakdown', solution: 'Find closest mechanic' },
+          {
+            date: '2:06 AM',
+            fault: 'Engine Breakdown',
+            solution: 'Find closest mechanic',
+            status: 'Bad - 2 days to fix',
+          },
+          {
+            date: '7:23 AM',
+            fault: 'Discharged Battery',
+            solution: 'Charge or replace battery',
+            status: 'Bad - Fix immediately',
+          },
+          {
+            date: '8:34 AM',
+            fault: 'Engine Breakdown',
+            solution: 'Find closest mechanic',
+            status: 'Bad - 1 days to fix',
+          },
+          {
+            date: '10:28 AM',
+            fault: 'Engine Overheating',
+            solution: 'Replace engine or visit closet mechanic',
+            status: 'Bad - Fix immediately',
+          },
+          {
+            date: '11:54 AM',
+            fault: 'Engine Breakdown',
+            solution: 'Find closest mechanic',
+            status: 'Bad - 1 days to fix',
+          },
+          {
+            date: '12:12 PM',
+            fault: 'Engine Overheating',
+            solution: 'Replace engine or visit closet mechanic',
+            status: 'Bad - Fix immediately',
+          },
+          {
+            date: '1:34 PM',
+            fault: 'Low Engine Oil Level',
+            solution: 'Service vehicle or refill engine oil',
+            status: 'Bad - Fix immediately',
+          },
+          {
+            date: '2:19 PM',
+            fault: 'Engine Breakdown',
+            solution: 'Find closest mechanic',
+          },
+          {
+            date: '2:45 PM',
+            fault: 'Low Engine Oil Level',
+            solution: 'Service vehicle or refill engine oil',
+            status: 'Bad - Fix immediately',
+          },
+          {
+            date: '3:54 PM',
+            fault: 'Engine Overheating',
+            solution: 'Replace engine or visit closet mechanic',
+            status: 'Bad - Fix immediately',
+          },
+          {
+            date: '4:12 PM',
+            fault: 'Low Engine Oil Level',
+            solution: 'Service vehicle or refill engine oil',
+            status: 'Bad - Fix immediately',
+          },
         ]"
+        @click="dialog = true"
       />
     </v-col>
 
     <!-- Dialogs -->
-    <!-- create dialog -->
-    <DialogDevice
+    <!-- spare part dialog -->
+    <DialogSparePart
       v-if="dialog"
       v-model="dialog"
-      title="Create Device"
+      title="Spare Parts Available"
       :loading="loading"
-      @clicked:ok="create"
-    />
-    <!-- edit Dialog -->
-    <DialogDevice
-      v-if="editDialog"
-      v-model="editDialog"
-      title="Edit Device"
-      :loading="loading"
-      :device="selectedDevice"
-      @clicked:ok="edit"
     />
     <DialogPrompt ref="prompt" v-model="showPrompt" />
   </v-row>
@@ -60,7 +105,6 @@ export default {
 
   data() {
     return {
-      // terminals: [],
       dialog: false,
       editDialog: false,
       loading: false,
