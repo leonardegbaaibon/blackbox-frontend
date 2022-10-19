@@ -98,7 +98,7 @@ export default {
   methods: {
     navigateDriver(evt) {
       console.log('🚀 ~ navigateVehicle ~ evt', evt)
-      this.$router.push(`drivers/${evt.driverId}`)
+      this.$router.push(`/drivers/${evt.driverId}`)
     },
   },
 }

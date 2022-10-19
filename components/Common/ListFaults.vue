@@ -5,6 +5,7 @@
       :key="index"
       v-bind="fault"
       class="mb-4"
+      @click="$emit('click')"
     />
   </div>
 </template>

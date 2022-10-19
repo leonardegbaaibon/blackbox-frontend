@@ -24,7 +24,13 @@
             </p>
           </div>
         </div>
-        <div class="">{{ vehicle }}</div>
+        <div class="">
+          {{ vehicle }}
+          <br />
+          <v-btn x-small @click="$emit('click')" depressed>
+            Spare part available
+          </v-btn>
+        </div>
       </div>
     </v-card-text>
     <v-card-actions class="primary white--text">
