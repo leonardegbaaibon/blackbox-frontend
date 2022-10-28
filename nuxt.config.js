@@ -144,7 +144,7 @@ export default {
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    baseURL: 'https://api.blackboxservice.monster/v2',
+    baseURL: process.env.BASE_URL,
   },
 
   auth: {
@@ -195,14 +195,12 @@ export default {
   // Runtime Config
   publicRuntimeConfig: {
     baseURL: process.env.BASE_URL,
-    mapsKey:
-      process.env.MAPS_API_KEY || 'AIzaSyDbBTLvWhFpBeu5eJuy1hx0BceEsJTI6qU',
+    mapsKey: process.env.MAPS_API_KEY,
     carsURL: process.env.CARS_API_KEY,
   },
 
   privateRuntimeConfig: {
-    mapsKey:
-      process.env.MAPS_API_KEY || 'AIzaSyDbBTLvWhFpBeu5eJuy1hx0BceEsJTI6qU',
+    mapsKey: process.env.MAPS_API_KEY,
     carsURL: process.env.CARS_API_KEY,
   },
 
