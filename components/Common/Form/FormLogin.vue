@@ -49,11 +49,11 @@ export default {
     return {
       form: {
         email:
-          process.env.NODE_ENV === 'development' ? 'gigrcontact@gmail.com' : '',
-        password:
           process.env.NODE_ENV === 'development'
-            ? 'Glanks_integrated_global_resources'
+            ? 'insurancecare@axamansard.com'
             : '',
+        password:
+          process.env.NODE_ENV === 'development' ? 'axamansard@2022' : '',
       },
     }
   },
