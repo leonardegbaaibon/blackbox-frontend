@@ -91,6 +91,7 @@ export default {
         // { text: 'Position Id', value: 'positionId' },
         { text: 'Status', value: 'status' },
         { text: 'Unique ID', value: 'uniqueId' },
+        { text: 'Phone Number', value: 'phone' },
         { text: 'Last Update', value: 'lastUpdate' },
         // { text: 'Disabled', value: 'disabled' },
         // { text: 'Actions', value: 'actions', sortable: false, width: 150 },
