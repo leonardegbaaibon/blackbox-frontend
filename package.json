@@ -38,7 +38,7 @@
     "vue-apexcharts": "^1.6.0",
     "vue-datetime": "^1.0.0-beta.14",
     "vue-swatches": "^2.1.1",
-    "vuetify": "^2.5.5",
+    "vuetify": "^2.6.13",
     "vuex-persistedstate": "^4.1.0",
     "weekstart": "^1.1.0",
     "xml2js": "^0.4.23"
