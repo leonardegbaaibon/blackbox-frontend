@@ -144,7 +144,10 @@ export default {
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    baseURL: process.env.BASE_URL,
+    baseURL:
+      process.env.NODE_ENV === 'development'
+        ? process.env.BASE_URL_STAGING
+        : process.env.BASE_URL,
   },
 
   auth: {
@@ -194,7 +197,10 @@ export default {
 
   // Runtime Config
   publicRuntimeConfig: {
-    baseURL: process.env.BASE_URL,
+    baseURL:
+      process.env.NODE_ENV === 'development'
+        ? process.env.BASE_URL_STAGING
+        : process.env.BASE_URL,
     mapsKey: process.env.MAPS_API_KEY,
     carsURL: process.env.CARS_API_KEY,
   },
