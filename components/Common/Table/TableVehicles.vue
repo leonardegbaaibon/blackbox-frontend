@@ -103,7 +103,7 @@ export default {
 
   methods: {
     navigateVehicle(evt) {
-      this.$router.push(`vehicles/${evt.vehicleId}`)
+      this.$router.push(`/vehicles/${evt.vehicleId}`)
     },
   },
 }
