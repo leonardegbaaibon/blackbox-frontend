@@ -20,6 +20,7 @@
             fault: 'Engine Breakdown',
             solution: 'Find closest mechanic',
             status: 'Bad - 2 days to fix',
+            criticality: 'Recieved critical DPC P0111',
           },
           {
             date: '7:23 AM',
