@@ -1,11 +1,10 @@
 <template>
   <DialogHandler
-    :title="formTitle"
-    subtitle="Enter terminal's details to create one"
+    :title="title"
+    :subtitle="subtitle"
     :loading="loading"
     :value="value"
-    :ok-button="formTitle"
-    :ok-disabled="editedIndex === -1 ? true : false"
+    :ok-button="title"
     @input="$emit('input', $event)"
     @clicked:ok="submit"
     @clicked:cancel="$emit('input', false)"
@@ -62,7 +61,7 @@
         <v-row>
           <v-col class="pb-0">
             <FormInput
-              v-model="form.terminalPhoneNumber[0]"
+              v-model="form.terminalPhoneNumber"
               label="Terminal Phone Number *"
               rules="required|digits:11"
               type="tel"
@@ -99,15 +98,19 @@ export default {
       type: Boolean,
       default: false,
     },
+    title: {
+      type: String,
+      default: '',
+    },
+    subtitle: {
+      type: String,
+      default: '',
+    },
     loading: {
       type: Boolean,
       default: false,
     },
-    editedIndex: {
-      type: Number,
-      default: -1,
-    },
-    model: {
+    terminal: {
       type: Object,
       default: () => {},
     },
@@ -115,66 +118,49 @@ export default {
 
   data() {
     return {
-      form: {},
+      form: {
+        terminalName: this.terminal?.terminalName || '',
+        terminalAddress: this.terminal?.terminalAddress || '',
+        terminalState: this.terminal?.terminalState || '',
+        terminalManager: this.terminal?.terminalManager || '',
+        terminalEmail: this.terminal?.terminalEmail || '',
+        terminalPhoneNumber: this.terminal?.terminalPhoneNumber || '',
+      },
     }
   },
 
-  computed: {
-    formTitle() {
-      return this.editedIndex === -1 ? 'Create Terminal' : 'Edit Terminal'
-    },
-  },
-
-  watch: {
-    model: {
-      // immediate: true,
-      handler(newValue, oldValue) {
-        this.form = {
-          ...this.form,
-          ...newValue,
-          terminalPhoneNumber: [
-            typeof newValue.terminalPhoneNumber === 'object'
-              ? newValue.terminalPhoneNumber[0]
-              : newValue.terminalPhoneNumber,
-            '',
-          ],
-        }
-      },
-    },
-  },
-
-  created() {
-    this.form = Object.assign({}, this.model)
-  },
-
   methods: {
+    // submit() {
+    //   if (this.editedIndex !== -1) {
+    //     // edit terminal
+    //     this.$refs.observer.validate().then((success) => {
+    //       if (success) {
+    //         const { updatedAt, createdAt, ...rest } = this.form
+    //         const updatedPayload = {
+    //           id: this.model.terminalId,
+    //           payload: { ...rest },
+    //         }
+    //         this.$emit('clicked:edit', updatedPayload)
+    //       }
+    //     })
+    //   } else {
+    //     // create terminal
+    //     this.$refs.observer.validate().then((success) => {
+    //       if (success) {
+    //         const payload = {
+    //           ...this.form,
+    //           terminalPhoneNumber: this.form.terminalPhoneNumber.filter(
+    //             (x) => x
+    //           ),
+    //         }
+    //         this.$emit('clicked:ok', payload)
+    //       }
+    //     })
+    //   }
+    // },
+
     submit() {
-      if (this.editedIndex !== -1) {
-        // edit terminal
-        this.$refs.observer.validate().then((success) => {
-          if (success) {
-            const { updatedAt, createdAt, ...rest } = this.form
-            const updatedPayload = {
-              id: this.model.terminalId,
-              payload: { ...rest },
-            }
-            this.$emit('clicked:edit', updatedPayload)
-          }
-        })
-      } else {
-        // create terminal
-        this.$refs.observer.validate().then((success) => {
-          if (success) {
-            const payload = {
-              ...this.form,
-              terminalPhoneNumber: this.form.terminalPhoneNumber.filter(
-                (x) => x
-              ),
-            }
-            this.$emit('clicked:ok', payload)
-          }
-        })
-      }
+      this.$emit('clicked:ok', this.form)
     },
   },
 }

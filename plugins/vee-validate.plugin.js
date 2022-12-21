@@ -59,7 +59,6 @@ extend('max', {
 })
 extend('minInt', {
   validate(value, args) {
-    console.log(value, args, 'VALUE')
     return value >= Number(args.length)
   },
   params: ['length'],

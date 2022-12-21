@@ -66,7 +66,7 @@ export default {
         { text: 'Email', value: 'terminalEmail' },
         { text: 'Phone Number', value: 'terminalPhoneNumber' },
         { text: 'Created', value: 'createdAt' },
-        { text: 'Actions', value: 'actions', sortable: false },
+        { text: 'Actions', value: 'actions', sortable: false, width: 150 },
       ],
     }
   },

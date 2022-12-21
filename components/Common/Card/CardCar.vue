@@ -8,13 +8,46 @@
       :height="'200px'"
       position="center center"
     >
-      <v-chip
-        style="position: absolute; top: 16px; right: 16px"
-        :color="device ? 'success' : 'error'"
-        label
-      >
-        {{ device ? `Connected` : 'Disconnected' }}
-      </v-chip>
+      <div style="position: absolute; top: 16px; right: 16px">
+        <!-- Assign Device  -->
+        <v-btn
+          v-if="!device"
+          depressed
+          color="primary"
+          @click="$emit('clicked:assign', { id: vehicleId })"
+        >
+          <v-icon left dark>mdi-tablet-cellphone</v-icon>
+          Assign Device
+        </v-btn>
+        <v-btn
+          v-else
+          depressed
+          color="error"
+          @click="$emit('clicked:unassign', { id: vehicleId })"
+        >
+          <v-icon left dark>mdi-tablet-cellphone</v-icon>
+          Unassign Device
+        </v-btn>
+        <!-- Assign Driver -->
+        <v-btn
+          v-if="!chauffeur"
+          depressed
+          color="primary"
+          @click="$emit('clicked:assignDriver', { id: vehicleId })"
+        >
+          <v-icon left dark>mdi-steering</v-icon>
+          Assign Driver
+        </v-btn>
+        <v-btn
+          v-else
+          depressed
+          color="error"
+          @click="$emit('clicked:unassignDriver', { id: chauffeur })"
+        >
+          <v-icon left dark>mdi-steering</v-icon>
+          Unassign Driver
+        </v-btn>
+      </div>
 
       <v-card-title class="font-weight-bold text-h3">
         {{ vehicleMake ? `${vehicleMake} ${vehicleModel}` : 'Loading....' }}
@@ -31,6 +64,9 @@
         </v-col>
         <v-col cols="">
           <div class="d-flex">
+            <p class="text-h6 mb-0 font-weight-bold mr-1">
+              {{ vehicleColor ? `${vehicleColor}` : '' }}
+            </p>
             <v-avatar
               size="24"
               class="mr-3"
@@ -41,11 +77,7 @@
                   .toLowerCase()
               "
             ></v-avatar>
-            <p class="text-h6 mb-0 font-weight-bold">
-              {{ vehicleColor ? `${vehicleColor}` : '' }}
-            </p>
           </div>
-
           <p class="text-caption">Vehicle Color</p>
         </v-col>
         <v-col cols="">
@@ -58,13 +90,15 @@
         </v-col>
         <v-col cols="">
           <p class="text-h6 mb-0 font-weight-bold">
-            {{ attributes.totalDistance }}
+            <!-- {{ attributes.totalDistance }} -->
+            0
           </p>
           <p class="text-caption">Total Distance Travelled</p>
         </v-col>
         <v-col cols="">
           <p class="text-h6 mb-0 font-weight-bold">
-            {{ attributes.fuelConsumption }}
+            <!-- {{ attributes.fuelConsumption }} -->
+            0
           </p>
           <p class="text-caption">Fuel Consumed</p>
         </v-col>
@@ -103,6 +137,14 @@ export default {
       default: '',
     },
     device: {
+      type: String,
+      default: null,
+    },
+    driver: {
+      type: String,
+      default: null,
+    },
+    chauffeur: {
       type: String,
       default: null,
     },

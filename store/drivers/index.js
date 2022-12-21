@@ -1,5 +1,4 @@
 /* eslint-disable no-useless-catch */
-// console.log('this :>> ', this)
 export const state = () => ({
   state: 'drivers',
   all: [],
@@ -30,7 +29,6 @@ export const actions = {
       dispatch('getDrivers')
       return resp
     } catch (error) {
-      console.log('🚀 ~ createDriver ~ error', error)
       throw error.response
     }
   },
@@ -64,6 +62,42 @@ export const actions = {
       return resp
     } catch (error) {
       throw error
+    }
+  },
+
+  async getUnassignedDrivers({ commit }) {
+    commit('SET_PROCESS', 'drivers/getUnassignedDrivers', { root: true })
+    try {
+      const resp = await this.$axios.$get('drivers/unassigned/fetch')
+      return resp.data
+    } catch (error) {
+      throw error
+    }
+  },
+
+  async assignDriver({ commit, dispatch }, { vehicleId, driverId }) {
+    commit('SET_PROCESS', 'drivers/assignDriver', { root: true })
+    try {
+      const resp = await this.$axios.$put(`drivers/${vehicleId}`, {
+        driverId,
+      })
+      dispatch('getDrivers')
+      return resp
+    } catch (error) {
+      throw error.response
+    }
+  },
+
+  async unassignDriver({ commit, dispatch }, { vehicleId, driverId }) {
+    commit('SET_PROCESS', 'drivers/unassignDriver', { root: true })
+    try {
+      const resp = await this.$axios.$put(`drivers/unassign/${vehicleId}`, {
+        driverId,
+      })
+      dispatch('getDrivers')
+      return resp
+    } catch (error) {
+      throw error.response
     }
   },
 }

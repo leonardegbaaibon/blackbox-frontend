@@ -1,10 +1,9 @@
 <template>
   <DialogHandler
-    :title="formTitle"
-    subtitle="Enter vehicle and vehicle owner's details to create one"
+    :title="title"
+    subtitle="Enter vehicle's details to create one"
     :value="value"
-    :ok-button="formTitle"
-    :ok-disabled="editedIndex === -1 ? true : false"
+    :ok-button="title"
     :loading="loading"
     @input="$emit('input', $event)"
     @clicked:ok="submit"
@@ -26,14 +25,22 @@
             />
           </v-col>
           <v-col class="pb-0">
-            <FormInput v-model="form.name" label="Name" type="text" />
+            <!-- vehicle Model  -->
+            <FormInput
+              v-model="form.model"
+              label="Model *"
+              rules="required"
+              type="text"
+            />
+            <!-- END vehicle Model  -->
           </v-col>
         </v-row>
         <v-row>
           <v-col>
             <FormInput
-              v-model="form.model"
-              label="Model *"
+              v-model.number="form.carValue"
+              prefix="₦"
+              label="Price"
               rules="required"
               type="text"
             />
@@ -65,12 +72,48 @@
             />
           </v-col>
         </v-row>
+        <FormInput
+          v-model="form.engineNumber"
+          label="Engine Number *"
+          rules="required"
+          type="text"
+        />
         <!-- color picker  -->
-        <FormSelect v-model="form.color" label="Color *" :items="color" />
+        <div class="mb-1 d-flex">
+          <p
+            class="
+              mb-0
+              text-uppercase text--black
+              font-weight-bold
+              text-caption
+            "
+          >
+            Color *
+          </p>
+        </div>
+        <v-select
+          v-model="form.color"
+          outlined
+          dense
+          :items="swatches"
+          item-text="label"
+          item-value="label"
+        />
+        <!-- END color picker  -->
+
+        <!-- new color picker  -->
+        <!-- <p
+          class="mb-2 text-uppercase text--black font-weight-bold text-caption"
+        >
+          vehicle color *
+        </p>
+        <v-swatches v-model="color" :swatches="swatches"></v-swatches>
+        <br />
+        {{ colorText }} -->
         <!-- END color picker  -->
 
         <!-- Owner's Information -->
-        <p
+        <!-- <p
           class="primary--text mt-5 text-overline font-weight-bold text-center"
         >
           Owner's Information
@@ -102,7 +145,7 @@
               type="text"
             />
           </v-col>
-        </v-row>
+        </v-row> -->
       </v-form>
     </ValidationObserver>
   </DialogHandler>
@@ -110,11 +153,31 @@
 
 <script>
 import { ValidationObserver } from 'vee-validate'
-import COLORS from 'vuetify/lib/util/colors'
-// console.log('🚀 ~ COLORS', COLORS)
+
+const SWATCHES = [
+  { color: '#A52A2A', label: 'Brown' },
+  { color: '#808080', label: 'Gray' },
+  { color: '#008000', label: 'Green' },
+  { color: '#ffa500', label: 'Orange' },
+  { color: '#ffc0cb', label: 'Pink' },
+  { color: '#800080', label: 'Purple' },
+  { color: '#ff0000', label: 'Red' },
+  { color: '#c0c0c0', label: 'Silver' },
+  { color: '#ffffff', label: 'White' },
+  { color: '#ffff00', label: 'Yellow' },
+  { color: '#f5f5dc', label: 'Beige' },
+  { color: '#ffd700', label: 'Gold' },
+  { color: '#aaa9ad', label: 'SilverMetallic' },
+  { color: '#36454F', label: 'Charcoal' },
+  { color: '#800020', label: 'Burgundy' },
+  { color: '', label: 'Other' },
+  // { color: '#F891A6', label: 'Multi' },
+]
+
 export default {
   components: {
     ValidationObserver,
+    // VSwatches,
   },
 
   model: {
@@ -131,108 +194,47 @@ export default {
       type: Boolean,
       default: false,
     },
-    editedIndex: {
-      type: Number,
-      default: -1,
-    },
-    model: {
+    vehicle: {
       type: Object,
       default: () => {},
+    },
+    title: {
+      type: String,
+      default: 'Create',
+    },
+    subtitle: {
+      type: String,
+      default: "Enter device's details to create one",
     },
   },
 
   data() {
     return {
-      colorItems: [
-        { text: 'Red', value: 'red' },
-        { text: 'Green', value: 'green' },
-        { text: 'Blue', value: 'blue' },
-      ],
-      form: {},
-      // form: {
-      //   model: '',
-      //   year: '',
-      //   vin: '',
-      //   color: '',
-      //   registrationNumber: '',
-      //   make: '',
-      //   name: '',
-      //   // owner info
-      //   vehicleOwnerAddress: '',
-      //   vehicleOwnerPhoneNumber: '',
-      //   vehicleOwnerName: '',
-      // },
-    }
-  },
-
-  computed: {
-    formTitle() {
-      return this.editedIndex === -1 ? 'Create Vehicle' : 'Edit Vehicle'
-    },
-    color() {
-      const colorArray = Object.keys(COLORS).map((color) => ({
-        text: color.charAt(0).toUpperCase() + color.slice(1),
-        value: color.charAt(0).toUpperCase() + color.slice(1),
-        color: color
-          .split(/(?=[A-Z])/)
-          .join('-')
-          .toLowerCase(),
-      }))
-      return colorArray
-    },
-  },
-
-  watch: {
-    model: {
-      // immediate: true,
-      handler(newValue, oldValue) {
-        if (this.editedIndex === -1) {
-          // create
-          this.form = {
-            ...newValue,
-          }
-        } else {
-          // edit
-          this.form = {
-            ...newValue,
-          }
-        }
+      form: {
+        model: this.vehicle?.vehicleModel || '',
+        year: this.vehicle?.vehicleYear || '',
+        vin: this.vehicle?.vehicleVin || '',
+        color: this.vehicle?.vehicleColor || '',
+        carValue: this.vehicle?.carValue || '',
+        registrationNumber: this.vehicle?.vehicleRegistrationNumber || '',
+        make: this.vehicle?.vehicleMake || '',
+        engineNumber: this.vehicle?.engineNumber || '',
       },
-    },
-  },
-
-  created() {
-    this.form = Object.assign({}, this.model)
+      color: this.vehicle?.vehicleColor || '',
+      swatches: SWATCHES,
+      makes: [],
+      models: [],
+      tmpLoading: false,
+    }
   },
 
   methods: {
     submit() {
-      if (this.editedIndex !== -1) {
-        // edit vehicle
-        this.$refs.observer.validate().then((success) => {
-          if (success) {
-            const { updatedAt, createdAt, device, ...rest } = this.form
-            const updatedPayload = {
-              id: this.model.vehicleId,
-              payload: {
-                ...rest,
-              },
-            }
-            this.$emit('clicked:edit', updatedPayload)
-          }
-        })
-      } else {
-        // create vehicle
-        this.$refs.observer.validate().then((success) => {
-          if (success) {
-            this.$emit('clicked:ok', this.form)
-          }
-        })
-      }
-    },
-
-    changeColor(evt) {
-      console.log('🚀 ~ changeColor ~ evt', evt)
+      this.$refs.observer.validate().then((success) => {
+        if (success) {
+          this.$emit('clicked:ok', this.form)
+        }
+      })
     },
   },
 }

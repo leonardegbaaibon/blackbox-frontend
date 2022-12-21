@@ -1,5 +1,4 @@
 /* eslint-disable no-useless-catch */
-// console.log('this :>> ', this)
 export const state = () => ({
   state: 'terminals',
   all: [],
@@ -44,10 +43,10 @@ export const actions = {
     }
   },
 
-  async updateTerminal({ commit, dispatch }, payload) {
+  async updateTerminal({ commit, dispatch }, { id, payload }) {
     commit('SET_PROCESS', 'terminals/updateTerminal', { root: true })
     try {
-      const resp = await this.$axios.$patch(`terminals/${payload.id}`, payload)
+      const resp = await this.$axios.$patch(`terminals/${id}`, payload)
       dispatch('getTerminals')
       return resp
     } catch (error) {

@@ -36,7 +36,7 @@
               .join('-')
               .toLowerCase(),
           ]"
-          size="24"
+          size="12"
           class="mr-3"
         ></v-avatar>
         {{ item.vehicleColor }}
@@ -49,6 +49,18 @@
           mdi-pencil
         </v-icon>
         <v-icon small @click="$emit('clicked:delete', item)">mdi-delete</v-icon>
+      </template>
+      <template #[`item.device`]="{ item }">
+        <v-icon :color="item.device ? 'success' : 'error'" small>
+          {{ item.device ? 'mdi-check-circle' : 'mdi-close-circle' }}
+        </v-icon>
+        {{ item.device ? 'Assigned' : 'Unassigned' }}
+      </template>
+      <template #[`item.chauffeur`]="{ item }">
+        <v-icon :color="item.chauffeur ? 'success' : 'error'" small>
+          {{ item.chauffeur ? 'mdi-check-circle' : 'mdi-close-circle' }}
+        </v-icon>
+        {{ item.chauffeur ? 'Assigned' : 'Unassigned' }}
       </template>
       <template #no-data>
         <v-btn color="primary" @click="initialize">Reset</v-btn>
@@ -76,21 +88,22 @@ export default {
           sortable: false,
           value: 'vehicleMake',
         },
-        { text: 'Color', value: 'vehicleColor' },
+        { text: 'Color', value: 'vehicleColor', width: '10%' },
         { text: 'Registration Number', value: 'vehicleRegistrationNumber' },
         { text: 'Model', value: 'vehicleModel' },
         { text: 'Year', value: 'vehicleYear' },
         { text: 'VIN', value: 'vehicleVin' },
-        { text: 'Created at', value: 'createdAt' },
-        { text: 'Actions', value: 'actions', sortable: false },
+        { text: 'Device connected', value: 'device', width: '15%' },
+        { text: 'Driver Assigned', value: 'chauffeur', width: '15%' },
+        { text: 'Created on', value: 'createdAt', width: '35%' },
+        { text: 'Actions', value: 'actions', sortable: false, width: 150 },
       ],
     }
   },
 
   methods: {
     navigateVehicle(evt) {
-      // console.log('🚀 ~ navigateVehicle ~ evt', evt)
-      this.$router.push(`vehicles/${evt.vehicleId}`)
+      this.$router.push(`/vehicles/${evt.vehicleId}`)
     },
   },
 }

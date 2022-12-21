@@ -55,10 +55,6 @@ export default {
       return { lat: 6.459295, lng: 3.335831 }
     },
   },
-
-  beforeUpdate() {
-    console.log(`updated`)
-  },
 }
 </script>
 

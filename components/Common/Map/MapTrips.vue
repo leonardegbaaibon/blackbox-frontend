@@ -1,20 +1,21 @@
 <template>
   <MapHandler
-    :style="{ height: `${height}px` }"
+    :style="{ height: height }"
     :map-config="mapConfig"
     class="rounded-lg"
   >
-    <template v-if="trips.length !== 0" slot-scope="{ google, map }">
+    <template v-if="items.length !== 0" slot-scope="{ google, map, bounds }">
       <MapMarkers
-        v-for="(marker, index) in trips"
+        v-for="(marker, index) in items"
         :key="marker.id"
-        :length="trips.length"
+        :length="items.length"
         :index="index"
         :marker="marker"
         :google="google"
+        :bounds="bounds"
         :map="map"
       />
-      <MapPolygons :google="google" :map="map" :markers="trips" />
+      <MapPolygons :google="google" :map="map" :markers="items" />
       <!-- <MapWaypoint :markers="items" :google="google" :map="map" /> -->
     </template>
   </MapHandler>
@@ -28,7 +29,7 @@ export default {
   props: {
     height: {
       type: [Number, String],
-      default: 500,
+      default: '100%',
     },
 
     items: {
@@ -55,10 +56,6 @@ export default {
       return { lat: 6.459295, lng: 3.335831 }
     },
   },
-
-  // beforeUpdate() {
-  //   console.log(`updated`)
-  // },
 }
 </script>
 

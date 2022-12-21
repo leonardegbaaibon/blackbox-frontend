@@ -10,28 +10,11 @@
         </v-footer>
       </v-container>
     </v-main>
-    <!-- <v-footer fixed app>
-      <span>&copy; {{ new Date().getFullYear() }}</span>
-    </v-footer> -->
-
-    <!-- Snackbar -->
-    <!-- <v-snackbar
-      v-for="(snackbar, index) in snackbars.filter((s) => s.showing)"
-      :key="index"
-      :value="snackbar.showing"
-      :timeout="-1"
-      :color="snackbar.variant || 'success'"
-      outlined
-    >
-      {{ snackbar.text }}
-
-      <v-btn :color="snackbar.variant" text @click="close">Close</v-btn>
-    </v-snackbar> -->
   </v-app>
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapMutations } from 'vuex'
 export default {
   data() {
     return {
@@ -41,25 +24,31 @@ export default {
     }
   },
 
-  computed: {
-    // ...mapState({ snackbars: (state) => state.snackbars }),
-  },
-
   created() {
-    // this.$toast.success('Success', { position: 'top-right' })
-    // console.log('here')
-    this.getUser({}).then((response) => {
+    this.getUser({}).then(async (response) => {
       this.$auth.setUser(response)
+      const dataRef = this.$fire.database.ref(`users/${response.userId}`)
+      // recieve data
+      try {
+        // const snapshot = await dataRef.once('value')
+        await dataRef.on('value', (snapshot) => {
+          this.setRealtime(snapshot.val())
+        })
+      } catch (e) {
+        alert(e)
+      }
     })
   },
+
+  // async mounted() {},
 
   methods: {
     ...mapActions({
       getUser: 'user/authentication/getUserInfo',
     }),
-    // close() {
-    //   this.$store.dispatch('setSnackbar', { showing: false })
-    // },
+    ...mapMutations({
+      setRealtime: 'SET_REALTIME',
+    }),
   },
 }
 </script>

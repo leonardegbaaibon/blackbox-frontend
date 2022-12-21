@@ -74,10 +74,6 @@ export default {
 
     // * init
     const waypts = []
-    // const filteredMarkers = markers.filter(
-    //   (_, index, array) => index !== 0 || index !== array.length - 1
-    // )
-    // console.log('🚀 ~ mounted ~ filteredMarkers', filteredMarkers)
     markers.forEach((element) => {
       waypts.push({
         stopover: true,
@@ -99,15 +95,10 @@ export default {
         travelMode: this.google.maps.TravelMode.DRIVING,
       })
       .then((response) => {
-        console.log('🚀 ~ mounted ~ response', response)
         directionRenderer.setDirections(response)
-
-        const route = response.routes[0]
-        console.log('🚀 ~ .then ~ route', route)
-
-        // =======
+        // const route = response.routes[0]
       })
-      .catch((e) => console.log('Directions request failed due to ' + e))
+      .catch((e) => console.error('Directions request failed due to ' + e))
   },
   // eslint-disable-next-line vue/require-render-return
   render() {},

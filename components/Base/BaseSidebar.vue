@@ -1,13 +1,21 @@
 <template>
   <v-navigation-drawer
     v-model="drawer"
-    :mini-variant="false"
-    fixed
+    :mini-variant.sync="mini"
+    permanent
     dark
     app
-    color="secondary"
+    color="primary"
   >
-    <Logo style="margin: 80px 0 50px 24px" class="" />
+    <v-list-item
+      class="px-2 d-flex justify-space-between align-center mt-12 mb-8"
+    >
+      <Logo v-if="!mini" style="margin-left: 8px" />
+      <img v-else class="pa-2" src="~/assets/svg/icon-white.svg" />
+      <v-btn fab x-small @click.stop="mini = !mini">
+        <v-icon>mdi-chevron-left</v-icon>
+      </v-btn>
+    </v-list-item>
 
     <v-list class="">
       <v-list-item-group color="white">
@@ -61,12 +69,18 @@ export default {
           title: 'Vehicles',
           to: '/vehicles',
         },
-        // {
-        //   icon: 'mdi-alert-decagram',
-        //   title: 'Faults Monitor',
-        //   to: '/faults',
-        // },
+        {
+          icon: 'mdi-devices',
+          title: 'Devices',
+          to: '/devices',
+        },
+        {
+          icon: 'mdi-alert',
+          title: 'Faults Monitor',
+          to: '/fault-monitor',
+        },
       ],
+      mini: true,
     }
   },
   computed: {
@@ -84,4 +98,9 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.collapse-button {
+  position: absolute;
+  right: -7%;
+}
+</style>

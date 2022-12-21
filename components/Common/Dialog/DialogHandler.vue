@@ -32,10 +32,10 @@
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn v-if="cancelDisabled" x-large depressed class="" @click="cancel">
+        <v-btn v-if="cancelDisabled" depressed class="" @click="cancel">
           {{ cancelButton }}
         </v-btn>
-        <v-btn v-if="okDisabled" x-large color="primary" depressed @click="ok">
+        <v-btn v-if="okDisabled" color="primary" depressed @click="ok">
           {{ okButton }}
         </v-btn>
         <!-- <v-spacer></v-spacer> -->
@@ -102,7 +102,6 @@ export default {
   methods: {
     ok(evt) {
       this.$emit('clicked:ok')
-      // console.log(evt)
     },
     cancel() {
       this.$emit('clicked:cancel')

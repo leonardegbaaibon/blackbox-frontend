@@ -2,7 +2,7 @@
   <div>
     <v-app>
       <v-main>
-        <v-container fluid class="fill-height secondary text-center">
+        <v-container fluid class="fill-height primary text-center">
           <Nuxt />
         </v-container>
       </v-main>

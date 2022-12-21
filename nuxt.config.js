@@ -1,8 +1,14 @@
 import colors from 'vuetify/es5/util/colors'
-// console.log('process.env :>> ', process.env)
+// eslint-disable-next-line nuxt/no-cjs-in-config
+// const fs = require('fs')
+// const isDev = process.env.NODE_ENV === 'development'
+// const useEmulators = false
 export default {
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
   ssr: false,
+
+  // Target: https://go.nuxtjs.dev/config-target
+  // target: 'static',
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
@@ -13,9 +19,33 @@ export default {
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { hid: 'description', name: 'description', content: '' },
       { name: 'format-detection', content: 'telephone=no' },
+      { name: 'msapplication-TileColor', content: '#ffffff' },
+      { name: 'theme-color', content: '#ffffff' },
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      {
+        rel: 'apple-touch-icon',
+        sizes: '180x180',
+        href: '/apple-touch-icon.png',
+      },
+      {
+        rel: 'icon',
+        type: 'image/png',
+        sizes: '32x32',
+        href: '/favicon-32x32.png',
+      },
+      {
+        rel: 'icon',
+        type: 'image/png',
+        sizes: '64x64',
+        href: '/favicon-64x64.png',
+      },
+      {
+        rel: 'mask-icon',
+        href: '/safari-pinned-tab.svg',
+        color: '#5bbad5',
+      },
       {
         rel: 'preconnect',
         href: 'https://fonts.googleapis.com',
@@ -44,6 +74,7 @@ export default {
     '~/plugins/vee-validate.plugin',
     '~/plugins/datetimepicker.plugin',
     '~/plugins/persistedState.plugin.js',
+    // '~/plugins/firebase.plugin.js',
   ],
 
   // Auto import onents: https://go.nuxtjs.dev/config-components
@@ -55,22 +86,47 @@ export default {
     '@nuxtjs/eslint-module',
     // https://go.nuxtjs.dev/vuetify
     '@nuxtjs/vuetify',
+    'faker-nuxt',
+    // '@nuxtjs/pwa',
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
-    // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
-    // https://go.nuxtjs.dev/pwa
     '@nuxtjs/pwa',
     '@nuxtjs/auth-next',
     '@nuxtjs/dayjs',
     '@nuxtjs/toast',
+    'vue-swatches/nuxt',
+    // '@deepsource/nuxt-websocket',
+    [
+      '@nuxtjs/firebase',
+      {
+        config: {
+          apiKey: 'AIzaSyDbBTLvWhFpBeu5eJuy1hx0BceEsJTI6qU',
+          authDomain: 'tsaron-technologies.firebaseapp.com',
+          projectId: 'tsaron-technologies',
+          storageBucket: 'tsaron-technologies.appspot.com',
+          messagingSenderId: '659212583390',
+          appId: '1:659212583390:web:46360c0bdeb9db83729d4f',
+          measurementId: 'G-B3SNNS6ZCT',
+        },
+        services: {
+          storage: true, // Just as example. Can be any other service.
+          database: true,
+        },
+      },
+    ],
   ],
+
+  // websocket: {
+  //   url: 'ws://3.129.204.142:6060',
+  //   reconnectInterval: 1000,
+  // },
 
   toast: {
     position: 'top-right',
-    theme: 'outline',
+    theme: 'bubble',
     keepOnHover: true,
     iconPack: 'mdi',
     duration: 6000,
@@ -88,14 +144,17 @@ export default {
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    baseURL: 'https://blackbox-server-deploy.herokuapp.com/v1',
+    baseURL:
+      process.env.NODE_ENV === 'development'
+        ? process.env.BASE_URL_STAGING
+        : process.env.BASE_URL,
   },
 
   auth: {
     redirect: {
       login: '/',
       logout: '/',
-      callback: '/',
+      callback: '/dashboard',
       home: '/dashboard',
     },
 
@@ -124,33 +183,42 @@ export default {
   // Optional
   dayjs: {
     // locales: ['en', 'ja'],
-    // defaultLocale: 'en',
-    // defaultTimeZone: 'Asia/Tokyo',
+    defaultLocale: 'en',
+    // defaultTimeZone: 'Africa/Lagos',
     plugins: [
       'customParseFormat', // import 'dayjs/plugin/customParseFormat'
       'advancedFormat', // import 'dayjs/plugin/advancedFormat'
-      // 'timezone', // import 'dayjs/plugin/timezone'
-    ], // Your Day.js plugin
+      'duration', // import 'dayjs/plugin/duration'
+      'relativeTime', // import 'dayjs/plugin/relativeTime'
+      'timezone', // import 'dayjs/plugin/relativeTime'
+      'utc', // import 'dayjs/plugin/relativeTime'
+    ], // 'duration'
   },
 
   // Runtime Config
   publicRuntimeConfig: {
-    baseURL: process.env.BASE_URL,
-    mapsKey:
-      process.env.MAPS_API_KEY || 'AIzaSyBkqE0PkQC2o7dnPVaaO6M7uF-d_NXXyyc',
+    baseURL:
+      process.env.NODE_ENV === 'development'
+        ? process.env.BASE_URL_STAGING
+        : process.env.BASE_URL,
+    mapsKey: process.env.MAPS_API_KEY,
     carsURL: process.env.CARS_API_KEY,
   },
 
   privateRuntimeConfig: {
-    mapsKey:
-      process.env.MAPS_API_KEY || 'AIzaSyBkqE0PkQC2o7dnPVaaO6M7uF-d_NXXyyc',
+    mapsKey: process.env.MAPS_API_KEY,
     carsURL: process.env.CARS_API_KEY,
   },
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa
   pwa: {
     manifest: {
+      name: 'Blackbox Admin',
+      short_name: 'Blackbox Admin',
+      description: 'Fleet and Vehicle Management System',
       lang: 'en',
+      useWebmanifestExtension: false,
+      theme_color: '#0F084B',
     },
   },
 

@@ -15,6 +15,10 @@ export default {
       type: Object,
       required: true,
     },
+    bounds: {
+      type: Object,
+      required: true,
+    },
     map: {
       type: Object,
       required: true,
@@ -27,7 +31,6 @@ export default {
 
   mounted() {
     const { Marker } = this.google.maps
-    const { LatLngBounds } = this.google.maps
     const { InfoWindow } = this.google.maps
     const { Size } = this.google.maps
 
@@ -50,8 +53,6 @@ export default {
       icon = { url: POINT_MARKER_ICON_CONFIG.end }
     }
 
-    const bounds = new LatLngBounds()
-
     // Re center map according to location
     this.map.setCenter({
       lat: this.marker.latitude,
@@ -68,11 +69,12 @@ export default {
             })
           : null,
       title: this.marker.protocol,
-      // marker: this.marker,
+      optimized: true,
       map: this.map,
       icon,
     })
-    bounds.extend(marker.getPosition())
+    this.bounds.extend(marker.getPosition())
+    this.map.fitBounds(this.bounds)
 
     // Info Window
     const contentString = `
@@ -126,8 +128,6 @@ export default {
         infoWindow.close()
       }, 2000)
     })
-
-    // if (this.index === 0) this.map.fitBounds(bounds)
   },
 
   // eslint-disable-next-line vue/require-render-return

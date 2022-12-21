@@ -25,22 +25,6 @@ export default {
       type: Boolean,
       default: false,
     },
-    // loading: {
-    // 	type: Boolean,
-    // 	default: false,
-    // },
-    // title: {
-    // 	type: String,
-    // 	default: 'Clear tamper',
-    // },
-    // responseTitle: {
-    // 	type: String,
-    // 	default: '',
-    // },
-    // response: {
-    // 	type: String,
-    // 	default: '',
-    // },
   },
 
   data() {

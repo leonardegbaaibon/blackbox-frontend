@@ -7,8 +7,29 @@
         indeterminate
       ></v-progress-circular>
       <div v-else class="">
-        <CardCar v-bind="{ ...vehicle, ...trips[trips.length - 1] }"></CardCar>
-        <MapVehicle class="" height="500" :marker="trips[trips.length - 1]" />
+        <CardCar
+          v-bind="{ ...vehicle, ...trips[trips.length - 1] }"
+          @clicked:assign="dialog = true"
+          @clicked:unassign="openUnassign"
+          @clicked:assignDriver="driverDialog = true"
+          @clicked:unassignDriver="openUnassignDriver"
+        ></CardCar>
+        <!-- <MapVehicle class="" height="500" :marker="trips[trips.length - 1]" /> -->
+
+        <!-- Dialogs -->
+        <DialogAssignDevice
+          v-if="dialog"
+          v-model="dialog"
+          :vehicle="$route.params.id"
+          @reload="$fetch"
+        />
+        <DialogAssignDriver
+          v-if="driverDialog"
+          v-model="driverDialog"
+          :vehicle="$route.params.id"
+          @reload="$fetch"
+        />
+        <DialogPrompt ref="prompt" v-model="showPrompt" />
       </div>
     </v-col>
   </v-row>
@@ -25,6 +46,8 @@ export default {
       vehicle: null,
       history: null,
       dialog: false,
+      driverDialog: false,
+      showPrompt: false,
       loading: false,
     }
   },
@@ -42,7 +65,7 @@ export default {
 
   computed: {
     ...mapState({
-      trips: (state) => state.trips.all,
+      trips: (state) => state.trips.tripData,
       // vehicles: (state) => state.vehicles.all,
     }),
   },
@@ -50,9 +73,73 @@ export default {
   methods: {
     ...mapActions({
       getVehicle: 'vehicles/getOneVehicle',
+      unassignDevice: 'devices/unassignDevice',
+      unassignDriver: 'drivers/unassignDriver',
       getTripHistory: 'trips/getTripHistory',
-      getPosition: 'trips/getVehicleTrips',
+      getPosition: 'trips/getSingleTrip',
     }),
+
+    // openAssign(evt) {
+    //   this.dialog = true
+    // },
+
+    openUnassign(evt) {
+      this.$refs.prompt
+        .show({
+          title: 'Confirmation',
+          message: `Are you sure you want to unassign ${this.vehicle.vehicleMake} ${this.vehicle.vehicleModel} from ${this.vehicle.device}`,
+          okButton: 'Yes, Unassign Device',
+          cancelButton: 'No',
+        })
+        .then(async (ok) => {
+          if (ok) {
+            this.loading = true
+            try {
+              const response = await this.unassignDevice({
+                vehicleId: this.$route.params.id,
+                deviceId: this.vehicle.device,
+              })
+              this.$fetch()
+              this.$toast.success(response.meta.message)
+            } catch (error) {
+              this.$toast.error(`Error Unassigning Device`)
+            } finally {
+              this.loading = false
+            }
+          } else {
+            this.loading = false
+          }
+        })
+    },
+
+    openUnassignDriver(evt) {
+      this.$refs.prompt
+        .show({
+          title: 'Confirmation',
+          message: `Are you sure you want to unassign ${this.vehicle.vehicleMake} ${this.vehicle.vehicleModel} from driver`,
+          okButton: 'Yes, Unassign Driver',
+          cancelButton: 'No',
+        })
+        .then(async (ok) => {
+          if (ok) {
+            this.loading = true
+            try {
+              const response = await this.unassignDriver({
+                vehicleId: this.$route.params.id,
+                driverId: evt.id,
+              })
+              this.$fetch()
+              this.$toast.success(response.meta.message)
+            } catch (error) {
+              this.$toast.error(`Error Unassigning Driver`)
+            } finally {
+              this.loading = false
+            }
+          } else {
+            this.loading = false
+          }
+        })
+    },
   },
 }
 </script>

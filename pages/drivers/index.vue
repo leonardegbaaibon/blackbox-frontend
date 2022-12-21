@@ -9,25 +9,34 @@
       <CardNoState
         v-else-if="drivers.length === 0"
         button-text="New Driver"
-        @clicked="openCreateDialog"
+        @clicked="dialog = true"
       ></CardNoState>
       <TableDrivers
         v-else
         :items="drivers"
-        @clicked="openCreateDialog"
-        @clicked:edit="openEditDialog"
+        @clicked="dialog = true"
+        @clicked:edit="openEdit"
         @clicked:delete="openDeleteDialog"
       />
     </v-col>
 
     <!-- Dialogs -->
+    <!-- create dialog -->
     <DialogDriver
+      v-if="dialog"
       v-model="dialog"
+      title="Create Driver"
       :loading="loading"
-      :model="driverModel"
-      :edited-index="editedIndex"
       @clicked:ok="create"
-      @clicked:edit="edit"
+    />
+    <!-- edit Dialog -->
+    <DialogDriver
+      v-if="editDialog"
+      v-model="editDialog"
+      title="Edit Driver"
+      :loading="loading"
+      :driver="selectedDriver"
+      @clicked:ok="edit"
     />
     <DialogPrompt ref="prompt" v-model="showPrompt" />
   </v-row>
@@ -41,41 +50,11 @@ export default {
 
   data() {
     return {
-      // drivers: '',
       showPrompt: false,
-      editedIndex: -1,
       dialog: false,
+      editDialog: false,
       loading: false,
-      driverModel: {
-        driverName: '',
-        driverNin: '',
-        driverEmail: '',
-        driverLicenseNumber: '',
-        driverLicenseExpiryDate: '',
-        driverAddress: '',
-        // to turn to array
-        driverPhoneNumber: ['', ''],
-        driverPhoto: [''],
-        driverQuarantorPhoneNumber: ['', ''],
-        // guarantor info
-        driverQuarantor: '',
-        driverQuarantorEmail: '',
-      },
-      defaultDriverModel: {
-        driverName: '',
-        driverNin: '',
-        driverEmail: '',
-        driverLicenseNumber: '',
-        driverLicenseExpiryDate: '',
-        driverAddress: '',
-        // to turn to array
-        driverPhoneNumber: ['', ''],
-        driverPhoto: [''],
-        driverQuarantorPhoneNumber: ['', ''],
-        // guarantor info
-        driverQuarantor: '',
-        driverQuarantorEmail: '',
-      },
+      selectedDriver: {},
     }
   },
 
@@ -98,55 +77,70 @@ export default {
       deleteDriver: 'drivers/deleteDriver',
     }),
 
-    create(evt) {
+    openEdit(evt) {
+      this.editDialog = true
+      this.selectedDriver = evt
+    },
+
+    async uploadFile(file) {
+      const storageRef = this.$fire.storage
+        .ref()
+        .child(`driver-images/${file.name}_${new Date().getTime()}`)
+      try {
+        await storageRef.put(file)
+        const url = await storageRef.getDownloadURL()
+        return url
+      } catch (e) {
+        alert(e.message)
+      }
+    },
+
+    async create(evt) {
       this.loading = true
-      this.createDriver(evt)
+      const url = await this.uploadFile(evt.driverPhoto)
+      this.createDriver({
+        ...evt,
+        driverPhoto: [url],
+        driverPhoneNumber: [evt.driverPhoneNumber],
+        driverDeviceDeliveryAddress: 'string',
+        driverQuarantor: 'string',
+        driverQuarantorPhoneNumber: ['string'],
+        driverQuarantorEmail: 'string',
+        driverPassword: 'password',
+      })
         .then((resp) => {
           this.dialog = false
           this.$toast.success(resp.meta.info)
         })
         .catch((error) => {
-          // console.log('🚀 ~ create ~ errors', errors)
-          // errors.data.message.forEach((error) => {
           this.$toast.error(error.data.message)
-          // })
         })
         .finally(() => {
           this.loading = false
         })
     },
 
-    edit(evt) {
+    async edit(evt) {
       this.loading = true
-      this.editDriver(evt)
+      const url = await this.uploadFile(evt.driverPhoto)
+      this.editDriver({
+        id: this.selectedDriver.driverId,
+        payload: {
+          ...evt,
+          driverPhoto: [url],
+          driverPhoneNumber: [evt.driverPhoneNumber],
+        },
+      })
         .then((resp) => {
-          console.log('🚀 ~ .then ~ resp', resp)
-          this.dialog = false
+          this.editDialog = false
           this.$toast.success('Driver successfully updated')
         })
         .catch((error) => {
-          // console.log('🚀 ~ create ~ errors', errors)
-          // errors.data.message.forEach((error) => {
-          this.$toast.error(error.data.message)
-          // })
+          this.$toast.error(error.data.message || error.message)
         })
         .finally(() => {
           this.loading = false
         })
-    },
-
-    openCreateDialog() {
-      this.editedIndex = -1
-      this.driverModel = Object.assign({}, this.defaultDriverModel)
-      this.dialog = true
-    },
-
-    openEditDialog(evt) {
-      this.editedIndex = this.drivers
-        .map((e) => e.driverId)
-        .indexOf(evt.driverId)
-      this.driverModel = Object.assign({}, evt)
-      this.dialog = true
     },
 
     openDeleteDialog(evt) {

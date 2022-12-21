@@ -346,15 +346,12 @@ export default {
       this.$emit('change', evt)
       this.dialog = false
       if (evt.outside) {
-        const {outside,...rest}=evt
+        const { outside, ...rest } = evt
         this.dValue = rest
       }
-      // console.log(evt)
     },
 
-    toggle() {
-      console.log(`click`)
-    },
+    toggle() {},
   },
 }
 </script>

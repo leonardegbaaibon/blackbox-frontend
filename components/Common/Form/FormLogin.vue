@@ -4,7 +4,7 @@
       <v-form
         @submit.prevent="
           handleSubmit(() => {
-            $emit('submit', form)
+            $emit('submit', { ...form })
           })
         "
       >
@@ -17,7 +17,7 @@
         <FormInput
           v-model="form.password"
           label="Password"
-          rules="required|password_check"
+          rules="required"
           type="password"
         >
           <template #label2>
@@ -25,10 +25,6 @@
           </template>
         </FormInput>
         <FormButton block :loading="loading" type="submit">Login</FormButton>
-        <p class="mb-0 mt-7 text-center">
-          Don’t have an account?
-          <a class="font-weight-bold" @click="$emit('click:switch')">Sign up</a>
-        </p>
       </v-form>
     </ValidationObserver>
   </CardAuth>
@@ -54,9 +50,10 @@ export default {
       form: {
         email:
           process.env.NODE_ENV === 'development'
-            ? 'richardsaseun@gmail.com'
+            ? 'insurancecare@axamansard.com'
             : '',
-        password: process.env.NODE_ENV === 'development' ? 'Forces123!' : '',
+        password:
+          process.env.NODE_ENV === 'development' ? 'axamansard@2022' : '',
       },
     }
   },

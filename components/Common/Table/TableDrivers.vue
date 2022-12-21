@@ -89,8 +89,8 @@ export default {
         { text: 'License', value: 'driverLicenseNumber' },
         { text: 'Phone', value: 'driverPhoneNumber' },
         // { text: 'NIN', value: 'driverNin' },
-        { text: 'Created at', value: 'createdAt' },
-        { text: 'Actions', value: 'actions', sortable: false },
+        { text: 'Created on', value: 'createdAt' },
+        { text: 'Actions', value: 'actions', sortable: false, width: 150 },
       ],
     }
   },
@@ -98,7 +98,7 @@ export default {
   methods: {
     navigateDriver(evt) {
       console.log('🚀 ~ navigateVehicle ~ evt', evt)
-      this.$router.push(`drivers/${evt.driverId}`)
+      this.$router.push(`/drivers/${evt.driverId}`)
     },
   },
 }

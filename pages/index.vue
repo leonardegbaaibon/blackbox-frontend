@@ -1,7 +1,7 @@
 <template>
   <!-- <v-container fluid class="fill-height"> -->
   <v-row justify="center" align="start">
-    <v-col md="3" class="">
+    <v-col md="6" lg="4" class="">
       <div class="text-center">
         <Logo class="mb-7" />
       </div>
@@ -90,12 +90,12 @@ export default {
             ...evt,
           },
         })
+
         const userResponse = await this.getUser({
           id: loginResponse.data.data.sub,
         })
         this.$auth.setUser(userResponse)
       } catch (error) {
-        console.log('🚀 ~ login ~ error', error)
         this.alert = true
         this.error = error.response?.data?.message
       } finally {
