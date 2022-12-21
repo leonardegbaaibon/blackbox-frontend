@@ -6,6 +6,9 @@
       indeterminate
     ></v-progress-circular>
     <v-row v-else justify="center" align="start">
+      <v-col md="12" class="">
+        <div class=""><TripRanking /></div>
+      </v-col>
       <v-col md="8">
         <CardScorecard class="mb-7" />
         <CardScoreTable class="mb-7" />
@@ -15,11 +18,11 @@
       </v-col>
     </v-row>
 
-    <v-row>
+    <!-- <v-row>
       <v-col md="12" class="">
         <div class=""><TripRanking /></div>
       </v-col>
-    </v-row>
+    </v-row> -->
   </div>
 </template>
 

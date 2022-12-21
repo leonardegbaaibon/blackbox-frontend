@@ -4,15 +4,15 @@
       <v-row align="center" justify="space-between">
         <v-col cols="8" class="">
           <div class="">
-            <p class="font-weight-bold text-h4 mb-0">₦25,000.00</p>
+            <p class="font-weight-bold text-h4 mb-0">₦5,122.00</p>
             <p class="text-overline">discount acquired</p>
           </div>
           <div class="my-6">
-            <p class="font-weight-bold text-h4 mb-0">₦25,000.00</p>
+            <p class="font-weight-bold text-h4 mb-0">₦2,734.00</p>
             <p class="text-overline">discount attainable</p>
           </div>
           <div class="">
-            <p class="font-weight-bold text-h4 mb-0">₦25,000.00</p>
+            <p class="font-weight-bold text-h4 mb-0">₦1,321.00</p>
             <p class="text-overline mb-0">discount lost</p>
           </div>
         </v-col>
@@ -24,7 +24,7 @@
             color="success"
             rotate="-90"
           >
-            <span class="text-h3 font-weight-bold">23</span>
+            <span class="text-h3 font-weight-bold">57</span>
           </v-progress-circular>
         </v-col>
       </v-row>
