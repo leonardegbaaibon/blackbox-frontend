@@ -71,6 +71,7 @@ export default {
   plugins: [
     '~/plugins/api.plugin',
     '~/plugins/axios.plugin',
+    { src: '~/plugins/chart.plugin.js', mode: 'client' },
     '~/plugins/vee-validate.plugin',
     '~/plugins/datetimepicker.plugin',
     '~/plugins/persistedState.plugin.js',
@@ -203,11 +204,13 @@ export default {
         : process.env.BASE_URL,
     mapsKey: process.env.MAPS_API_KEY,
     carsURL: process.env.CARS_API_KEY,
+    scoreURL: process.env.SCORECARD_API_URL,
   },
 
   privateRuntimeConfig: {
     mapsKey: process.env.MAPS_API_KEY,
     carsURL: process.env.CARS_API_KEY,
+    scoreURL: process.env.SCORECARD_API_URL,
   },
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa
