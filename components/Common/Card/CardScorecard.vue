@@ -2,30 +2,51 @@
   <v-card class="" flat>
     <v-card-text class="">
       <v-row align="center" justify="space-between">
-        <v-col cols="8" class="">
+        <v-col cols="6" class="">
           <div class="">
-            <p class="font-weight-bold text-h4 mb-0">₦5,122.00</p>
-            <p class="text-overline">discount acquired</p>
+            <p class="font-weight-bold text-h4 mb-0">
+              ₦{{ Math.round(discount * 10) / 10 }}
+            </p>
+            <p class="text-overline">{premium discount}</p>
           </div>
           <div class="my-6">
-            <p class="font-weight-bold text-h4 mb-0">₦2,734.00</p>
-            <p class="text-overline">discount attainable</p>
-          </div>
-          <div class="">
-            <p class="font-weight-bold text-h4 mb-0">₦1,321.00</p>
-            <p class="text-overline mb-0">discount lost</p>
+            <p class="font-weight-bold text-h4 mb-0">
+              {{ Math.round(percent * 10) / 10 }} %
+            </p>
+            <p class="text-overline">premium percentage</p>
           </div>
         </v-col>
         <!-- ============ -->
-        <v-col cols="auto">
+        <v-col class="text-right">
+          <div class="mb-2">
+            <p class="text-caption font-weight-bold mb-1 text-black">
+              Distance Travelled
+            </p>
+            <h3 class="text-h5">{{ Math.round(distance * 10) / 10 }} km</h3>
+          </div>
+          <div class="mb-2">
+            <p class="text-caption font-weight-bold mb-1 text-black">
+              Position
+            </p>
+            <h3 class="text-h5">{{ position }}</h3>
+          </div>
+        </v-col>
+        <v-col
+          cols="auto"
+          class="d-flex flex-column justify-center align-center"
+        >
           <v-progress-circular
             size="140"
-            value="23"
-            color="success"
+            :value="score"
+            :color="scoreColor"
             rotate="-90"
+            :indeterminate="score === 0"
           >
-            <span class="text-h3 font-weight-bold">57</span>
+            <span class="text-h3 font-weight-bold">
+              {{ Math.round(score * 10) / 10 }}
+            </span>
           </v-progress-circular>
+          <h3 class="mb-0 mt-3">{{ safetyClass }}</h3>
         </v-col>
       </v-row>
     </v-card-text>
@@ -36,6 +57,30 @@
 import { mapActions, mapState, mapGetters } from 'vuex'
 export default {
   props: {
+    score: {
+      type: Number,
+      default: 32.4,
+    },
+    distance: {
+      type: Number,
+      default: 0,
+    },
+    position: {
+      type: Number,
+      default: 0,
+    },
+    percent: {
+      type: Number,
+      default: 0,
+    },
+    discount: {
+      type: Number,
+      default: 0,
+    },
+    safetyClass: {
+      type: String,
+      default: 'Loading',
+    },
     driverId: {
       type: String,
       default: '',
@@ -111,6 +156,23 @@ export default {
     ...mapState({
       trips: (state) => state.trips.all,
     }),
+    scoreColor() {
+      let tmp = ''
+      switch (true) {
+        case this.score === 0:
+          tmp = 'grey darken-4'
+          break
+        case this.score < 35:
+          tmp = 'error'
+          break
+        case this.score < 50:
+          tmp = 'warning'
+          break
+        default:
+          tmp = 'success'
+      }
+      return tmp
+    },
   },
 
   methods: {
