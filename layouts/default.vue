@@ -40,7 +40,31 @@ export default {
     })
   },
 
-  // async mounted() {},
+  async mounted() {
+    try {
+      const auth = {
+        username: 'insurancecare@axamansard.com',
+        password: 'axamansard@2022',
+      }
+      const params = new URLSearchParams()
+      params.append('email', 'insurancecare@axamansard.com')
+      params.append('password', 'axamansard@2022')
+
+      await this.$api.get('server')
+      // eslint-disable-next-line no-unused-vars
+      const { data: token } = await this.$api.post('session/token', params, {
+        auth,
+      })
+      // await this.$api.get(`session/?token=${token}`)
+
+      const socket = new WebSocket(
+        'wss://traccar.blackboxservice.monster/api/socket'
+      )
+      console.log('🚀 ~ mounted ~ socket', socket)
+    } catch (error) {
+      console.log('🚀 ~ mounted ~ error', error)
+    }
+  },
 
   methods: {
     ...mapActions({
