@@ -1,3 +1,5 @@
+// import fs from 'fs'
+// import path from 'path'
 import colors from 'vuetify/es5/util/colors'
 // eslint-disable-next-line nuxt/no-cjs-in-config
 // const fs = require('fs')
@@ -75,6 +77,7 @@ export default {
     '~/plugins/vee-validate.plugin',
     '~/plugins/datetimepicker.plugin',
     '~/plugins/persistedState.plugin.js',
+    '~/plugins/crypto.plugin.js',
     // '~/plugins/firebase.plugin.js',
   ],
 
@@ -145,6 +148,7 @@ export default {
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
+    // credentials: true,
     baseURL:
       process.env.NODE_ENV === 'development'
         ? process.env.BASE_URL_STAGING
@@ -261,6 +265,10 @@ export default {
   // Set up server
   server: {
     // port: 3000, // default: 3000
-    host: '0.0.0.0', // default: localhost
+    // host: '0.0.0.0', // default: localhost
+    // https: {
+    //   key: fs.readFileSync(path.resolve(__dirname, 'localhost-key.pem')),
+    //   cert: fs.readFileSync(path.resolve(__dirname, 'localhost.pem')),
+    // },
   },
 }

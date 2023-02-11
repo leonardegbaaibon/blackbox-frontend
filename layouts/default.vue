@@ -21,6 +21,7 @@ export default {
       right: true,
       rightDrawer: false,
       title: 'Vuetify.js',
+      connection: null,
     }
   },
 
@@ -40,27 +41,21 @@ export default {
     })
   },
 
-  async mounted() {
+  mounted() {
     try {
-      const auth = {
-        username: 'insurancecare@axamansard.com',
-        password: 'axamansard@2022',
+      this.connection = new WebSocket('ws://localhost:8082/api/socket')
+      this.connection.onmessage = function (event) {
+        // console.log('onmessage', JSON.parse(event.data))
+        this.setRealtime(JSON.parse(event.data))
       }
-      const params = new URLSearchParams()
-      params.append('email', 'insurancecare@axamansard.com')
-      params.append('password', 'axamansard@2022')
 
-      await this.$api.get('server')
-      // eslint-disable-next-line no-unused-vars
-      const { data: token } = await this.$api.post('session/token', params, {
-        auth,
-      })
-      // await this.$api.get(`session/?token=${token}`)
-
-      const socket = new WebSocket(
-        'wss://traccar.blackboxservice.monster/api/socket'
-      )
-      console.log('🚀 ~ mounted ~ socket', socket)
+      this.connection.onopen = function (event) {
+        console.log('onopen', event)
+        console.log('Successfully connected to the traccar websocket server...')
+      }
+      this.connection.onerror = function (event) {
+        console.log('onError', event)
+      }
     } catch (error) {
       console.log('🚀 ~ mounted ~ error', error)
     }
@@ -71,7 +66,7 @@ export default {
       getUser: 'user/authentication/getUserInfo',
     }),
     ...mapMutations({
-      setRealtime: 'SET_REALTIME',
+      setRealtime: 'realtime/SAVE_REALTIME_DATA',
     }),
   },
 }

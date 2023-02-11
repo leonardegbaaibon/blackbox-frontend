@@ -60,6 +60,19 @@ export default {
     },
   },
 
+  mounted() {
+    // const encryptedText = this.$CryptoJS.AES.encrypt(
+    //   'Hi There!',
+    //   'Secret Passphrase'
+    // ).toString()
+    // const decryptedText = this.$CryptoJS.AES.decrypt(
+    //   encryptedText,
+    //   'Secret Passphrase'
+    // ).toString(this.$CryptoJS.enc.Utf8)
+    // console.log('🚀 ~ mounted ~ encryptedText', encryptedText)
+    // console.log('🚀 ~ mounted ~ decryptedText', decryptedText)
+  },
+
   methods: {
     ...mapActions({
       register: 'user/authentication/register',
@@ -85,16 +98,39 @@ export default {
       this.alert = false
       this.loading = true
       try {
+        const params = new URLSearchParams()
+        params.append(
+          'email',
+          process.env.NODE_ENV === 'development'
+            ? 'richardsaseun@gmail.com'
+            : evt.email
+        )
+        params.append(
+          'password',
+          process.env.NODE_ENV === 'development' ? 'admin' : evt.password
+        )
+        const { data: token } = await this.$api.post('session/token', params)
+        await this.$api.get(`session/?token=${token}`)
+
+        // login to blackbox
         const loginResponse = await this.$auth.loginWith('local', {
           data: {
             ...evt,
           },
         })
-
         const userResponse = await this.getUser({
           id: loginResponse.data.data.sub,
         })
         this.$auth.setUser(userResponse)
+
+        // Encrypt and Save to localstorage
+        // const email = this.$CryptoJS.AES.encrypt(evt.email, 'SECRET').toString()
+        // const password = this.$CryptoJS.AES.encrypt(
+        //   evt.password,
+        //   'SECRET'
+        // ).toString()
+        // localStorage.setItem('abc', email)
+        // localStorage.setItem('xyz', password)
       } catch (error) {
         this.alert = true
         this.error = error.response?.data?.message

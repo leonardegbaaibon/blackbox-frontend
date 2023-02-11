@@ -14,7 +14,7 @@ export default function ({ $axios, $config }, inject) {
   })
 
   // api.setBaseURL('https://api.axamansard.com/api/insurance')
-  api.setBaseURL('https://traccar.blackboxservice.monster/api')
+  api.setBaseURL('http://localhost:8082/api')
 
   inject('api', api)
 }
