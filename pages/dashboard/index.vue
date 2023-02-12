@@ -41,7 +41,7 @@ export default {
 
   computed: {
     ...mapState({
-      positions: (state) => state.positions,
+      positions: (state) => state.realtime.positions,
     }),
     mapConfig() {
       return {
