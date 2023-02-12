@@ -54,7 +54,7 @@ export default {
     this.connection = new WebSocket(
       process.env.NODE_ENV === 'development'
         ? 'ws://localhost:8082/api/socket'
-        : 'wss://traccar.blackboxservice.monster'
+        : 'wss://traccar.blackboxservice.monster/api/socket'
     )
     this.connection.onmessage = (event) => {
       console.log('onmessage', JSON.parse(event.data))
