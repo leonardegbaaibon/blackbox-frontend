@@ -37,7 +37,7 @@
               Settings
             </v-list-item-title>
           </v-list-item>
-          <v-list-item @click="$auth.logout()">
+          <v-list-item @click="logout">
             <v-list-item-title class="text-h6 font-weight-bold red--text">
               Logout
             </v-list-item-title>
@@ -94,6 +94,10 @@ export default {
     }),
     reRoute() {
       this.$router.go(-1)
+    },
+    logout() {
+      this.$api.delete('session')
+      this.$auth.logout()
     },
   },
 }

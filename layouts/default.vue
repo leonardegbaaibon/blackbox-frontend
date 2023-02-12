@@ -21,58 +21,54 @@ export default {
       right: true,
       rightDrawer: false,
       title: 'Vuetify.js',
+      connection: null,
     }
   },
 
-  created() {
-    this.getUser({}).then(async (response) => {
-      this.$auth.setUser(response)
-      const dataRef = this.$fire.database.ref(`users/${response.userId}`)
-      // recieve data
-      try {
-        // const snapshot = await dataRef.once('value')
-        await dataRef.on('value', (snapshot) => {
-          this.setRealtime(snapshot.val())
-        })
-      } catch (e) {
-        alert(e)
-      }
-    })
-  },
-
-  async mounted() {
-    try {
-      const auth = {
-        username: 'insurancecare@axamansard.com',
-        password: 'axamansard@2022',
-      }
-      const params = new URLSearchParams()
-      params.append('email', 'insurancecare@axamansard.com')
-      params.append('password', 'axamansard@2022')
-
-      await this.$api.get('server')
-      // eslint-disable-next-line no-unused-vars
-      const { data: token } = await this.$api.post('session/token', params, {
-        auth,
-      })
-      // await this.$api.get(`session/?token=${token}`)
-
-      const socket = new WebSocket(
-        'wss://traccar.blackboxservice.monster/api/socket'
-      )
-      console.log('🚀 ~ mounted ~ socket', socket)
-    } catch (error) {
-      console.log('🚀 ~ mounted ~ error', error)
-    }
-  },
-
+  // created() {
+  //   this.getUser({}).then(async (response) => {
+  //     this.$auth.setUser(response)
+  //     const dataRef = this.$fire.database.ref(`users/${response.userId}`)
+  //     // recieve data
+  //     try {
+  //       // const snapshot = await dataRef.once('value')
+  //       await dataRef.on('value', (snapshot) => {
+  //         this.setRealtime(snapshot.val())
+  //       })
+  //     } catch (e) {
+  //       alert(e)
+  //     }
+  //   })
+  // },
   methods: {
     ...mapActions({
       getUser: 'user/authentication/getUserInfo',
     }),
     ...mapMutations({
-      setRealtime: 'SET_REALTIME',
+      setRealtime: 'realtime/SAVE_REALTIME_DATA',
     }),
+  },
+
+  // eslint-disable-next-line vue/order-in-components
+  created() {
+    this.connection = new WebSocket(
+      process.env.NODE_ENV === 'development'
+        ? 'ws://localhost:8082/api/socket'
+        : 'wss://traccar.blackboxservice.monster'
+    )
+    this.connection.onmessage = (event) => {
+      console.log('onmessage', JSON.parse(event.data))
+      this.setRealtime(JSON.parse(event.data))
+    }
+
+    this.connection.onopen = (event) => {
+      // console.log('onopen', event)
+      // this.setRealtime(JSON.parse(event.data))
+      console.log('Successfully connected to the traccar websocket server...')
+    }
+    this.connection.onerror = (event) => {
+      console.log('onError', event)
+    }
   },
 }
 </script>
