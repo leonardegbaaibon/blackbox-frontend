@@ -1,15 +1,24 @@
 export default function ({ $axios, $config }, inject) {
   // Create a custom axios instance
   const api = $axios.create({
-    headers: {
-      common: {
-        // Accept: 'text/plain, */*',
-      },
-    },
+    withCredentials: true,
+    // headers: {
+    //   common: {
+    //     // Accept: 'text/plain, */*',
+    //   },
+    // },
+    // auth: {
+    //   username: 'access@tsaron.com',
+    //   password: 'tsarontelemat@2022',
+    // },
   })
 
   // api.setBaseURL('https://api.axamansard.com/api/insurance')
-  api.setBaseURL('https://traccar.blackboxservice.monster/api')
+  api.setBaseURL(
+    process.env.NODE_ENV === 'development'
+      ? 'http://localhost:8082/api'
+      : 'https://traccar.blackboxservice.monster'
+  )
 
   inject('api', api)
 }

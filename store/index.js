@@ -27,4 +27,10 @@ export const actions = {
   setSnackbar({ commit }, snackbar) {
     commit('SET_SNACKBAR', snackbar)
   },
+  nuxtServerInit(
+    { commit, state, dispatch },
+    { app, store, route, req, res, error, redirect }
+  ) {
+    console.log('hello')
+  },
 }

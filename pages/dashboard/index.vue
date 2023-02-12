@@ -41,7 +41,7 @@ export default {
 
   computed: {
     ...mapState({
-      positions: (state) => state.positions,
+      positions: (state) => state.realtime.positions,
     }),
     mapConfig() {
       return {
@@ -52,14 +52,6 @@ export default {
   },
 
   async mounted() {
-    console.log('here')
-    try {
-      const response = await this.$api.post('socket', {
-        email: 'access@tsaron.com',
-        password: 'tsarontelemat@2022',
-      })
-      console.log('🚀 ~ mounted ~ response', response)
-    } catch (error) {}
     // this.$socket.$on('message', (data) => {
     //   const message = JSON.parse(JSON.parse(data.data).utf8Data)
     //   if (!_.isEmpty(message)) {
