@@ -24,6 +24,7 @@
       :headers="headers"
       :items="items"
       class="elevation-1"
+      :search="search"
     >
       <template #[`item.lastUpdate`]="{ item }">
         {{ item.lastUpdate ? $dayjs(item.lastUpdate).fromNow() : '' }}
@@ -92,7 +93,11 @@ export default {
         { text: 'Status', value: 'status' },
         { text: 'Unique ID', value: 'uniqueId' },
         { text: 'Phone Number', value: 'phone' },
-        { text: 'Last Update', value: 'lastUpdate' },
+        {
+          text: 'Last Update',
+          value: 'lastUpdate',
+          cellClass: 'text-no-wrap',
+        },
         // { text: 'Disabled', value: 'disabled' },
         // { text: 'Actions', value: 'actions', sortable: false, width: 150 },
       ],
