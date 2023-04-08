@@ -24,6 +24,7 @@
       :headers="headers"
       :items="items"
       class="elevation-1"
+      :search="search"
     >
       <template #[`item.createdAt`]="{ item }">
         {{ $dayjs(item.createdAt).format('DD MMMM, YYYY • hh:mm A') }}

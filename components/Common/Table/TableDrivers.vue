@@ -24,6 +24,7 @@
       :headers="headers"
       :items="items"
       class="elevation-1"
+      :search="search"
     >
       <template #[`item.name`]="{ item }">
         <v-row class="py-3" align="center">
@@ -91,6 +92,14 @@ export default {
         // { text: 'NIN', value: 'driverNin' },
         { text: 'Created on', value: 'createdAt' },
         { text: 'Actions', value: 'actions', sortable: false, width: 150 },
+        {
+          value: 'driverEmail',
+          cellClass: 'd-none',
+        },
+        {
+          value: 'driverName',
+          cellClass: 'd-none',
+        },
       ],
     }
   },

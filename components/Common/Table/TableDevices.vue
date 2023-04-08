@@ -24,6 +24,7 @@
       :headers="headers"
       :items="items"
       class="elevation-1"
+      :search="search"
     >
       <template #[`item.lastUpdate`]="{ item }">
         {{ item.lastUpdate ? $dayjs(item.lastUpdate).fromNow() : '' }}
