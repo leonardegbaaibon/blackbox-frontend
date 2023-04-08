@@ -16,6 +16,73 @@
         ></CardCar>
         <!-- <MapVehicle class="" height="500" :marker="trips[trips.length - 1]" /> -->
 
+        <v-row>
+          <v-col v-if="vehicle.chauffeur">
+            <!-- Driver Card -->
+            <v-card class="mt-4" flat>
+              <v-list-item three-line>
+                <v-list-item-content>
+                  <div class="text-overline mb-4">DRIVER DETAILS</div>
+                  <v-list-item-title class="text-h5 mb-1 font-weight-bold">
+                    {{ vehicle.chauffeur.driverName }}
+                  </v-list-item-title>
+                  <v-list-item-subtitle>
+                    {{ vehicle.chauffeur.driverEmail }}
+                  </v-list-item-subtitle>
+                </v-list-item-content>
+
+                <v-list-item-avatar tile size="80" color="grey">
+                  <v-img :src="vehicle.chauffeur.driverPhoto"></v-img>
+                </v-list-item-avatar>
+              </v-list-item>
+
+              <v-card-actions>
+                <v-btn depressed :to="`/drivers/${vehicle.chauffeur.driverId}`">
+                  View Driver
+                </v-btn>
+                <v-btn
+                  depressed
+                  color="error"
+                  @click="
+                    openUnassignDriver({ id: vehicle.chauffeur.driverId })
+                  "
+                >
+                  <v-icon left dark>mdi-steering</v-icon>
+                  Unassign Driver
+                </v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-col>
+
+          <v-col v-if="vehicle.device">
+            <!-- Device Card -->
+            <v-card class="mt-4" flat>
+              <v-list-item three-line>
+                <v-list-item-content>
+                  <div class="text-overline mb-4">DEVICE DETAILS</div>
+                  <v-list-item-title class="text-h5 mb-1 font-weight-bold">
+                    {{ vehicle.device.name }}
+                  </v-list-item-title>
+                  <v-list-item-subtitle>
+                    {{ vehicle.device.deviceSimNumber }}
+                  </v-list-item-subtitle>
+                </v-list-item-content>
+              </v-list-item>
+
+              <v-card-actions>
+                <v-btn
+                  depressed
+                  color="error"
+                  @click="openUnassign({ id: vehicle.vehicleId })"
+                >
+                  <v-icon left dark>mdi-tablet-cellphone</v-icon>
+                  Unassign Device
+                </v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-col>
+        </v-row>
+
         <!-- Dialogs -->
         <DialogAssignDevice
           v-if="dialog"
@@ -87,7 +154,7 @@ export default {
       this.$refs.prompt
         .show({
           title: 'Confirmation',
-          message: `Are you sure you want to unassign ${this.vehicle.vehicleMake} ${this.vehicle.vehicleModel} from ${this.vehicle.device}`,
+          message: `Are you sure you want to unassign ${this.vehicle.vehicleMake} ${this.vehicle.vehicleModel} from ${this.vehicle.device.name}`,
           okButton: 'Yes, Unassign Device',
           cancelButton: 'No',
         })
@@ -97,7 +164,7 @@ export default {
             try {
               const response = await this.unassignDevice({
                 vehicleId: this.$route.params.id,
-                deviceId: this.vehicle.device,
+                deviceId: this.vehicle.device.deviceId,
               })
               this.$fetch()
               this.$toast.success(response.meta.message)

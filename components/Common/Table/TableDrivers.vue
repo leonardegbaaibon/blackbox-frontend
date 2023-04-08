@@ -86,19 +86,29 @@ export default {
           sortable: false,
           value: 'name',
         },
-        { text: 'Address', value: 'driverAddress' },
+        {
+          text: 'Address',
+          value: 'driverAddress',
+          cellClass: 'text-no-wrap',
+        },
         { text: 'License', value: 'driverLicenseNumber' },
         { text: 'Phone', value: 'driverPhoneNumber' },
         // { text: 'NIN', value: 'driverNin' },
-        { text: 'Created on', value: 'createdAt' },
+        {
+          text: 'Created on',
+          value: 'createdAt',
+          cellClass: 'text-no-wrap',
+        },
         { text: 'Actions', value: 'actions', sortable: false, width: 150 },
         {
           value: 'driverEmail',
           cellClass: 'd-none',
+          align: ' d-none',
         },
         {
           value: 'driverName',
           cellClass: 'd-none',
+          align: ' d-none',
         },
       ],
     }
