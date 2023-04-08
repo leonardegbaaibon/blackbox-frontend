@@ -24,6 +24,8 @@
       :headers="headers"
       :items="items"
       class="elevation-1"
+      :search="search"
+      calculate-widths
     >
       <template #[`item.createdAt`]="{ item }">
         {{ $dayjs(item.createdAt).format('DD MMMM, YYYY • hh:mm A') }}
@@ -51,16 +53,24 @@
         <v-icon small @click="$emit('clicked:delete', item)">mdi-delete</v-icon>
       </template>
       <template #[`item.device`]="{ item }">
-        <v-icon :color="item.device ? 'success' : 'error'" small>
-          {{ item.device ? 'mdi-check-circle' : 'mdi-close-circle' }}
-        </v-icon>
-        {{ item.device ? 'Assigned' : 'Unassigned' }}
+        <div class="d-flex">
+          <v-icon :color="item.device ? 'success' : 'error'" small class="mr-1">
+            {{ item.device ? 'mdi-check-circle' : 'mdi-close-circle' }}
+          </v-icon>
+          {{ item.device ? 'Assigned' : 'Unassigned' }}
+        </div>
       </template>
       <template #[`item.chauffeur`]="{ item }">
-        <v-icon :color="item.chauffeur ? 'success' : 'error'" small>
-          {{ item.chauffeur ? 'mdi-check-circle' : 'mdi-close-circle' }}
-        </v-icon>
-        {{ item.chauffeur ? 'Assigned' : 'Unassigned' }}
+        <div class="d-flex">
+          <v-icon
+            :color="item.chauffeur ? 'success' : 'error'"
+            small
+            class="mr-1"
+          >
+            {{ item.chauffeur ? 'mdi-check-circle' : 'mdi-close-circle' }}
+          </v-icon>
+          {{ item.chauffeur ? 'Assigned' : 'Unassigned' }}
+        </div>
       </template>
       <template #no-data>
         <v-btn color="primary" @click="initialize">Reset</v-btn>
@@ -95,7 +105,12 @@ export default {
         { text: 'VIN', value: 'vehicleVin' },
         { text: 'Device connected', value: 'device', width: '15%' },
         { text: 'Driver Assigned', value: 'chauffeur', width: '15%' },
-        { text: 'Created on', value: 'createdAt', width: '35%' },
+        {
+          text: 'Created on',
+          value: 'createdAt',
+          width: '35%',
+          cellClass: 'text-no-wrap',
+        },
         { text: 'Actions', value: 'actions', sortable: false, width: 150 },
       ],
     }

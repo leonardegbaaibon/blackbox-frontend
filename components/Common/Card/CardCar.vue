@@ -2,9 +2,7 @@
   <v-card class="mt-0 pt-0" flat>
     <!-- <MapTrips :items="trips" class="mb-6" height="400" /> -->
     <v-img
-      class="white--text align-end rounded-lg"
-      :src="image"
-      gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
+      class="white--text align-end rounded-lg secondary"
       :height="'200px'"
       position="center center"
     >
@@ -19,7 +17,7 @@
           <v-icon left dark>mdi-tablet-cellphone</v-icon>
           Assign Device
         </v-btn>
-        <v-btn
+        <!-- <v-btn
           v-else
           depressed
           color="error"
@@ -27,7 +25,7 @@
         >
           <v-icon left dark>mdi-tablet-cellphone</v-icon>
           Unassign Device
-        </v-btn>
+        </v-btn> -->
         <!-- Assign Driver -->
         <v-btn
           v-if="!chauffeur"
@@ -38,7 +36,7 @@
           <v-icon left dark>mdi-steering</v-icon>
           Assign Driver
         </v-btn>
-        <v-btn
+        <!-- <v-btn
           v-else
           depressed
           color="error"
@@ -46,7 +44,7 @@
         >
           <v-icon left dark>mdi-steering</v-icon>
           Unassign Driver
-        </v-btn>
+        </v-btn> -->
       </div>
 
       <v-card-title class="font-weight-bold text-h3">

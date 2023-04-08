@@ -17,7 +17,7 @@ export default function ({ $axios, $config }, inject) {
   api.setBaseURL(
     process.env.NODE_ENV === 'development'
       ? 'http://localhost:8082/api'
-      : 'https://traccar.blackboxservice.monster'
+      : 'https://traccar.blackboxservice.monster/api'
   )
 
   inject('api', api)
