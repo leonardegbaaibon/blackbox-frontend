@@ -98,19 +98,19 @@ export default {
       this.alert = false
       this.loading = true
       try {
-        const params = new URLSearchParams()
-        params.append(
-          'email',
-          process.env.NODE_ENV === 'development'
-            ? 'richardsaseun@gmail.com'
-            : evt.email
-        )
-        params.append(
-          'password',
-          process.env.NODE_ENV === 'development' ? 'admin' : evt.password
-        )
-        const { data: token } = await this.$api.post('session/token', params)
-        await this.$api.get(`session/?token=${token}`)
+        // const params = new URLSearchParams()
+        // params.append(
+        //   'email',
+        //   process.env.NODE_ENV === 'development'
+        //     ? 'richardsaseun@gmail.com'
+        //     : evt.email
+        // )
+        // params.append(
+        //   'password',
+        //   process.env.NODE_ENV === 'development' ? 'admin' : evt.password
+        // )
+        // const { data: token } = await this.$api.post('session/token', params)
+        // await this.$api.get(`session/?token=${token}`)
 
         // login to blackbox
         const loginResponse = await this.$auth.loginWith('local', {
