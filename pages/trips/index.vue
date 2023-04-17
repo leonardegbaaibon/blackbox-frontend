@@ -22,6 +22,18 @@
           </v-col>
         </v-row>
         <!-- Trips List -->
+        <v-row>
+          <v-col v-if="form.chosenVehicle">
+            <CardDriverVehicleInfo
+              v-bind="{ chauffeurVehicle: form.chosenVehicle }"
+              class="mt-5"
+            />
+          </v-col>
+          <v-col v-if="form.chosenVehicle.chauffeur">
+            <CardDriverInfo v-bind="form.chosenVehicle.chauffeur" />
+          </v-col>
+        </v-row>
+
         <div v-if="trips.length === 0">
           <v-alert type="warning">{{ error }}</v-alert>
         </div>

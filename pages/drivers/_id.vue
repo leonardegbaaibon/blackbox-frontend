@@ -31,7 +31,7 @@
       </v-col>
       <v-col md="4" class="">
         <div class=""><CardDriverInfo v-bind="driver" /></div>
-        <div class="">
+        <div v-if="driver.chauffeurVehicle" class="">
           <CardDriverVehicleInfo v-bind="driver" class="mt-5" />
         </div>
       </v-col>

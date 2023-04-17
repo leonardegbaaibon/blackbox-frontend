@@ -24,7 +24,8 @@
       <template #selection="{ item }">
         <v-chip>
           {{ item.vehicleMake }}
-          {{ item.vehicleModel }} - {{ item.vehicleRegistrationNumber }}
+          {{ item.vehicleModel }} - {{ item.chauffeur?.driverName }} -
+          {{ item.device?.name }}
         </v-chip>
       </template>
       <template #item="{ item }">
@@ -33,7 +34,8 @@
             {{ item.vehicleMake }} {{ `${item.vehicleModel}` }}
           </v-list-item-title>
           <v-list-item-subtitle>
-            {{ `${item.vehicleRegistrationNumber}` }}
+            {{ `${item.vehicleRegistrationNumber}` }} -
+            {{ item.device?.name }} -{{ item.chauffeur?.driverName }}
           </v-list-item-subtitle>
         </v-list-item-content>
       </template>
