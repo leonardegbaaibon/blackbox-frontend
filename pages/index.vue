@@ -13,20 +13,10 @@
 
       <!-- Login form -->
       <template v-if="!done">
-        <FormLogin
-          v-if="isLogin"
-          :loading="loading"
-          @click:switch="isLogin = false"
-          @submit="login"
-        />
+        <FormLogin v-if="isLogin" :loading="loading" @click:switch="isLogin = false" @submit="login" />
 
         <!-- Signup form -->
-        <FormSignup
-          v-else
-          :loading="loading"
-          @click:switch="isLogin = true"
-          @submit="signup"
-        />
+        <FormSignup v-else :loading="loading" @click:switch="isLogin = true" @submit="signup" />
       </template>
 
       <!-- Success Card -->
@@ -113,11 +103,16 @@ export default {
         // await this.$api.get(`session/?token=${token}`)
 
         // login to blackbox
+        const formData = new URLSearchParams();
+        formData.append('email', evt.email);
+        formData.append('password', evt.password);
         const loginResponse = await this.$auth.loginWith('local', {
-          data: {
-            ...evt,
-          },
-        })
+          // headers: {
+          //   'Content-Type': 'application/x-www-form-urlencoded',
+          // },
+          data: { ...evt },
+        });
+        await this.$api.post('session', formData, { headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' } })
         const userResponse = await this.getUser({
           id: loginResponse.data.data.sub,
         })
