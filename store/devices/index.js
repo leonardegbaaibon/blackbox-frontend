@@ -9,12 +9,26 @@ export const mutations = {
     state.all = [...devices]
   },
 }
-
+// function generateRandomLatLng() {
+//   let num = Math.random() * 180
+//   const posorneg = Math.floor(Math.random())
+//   if (posorneg === 0) {
+//     num = num * -1
+//   }
+//   return num
+// }
 export const actions = {
   async getDevices({ commit }) {
     commit('SET_PROCESS', 'devices/getDevices', { root: true })
     try {
       const resp = await this.$axios.$get('devices')
+      // const devices = resp.data.map((device) => {
+      //   return {
+      //     ...device,
+      //     latitude: generateRandomLatLng(),
+      //     longitude: generateRandomLatLng(),
+      //   }
+      // })
       commit('SET_DEVICES', resp.data)
       return resp
     } catch (error) {

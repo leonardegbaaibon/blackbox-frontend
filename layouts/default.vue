@@ -62,7 +62,7 @@ export default {
     }
 
     this.connection.onopen = (event) => {
-      // console.log('onopen', event)
+      console.log('onopen', event)
       // this.setRealtime(JSON.parse(event.data))
       console.log('Successfully connected to the traccar websocket server...')
     }
