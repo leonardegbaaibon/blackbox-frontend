@@ -1,25 +1,10 @@
 <template>
   <v-row justify="center" align="center">
     <v-col md="12" class="">
-      <MapHandler
-        :style="{ height: '90vh' }"
-        :map-config="mapConfig"
-        class="rounded-lg"
-      >
-        <template
-          v-if="positions.length !== 0"
-          slot-scope="{ google, map, bounds }"
-        >
-          <MapDashboard
-            v-for="(marker, index) in positions"
-            :key="marker.id"
-            :length="positions.length"
-            :index="index"
-            :marker="marker"
-            :google="google"
-            :bounds="bounds"
-            :map="map"
-          />
+      <MapHandler :style="{ height: '90vh' }" :map-config="mapConfig" class="rounded-lg">
+        <template v-if="positions.length > 0" slot-scope="{ google, map, bounds }">
+          <MapDashboard v-for="(marker, index) in positions" :key="marker.id" :length="positions.length" :index="index" :marker="marker"
+            :google="google" :bounds="bounds" :map="map" />
         </template>
       </MapHandler>
     </v-col>
@@ -29,7 +14,7 @@
 <script>
 // eslint-disable-next-line no-unused-vars
 import _, { isEmpty } from 'underscore'
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 import { mapSettings } from '@/utils/mapSettings'
 
 export default {
@@ -38,10 +23,14 @@ export default {
   data() {
     return { message: null, count: 0 }
   },
+  async fetch() {
+    await this.getDevices()
+  },
 
   computed: {
     ...mapState({
       positions: (state) => state.realtime.positions,
+      devices: (state) => state.devices.all,
     }),
     mapConfig() {
       return {
@@ -52,6 +41,7 @@ export default {
   },
 
   async mounted() {
+    // await console.log(this.devices)
     // this.$socket.$on('message', (data) => {
     //   const message = JSON.parse(JSON.parse(data.data).utf8Data)
     //   if (!_.isEmpty(message)) {
@@ -60,6 +50,10 @@ export default {
     // })
   },
 
-  methods: {},
+  methods: {
+    ...mapActions({
+      getDevices: 'devices/getDevices',
+    }),
+  },
 }
 </script>
