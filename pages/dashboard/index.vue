@@ -14,7 +14,7 @@
 <script>
 // eslint-disable-next-line no-unused-vars
 import _, { isEmpty } from 'underscore'
-import { mapState, mapActions } from 'vuex'
+import { mapState } from 'vuex'
 import { mapSettings } from '@/utils/mapSettings'
 
 export default {
@@ -23,14 +23,13 @@ export default {
   data() {
     return { message: null, count: 0 }
   },
-  async fetch() {
-    await this.getDevices()
-  },
+  // async fetch() {
+  //   await this.getDevices()
+  // },
 
   computed: {
     ...mapState({
       positions: (state) => state.realtime.positions,
-      devices: (state) => state.devices.all,
     }),
     mapConfig() {
       return {
@@ -40,7 +39,7 @@ export default {
     },
   },
 
-  async mounted() {
+  mounted() {
     // await console.log(this.devices)
     // this.$socket.$on('message', (data) => {
     //   const message = JSON.parse(JSON.parse(data.data).utf8Data)
@@ -51,9 +50,6 @@ export default {
   },
 
   methods: {
-    ...mapActions({
-      getDevices: 'devices/getDevices',
-    }),
   },
 }
 </script>
