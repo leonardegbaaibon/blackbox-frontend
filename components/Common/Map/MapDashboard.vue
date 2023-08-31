@@ -83,7 +83,7 @@ export default {
 	<hr class="my-3" />
 	<div class="d-flex justify-space-between">
 		<div>Driver Name</div>
-		<div class="font-weight-bold">${this.marker.chauffeur.driverName}</div>
+		<div class="font-weight-bold">${this.marker.chauffeur?.driverName ? this.marker.chauffeur.driverName : ''}</div>
 	</div>
 	<hr class="my-3" />
 	<div class="d-flex justify-space-between">
