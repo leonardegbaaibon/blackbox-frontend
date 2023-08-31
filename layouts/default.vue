@@ -61,7 +61,7 @@ export default {
   // eslint-disable-next-line vue/order-in-components
   async created() {
     await this.getVehicles()
-    console.log(this.vehicles, 'vehicles')
+    // console.log(this.vehicles, 'vehicles')
     this.connection = new WebSocket(
       process.env.NODE_ENV === 'development'
         ? 'ws://localhost:8082/api/socket'
@@ -71,12 +71,18 @@ export default {
       // console.log('onmessage', JSON.parse(event.data))
       const wsVehicles = JSON.parse(event.data)
       const vehicles = wsVehicles.positions?.map(vehicle => {
-        const vMatch = this.vehicles?.find(device => vehicle.id === device.device.traccarDeviceId)
+        console.log(vehicle, 'vehicle')
+        const vMatch = this.vehicles?.find(device => {
+          console.log(device, 'each device')
+          return vehicle.id === device?.device?.traccarDeviceId
+        })
         if (vMatch) {
+          console.log(vMatch, 'vmatch')
           return {
             ...vMatch, ...vehicle
           }
-        } return vehicle
+        }
+        return vehicle
       })
       this.setRealtime({ positions: vehicles })
     }
