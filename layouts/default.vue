@@ -71,13 +71,14 @@ export default {
       // console.log('onmessage', JSON.parse(event.data))
       const wsVehicles = JSON.parse(event.data)
       const vehicles = wsVehicles.positions?.map(vehicle => {
-        console.log(vehicle, 'vehicle')
         const vMatch = this.vehicles?.find(device => {
-          console.log(device, 'each device')
-          return vehicle.id === device?.device?.traccarDeviceId
+          try {
+            return vehicle.id === device?.device?.traccarDeviceId
+          } catch (e) {
+            return false
+          }
         })
         if (vMatch) {
-          console.log(vMatch, 'vmatch')
           return {
             ...vMatch, ...vehicle
           }
